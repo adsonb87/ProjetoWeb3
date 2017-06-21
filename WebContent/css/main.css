@@ -1,0 +1,359 @@
+header{
+	background-image: url("imgs/header_comum.png");
+	/*border-bottom: 2px solid #048ae4;*/
+    box-shadow: 0 2px 35px -1px rgba(0,0,0,0.75);
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+}
+form>.container{
+	margin-top: 120px;
+}
+.cabecalho h3{
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 30px;
+	color: #fff;
+}
+.cabecalho a{
+	display: -webkit-inline-box;
+}
+.cabecalho a img{
+	width: 218px;
+	height: 80px;
+}
+.cabecalho .dropdown{
+	padding-right: 10px;
+	width: auto;
+    padding: 0;
+}
+.cabecalho .itens{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.cabecalho .menuHamburger span {
+	margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #fff;
+}
+.cabecalho .produto h3{
+	text-transform: uppercase;
+	margin: 0 auto;
+    margin-top: 10px;
+}
+.cabecalho .menuHamburger{
+	float: right;
+	cursor: pointer;
+}
+.menuOpen{
+	display: none;
+}
+.dropdown .botaoMenu{
+		margin-right: 10px;
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    	background-color : #128dc2;
+}
+.dropdown button{
+		text-transform: uppercase;
+}
+.formConsulta {
+	margin-top: 60px;
+}
+.panel-item{
+	width: 50%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+.input-group{
+	width: 400px;
+	margin: 0 auto;
+	margin-top: 15px;
+}
+.table tr {
+	background-color: #329246;
+	color: #fff;
+}
+.table td {
+	background-color: #fff;
+	color: #000;
+	text-align: center;
+}
+.bootstrap-select > button,
+.bs-docs-example > .bootstrap-select > button{
+	border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.panel-footer {
+	border-top: 0;
+}
+
+.bootstrap-select,
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){
+	width: 100%;
+}
+
+.itens{
+	margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.itens label{
+	display: -webkit-inline-box;
+	margin-right: 20px;
+}
+.itens label p {
+	margin-left: 3px;
+}
+.itens label input {width: 20px;height: 20px;}
+
+.modalDetalhe {	padding:5px;}
+
+* CSS Method for adding Font Awesome Chevron Icons */
+ .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family:'FontAwesome';
+    content:"\f146";
+    float: right;
+    color: inherit;
+}
+.panel-heading.collapsed .accordion-toggle:after {
+    /* symbol for "collapsed" panels */
+    content:"\f0fe";
+}
+
+
+.rowTable{text-align:center;width: 16%;}
+
+#questionario .panel-body{padding: 0;}
+#questionario .panel-heading{padding: 0;}
+#questionario .panel-footer{text-align: center;}
+#questionario .table-bordered>thead>tr>td, #questionario .table-bordered>thead>tr>th {width: 120px;}
+#questionario .table>tbody>tr>td {width: 120px;}
+
+
+#deposito .panel-body{padding: 0;}
+#deposito .panel-heading{padding: 0;}
+#deposito .panel-footer{text-align: center;}
+#deposito .table-bordered>thead>tr>td, #deposito .table-bordered>thead>tr>th {width: 87px;}
+#deposito .table>tbody>tr>td {width: 87px;}
+
+.table-fixed thead {width: 97%;}
+.table-fixed tbody {height: 500px;overflow-y: auto; width: 100%;}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {display: block;}
+.table-fixed tbody td, .table-fixed thead > tr> th {float: left;border-bottom-width: 0;}
+
+.botoesLogin {text-align: center;}
+
+.painelLogin{opacity: 0.9;}
+
+.dropdown-menu{
+		position: relative;
+		background-color: #329246;
+		margin: 0 auto;
+		border: 0;
+    	padding: 0;
+		width: 100%;
+		top: 0;
+}
+
+.glyphicon-menu-hamburger, .glyphicon-remove{
+	font-size: 3ch;
+}
+
+.table-responsive{
+	height: 300px;
+}
+
+.bootstrap-select > .dropdown-menu > ul{
+    background-color: #fff;
+}
+
+/* CSS PARA O MENU - INÍCIO */
+#sidebar-wrapper {
+	margin-right: -250px;
+	right: 0;
+	width: 250px;
+	background: #329246;
+	position: fixed;
+	height: 100%;
+	overflow-y: auto;
+	z-index: 1000;
+	box-shadow: 0 2px 35px -1px rgba(0,0,0,0.75);
+	transition: all 0.5s ease-in 0s;
+	-webkit-transition: all 0.5s ease-in 0s;
+	-moz-transition: all 0.5s ease-in 0s;
+	-ms-transition: all 0.5s ease-in 0s;
+	-o-transition: all 0.5s ease-in 0s;
+}
+
+.sidebar-nav {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar-nav li {
+	line-height: 50px;
+	text-indent: 20px;
+}
+
+.sidebar-nav li a {
+	color: #999999;
+	display: block;
+	text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+	color: #fff;
+	background: rgba(255,255,255,0.2);
+	text-decoration: none;
+}
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+	text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+	height: 55px;
+	line-height: 55px;
+	font-size: 18px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+	color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+	color: #fff;
+	background: none;
+}
+
+#menu-toggle {
+	top: 0;
+	right: 0;
+	position: fixed;
+	z-index: 1;
+}
+
+#sidebar-wrapper.active {
+	right: 250px;
+	width: 300px;
+	transition: all 0.5s ease-out 0s;
+	-webkit-transition: all 0.5s ease-out 0s;
+	-moz-transition: all 0.5s ease-out 0s;
+	-ms-transition: all 0.5s ease-out 0s;
+	-o-transition: all 0.5s ease-out 0s;
+}
+
+.toggle {
+	margin: 5px 5px 0 0;
+}
+/* CSS PARA O MENU - FIM */
+
+/* PARA DISPOSITIVOS  ATÃƒâ€° 768px DE LARGURA (mobile) */
+@media screen and (max-width: 1020px) {
+	.cabecalho h3{
+		font-size: 20px;
+	}
+	.cabecalho .dropdown{
+		width: 100%;
+		padding-right: 10px;
+    	padding-left: 10px;
+	}
+	.cabecalho .botaoMenu{
+		width: 100%;
+		margin-top: 10px;
+		height: 60px;
+		font-size: 22px;
+	}
+	.dropdown-menu{
+			width: 100%;
+    	text-align: center;
+    	margin-bottom: 10px;
+			position: relative;
+			background-color: #329246;
+	}
+	#formConsCredenciado .formConsulta{
+		padding: 10px;
+	}
+	.panel-item{
+		width: auto;
+	}
+	#basic-addon1{
+		text-align: left;
+		width: 40%;
+		font-size: 14px;
+	}
+	.panel-footer > .btn{
+		width: auto;
+		height: 40px;
+		font-size: 15px;
+	}
+	.cabecalho .produto h3{
+		margin: 0;
+		padding: 0;
+	}
+	.formConsulta{
+		margin-top: 20px;
+	}
+	.input-group{
+		width: 100%;
+	}
+	.dropdown-menu > li{
+		margin-bottom: 10px;
+		text-align: left;
+	}
+	.dropdown-menu>li>a{
+		font-size: 18px;
+	}
+	.dropdown-toggle{
+		font-size: 20px;
+	}
+	.novoVinculo{
+		padding: 0;
+	}
+	.painelLogin{
+		margin: 0 auto;
+    margin-top: 180px;
+    width: 90%;
+	}
+	#sidebar-wrapper.active{
+		width: 100%;
+		top: 0;
+	}
+	.input-group .inputsLogin > span {width: 40%;}
+	.input-group .inputsLogin > input {width: 100%;}
+
+	.bootstrap-select > .dropdown-menu > ul{
+	    background-color: #fff;
+	}
+}
+/* PARA DISPOSITIVOS  ATÃƒâ€° 768px DE LARGURA (mobile) */
+
+/* PARA DISPOSITIVOS NO MÍNIMO 769px DE LARGURA (desktop) */
+@media screen and (min-width: 769px){
+	.cabecalho .menuItens{
+		width: auto;
+    float: none;
+	}
+	.painelLogin{
+		margin: 0 auto;
+		margin-top: 15%;
+		width: 40%;
+	}
+}
+/* PARA DISPOSITIVOS NO MÍNIMO 769px DE LARGURA (desktop) */
+/* PARA MONITORES MENORES  */
+@media (max-width:800px)  {
+	.input-group {
+    width: 100%;
+	}
+}
+/* PARA MONITORES MENORES  */
