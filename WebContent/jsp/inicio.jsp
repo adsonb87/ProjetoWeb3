@@ -69,7 +69,8 @@
 									<img style="height: 249px;" src="imagens/cartoesComum.png" alt="img01">
 									<figcaption style="width: 50%;">
 										<h3>AINDA NÃO POSSUI CARTÃO COMUM?</h3>
-										 <a onclick="javascript:consultarCadastro();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a>
+<!-- 										 <a onclick="javascript:consultarCadastro();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a> -->
+										 <a onclick="" class="btn btn-success botaoMenu" href="#">Clique Aqui</a>
 									</figcaption>
 								</figure>
 							</li>

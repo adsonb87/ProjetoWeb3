@@ -78,6 +78,11 @@
 		formConsultarCPF.action = "consultaCartao";
 		formConsultarCPF.submit();
 	}
+	
+	function goBackInicio() {
+		formConsultarCPF.action = "inicio";
+		formConsultarCPF.submit();
+	}
 
 	jQuery(function($){
 		$("#cpf").mask("999.999.999-99");
