@@ -32,12 +32,39 @@
 		}
 		
 	}
+	
+	function validarEmail(email) {
+		usuario = email.value.substring(0, email.value.indexOf("@"));
+		dominio = email.value.substring(email.value.indexOf("@")+ 1, email.value.length);
+		if (!(usuario.length >=1) &&
+		    (dominio.length >=3) && 
+		    (usuario.search("@")==-1) && 
+		    (dominio.search("@")==-1) &&
+		    (usuario.search(" ")==-1) && 
+		    (dominio.search(" ")==-1) &&
+		    (dominio.search(".")!=-1) &&      
+		    (dominio.indexOf(".") >=1)&& 
+		    (dominio.lastIndexOf(".") < dominio.length - 1)) {
+			bootbox.alert("Para continuar, informe um Email válido",function(){})
+		}
+	}
 
 	function validarCampos() {
-		if (document.formCadUsuario.nome.value == "") {
+		
+		//Validando NOME
+		var nome = document.formCadUsuario.nome.value.trim();
+		if (nome == "") {
 			bootbox.alert("Para continuar, informe o seu Nome!",function(){})
 			return false;
+		} else {
+			var cont = nome.length;
+			if(cont < 3){
+				bootbox.alert("Para continuar, informe um nome válido!",function(){})
+				return false;
+			}
 		}
+		
+		//Validando CPF
 		if (document.formCadUsuario.cpf.value != "") {
 			var cpf_Int = parseInt(cpf.value);
 			var valido = (!isNaN(cpf_Int) && (isValidoCNPJ(cpf) || isValidoCPF(cpf.value)));
@@ -49,6 +76,8 @@
 			bootbox.alert("Para continuar, informe o seu CPF!",function(){})
 			return false;
 		}
+		
+		//Validando TELEFONE
 		if (document.formCadUsuario.telefone.value == "")  {
 			bootbox.alert("Para continuar, informe o seu Telefone!",function(){})
 			return false;
@@ -60,14 +89,33 @@
 				return false;
 			}
 		}
-		if (document.formCadUsuario.email.value == "") {
+		
+		//Validando EMAIL
+		var email = document.formCadUsuario.email.value;
+		if (email == "") {
 			bootbox.alert("Para continuar, informe o seu E-mail!",function(){})
 			return false;
+		} else {
+			var usuario = email.substring(0, email.indexOf("@"));
+			var dominio = email.substring(email.indexOf("@")+ 1, email.length);
+			if (!((usuario.length >=1) &&
+			    (dominio.length >= 3) && 
+			    (usuario.search("@") == -1) && 
+			    (dominio.search("@") == -1) &&
+			    (usuario.search(" ") == -1) && 
+			    (dominio.search(" ") == -1) &&
+			    (dominio.search(".") != -1) &&      
+			    (dominio.indexOf(".") >= 1)&& 
+			    (dominio.lastIndexOf(".") < dominio.length - 1))) {
+				bootbox.alert("Para continuar, informe um Email válido",function(){})
+				return false;
+			}
 		}
+		
 		if (document.formCadUsuario.cep.value == "") {
 			bootbox.alert("Para continuar, informe o CEP!",function(){})
 			return false;
-		}	
+		}
 		if (document.formCadUsuario.logradouro.value == "") {
 			bootbox.alert("Para continuar, informe o Logradouro!",function(){})
 			return false;
@@ -85,7 +133,7 @@
 			return false;
 		}
 		if (document.formCadUsuario.numero.value == "") {
-			bootbox.alert("Para continuar, informe o Número da Residência!",function(){})
+			bootbox.alert("Para continuar, informe o Número da sua Residência!",function(){})
 			return false;
 		}
 		
@@ -122,7 +170,7 @@
 
     function atualCampoEnd(conteudo) {
 		if (!("erro" in conteudo)) {
-            document.formCadUsuario.logradouro.value = (conteudo.logradouro).toUpperCase();
+			document.formCadUsuario.logradouro.value = (conteudo.logradouro).toUpperCase();
             document.formCadUsuario.bairro.value = (conteudo.bairro).toUpperCase();
             document.formCadUsuario.cidade.value = (conteudo.localidade).toUpperCase();
             document.formCadUsuario.uf.value = (conteudo.uf).toUpperCase();
@@ -174,14 +222,6 @@
 		formCadUsuario.action = "consultaCPF";
 		formCadUsuario.submit();
 	}
-	
-	jQuery(function($){
-		$("#cpf").mask("999.999.999-99");
-	});
-	
-	jQuery(function($){
-		$("#cep").mask("99999-999");
-	});
 
 	function sem_acento(e, args) {
 		if (document.all) { var evt = event.keyCode;} // caso seja IE
@@ -199,7 +239,7 @@
 	function sem_acentoEmail(e, args) {
 		if (document.all) { var evt = event.keyCode;} // caso seja IE
 		else { var evt = e.charCode; } // do contrário deve ser Mozilla
-		var valid_chars = 'abcdefghijlmnopqrstuvxzwykABCDEFGHIJLMNOPQRSTUVXZWYK.@0123456789-' + args; // criando a lista de teclas permitidas
+		var valid_chars = 'abcdefghijlmnopqrstuvxzwykABCDEFGHIJLMNOPQRSTUVXZWYK.@0123456789_-' + args; // criando a lista de teclas permitidas
 		var chr = String.fromCharCode(evt); // pegando a tecla digitada
 		if (valid_chars.indexOf(chr) > -1) { return true; } 
 		// se a tecla estiver na lista de permissão permite-a
@@ -277,7 +317,7 @@
 							<div class="input-group has-success">
 								<span class="input-group-addon" id="basic-addon1">Telefone:</span>
 								<input type="text" class="form-control" placeholder="DDD + Número" value="${ usuario.telefone }" aria-describedby="basic-addon1"
-								id="telefone" name="telefone" onkeypress="return sem_letra(event)"  autocomplete="off" maxlength="15">
+								id="telefone" name="telefone" onkeypress="maskTelefone(this, maskTel);"  autocomplete="off" maxlength="15">
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -359,5 +399,6 @@
 			</div>
 		</div>
 	</form>
+<script src="js/mask.js"></script>
 </body>
 </html>

@@ -13,49 +13,25 @@
 
 		if(msgComando == 1) {
 			bootbox.alert(msgAuxiliar,function(){
-				formVinculacao.action = "consultaCartao";
-				formVinculacao.submit();
-			})
-		}
-
-		if(msgComando == 2){
-			bootbox.alert(msgAuxiliar,function(){
-				formVinculacao.numCartao.value = numCartao;
-				formVinculacao.consCartao.value = "true";
-				formVinculacao.action = "consultaCPF";
+				formVinculacao.action = "inicio";
 				formVinculacao.submit();
 			})
 		}
 	}
 
-	function validarCampos() {
-		if (document.formVinculacao.numero.value == "") {
-			bootbox.alert("Para continuar, informe o Número do seu Cartão",function(){})
-			return false;
-		}
-		return true;
-	}
-
-	function limparCampos() {
-		$('#numero').val('');
-	}
-
-	function consultarCartao() {
-		if (validarCampos()) {
-			formVinculacao.consultar.value = "true";
-			formVinculacao.action = "consultaCartao";
-			formVinculacao.submit();	
-		}
+	function vincularCartao() {
+		formVinculacao.numCartao.value = "${ numCartao }";
+		formVinculacao.usrId.value = "${ cartao.usuario.usrId }";
+		formVinculacao.idUsuario.value = "${ cartao.usuario.id }";
+		formVinculacao.vincular.value = "true";
+		formVinculacao.action = "vinculacao";
+		formVinculacao.submit();	
 	}
 	
-	function goBack() {
+	function cancelar() {
 		formVinculacao.action = "inicio";
 		formVinculacao.submit();
 	}
-	
-	jQuery(function($){
-		$("#numero").mask("99.99.99999999-9");
-	});
 
 	function sem_letra(e, args) {
 		if (document.all) { var evt = event.keyCode;} // caso seja IE
@@ -74,29 +50,96 @@
 </head>
 <body onload="verificar()">
 	<form name=formVinculacao method="POST" action="formVinculacao" onSubmit="return false;">
-      <input type="hidden" name="consultar" value="false">
-      <input type="hidden" name="consCartao" value="false">
+      <input type="hidden" name="vincular" value="false">
       <input type="hidden" name="numCartao">
+      <input type="hidden" name="usrId">
+      <input type="hidden" name="idUsuario">
 		<div class="container">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h4>Vincular</h4>
+					<h4>CONFIRMANDO OS DADOS</h4>
 				</div>
 				<div class="panel-body">
 					<div class="row">
-            			<div class="col-md-12">
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">Número Cartão:</span>
-								<input type="text" class="form-control" placeholder="XX.XX.XXXXXXXX-X" aria-describedby="basic-addon1"
-								id="numero" name="numero">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer" style="text-align: center;">
-					<input class="btn btn-success" type="button" onclick="javascript:consultarCartao();" readonly="readonly" value='CONTINUAR' name="cmdContinuar" >
-					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
-					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>
+       					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+   							<div class="panel panel-success">
+			            		<div class="panel-heading">
+			              			<h3 class="panel-title">${ numCartao }</h3>
+			            		</div>
+			            		<div class="panel-body">
+			              			<div class="row">
+			                			<div class="col-md-3 col-lg-3 " align="center"> 
+			                				<img src="imagens/comum-avatar.png" alt="img01" class="img-responsive">
+			                			</div>	
+							                <div class=" col-md-9 col-lg-9 "> 
+							                	<table class="table table-user-information">
+							                    	<tbody>
+							                    		<tr>
+									                        <td>Nome:</td>
+									                        <td>
+									                        	<p name="nome" value="${ cartao.usuario.nome }">${ cartao.usuario.nome }</p>
+									                        </td>
+								                      	</tr>
+									                															<tr>
+									                    	<td>CPF:</td>
+									                        <td>
+									                        	<p name="cpf" value="${ cartao.usuario.cpf }">${ cartao.usuario.cpf }</p>
+									                        </td>
+								                      	</tr>
+								                      	<tr>
+								                      		<td>Telefone:</td>
+								                      		<td>
+																<p name=telefone value="${ cartao.usuario.telefone }">${ cartao.usuario.telefone }</p>
+								                      		</td>
+								                      	</tr>
+								                      	<tr>
+								                      		<td>Email:</td>
+								                      		<td>
+																<p name="email" value="${ cartao.usuario.email }">${ cartao.usuario.email }</p>
+								                      		</td>
+								                      	</tr>
+								                      	<tr>
+									                    	<td>Rua:</td>
+									                        <td>
+									                        	<p name="logradouro" value="${ cartao.usuario.endereco.logradouro }">${ cartao.usuario.endereco.logradouro }</p>
+									                        </td>
+								                      	</tr>
+								                      	<tr>
+								                      		<td>Número:</td>
+								                      		<td>								                      			
+								                      			<p name="numero" value="${ cartao.usuario.endereco.numero }">${ cartao.usuario.endereco.numero }</p>
+								                      		</td>
+								                      	</tr>
+								                      	<tr>
+								                      		<td>Cidade:</td>
+								                      		<td>								                      			
+								                      			<p name="cidade" value="${ cartao.usuario.endereco.cidade }">${ cartao.usuario.endereco.cidade }</p>
+								                      		</td>
+								                      	</tr>
+								                      	<tr>
+								                      		<td>UF:</td>
+								                      		<td>								                      			
+								                      			<p name="uf" value="${ cartao.usuario.endereco.uf }">${ cartao.usuario.endereco.uf }</p>
+								                      		</td>
+								                      	</tr>
+								                      	<tr>
+								                      		<td>Complemento:</td>
+								                      		<td>								                      			
+								                      			<p name="complemento" value="${ cartao.usuario.endereco.complemento }">${ cartao.usuario.endereco	.complemento }</p>
+								                      		</td>
+								                      	</tr>
+													</tbody>
+							                  	</table>	
+							                </div>
+										</div>
+									</div>
+								<div class="panel-footer" style="text-align: center;">
+									<input class="btn btn-success" type="button" onclick="javascript:vincularCartao();" readonly="readonly" value='CONFIRMAR' name="cmdConfirmar	" >
+									<input class="btn btn-success" type="button" onclick="javascript:cancelar();" readonly="readonly" id="canc" value='CANCELAR' name="cmdCancelar"/>
+			                    </div>
+			          		</div>
+			        	</div>
+			    	</div>
 				</div>
 			</div>
 		</div>

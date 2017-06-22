@@ -6,6 +6,8 @@ public class EntidadeVinculacao {
 	
 	private int idUsuario;
 	
+	private int usrId;
+	
 	private EntidadeCartao cartao;
 
 	public int getId() {
@@ -22,6 +24,14 @@ public class EntidadeVinculacao {
 
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public int getUsrId() {
+		return usrId;
+	}
+
+	public void setUsrId(int usrId) {
+		this.usrId = usrId;
 	}
 
 	public EntidadeCartao getCartao() {

@@ -95,7 +95,7 @@
 					</div>
 				</div>
 				<div class="panel-footer" style="text-align: center;">
-					<input class="btn btn-success" type="button" onclick="javascript:consultarCartao();" readonly="readonly" value='CONTINUAR' name="cmdContinuar" >
+					<input class="btn btn-success" type="submit" onclick="javascript:consultarCartao();" readonly="readonly" value='CONTINUAR' name="cmdContinuar" >
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>
 				</div>

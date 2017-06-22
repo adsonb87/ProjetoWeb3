@@ -20,7 +20,8 @@ form>.container{
 	display: -webkit-inline-box;
 }
 .cabecalho a img{
-	width: 218px;
+	padding-top: 8px;
+	width: 210px;
 	height: 80px;
 }
 .cabecalho .dropdown{

@@ -6,19 +6,20 @@ import javax.naming.NamingException;
 
 import br.com.pe.urbana.controller.rep.CartaoControllerRep;
 import br.com.pe.urbana.entidade.EntidadeCartao;
+import br.com.pe.urbana.entidade.EntidadeVinculacao;
 
-public class CartaooContoller {
+public class CartaoContoller {
 
-	private static CartaooContoller instance;
+	private static CartaoContoller instance;
 
-	public CartaooContoller() {
+	public CartaoContoller() {
 
 	}
 
-	public static CartaooContoller getInstance() {
+	public static CartaoContoller getInstance() {
 
 		if (instance == null) {
-			instance = new CartaooContoller();
+			instance = new CartaoContoller();
 		}
 
 		return instance;
@@ -42,6 +43,13 @@ public class CartaooContoller {
 		boolean flag = controllerRep.validarCartao(cartao);
 		
 		return flag;
+		
+	}
+	
+	public void vincularCartaoUsuario(EntidadeVinculacao vinculacao) throws Exception {
+		
+		CartaoControllerRep controllerRep = CartaoControllerRep.getInstance();
+		controllerRep.vincularCartaoUsuario(vinculacao);
 		
 	}
 	

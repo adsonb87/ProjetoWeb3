@@ -63,13 +63,13 @@ public class ConsultaCPF extends HttpServlet implements Servlet {
 
 		EntidadeUsuario usuario = null;
 		
-		String numero = request.getParameter("numCartao");
+		String numCartao = request.getParameter("numCartao");
 		
 		try{
 			
 			if(consultar || consCartao || consultarCadastro) {
 				page = "jsp/consultaCPF.jsp";
-				request.setAttribute("numCartao", numero);
+				request.setAttribute("numCartao", numCartao);
 			}
 		
 			if(consultar) {
@@ -78,21 +78,31 @@ public class ConsultaCPF extends HttpServlet implements Servlet {
 				cpf = Util.unMaskCnpj(cpf);
 				usuario = controller.consultarUsuario(cpf);
 				
-				if(usuario != null) {
+				//Caso o usuário já tenha cadastro e cartão
+				if(usuario != null && numCartao != "") {
 					
 					msgAuxiliar = "Você já possui cadastro!";
 					msgComando = "1";
-					
+		
 					request.setAttribute("usuCpf", usuario.getCpf());
-					request.setAttribute("numCartao", numero);
+					request.setAttribute("numCartao", numCartao);
+					
+				//Caso o usuário já tenha cadastro	
+				} else if (usuario != null){
+					
+					msgAuxiliar = "Você já possui cadastro!";
+					msgComando = "2";
+		
+					request.setAttribute("usuCpf", usuario.getCpf());
+					request.setAttribute("numCartao", numCartao);
 					
 				} else {
 					
 					msgAuxiliar = "Você ainda possui cadastro!";
-					msgComando = "2";
+					msgComando = "3";
 					
 					request.setAttribute("usuCpf", cpf);
-					request.setAttribute("numCartao", numero);
+					request.setAttribute("numCartao", numCartao);
 					
 				}
 				

@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import br.com.pe.urbana.controller.CartaoContoller;
 import br.com.pe.urbana.controller.UsuarioContoller;
-import br.com.pe.urbana.controller.VinculacaoContoller;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.entidade.EntidadeVinculacao;
@@ -54,7 +54,7 @@ public class Vinculacao extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/vinculacao.jsp";
+		String page = "jsp/inicio.jsp";
 		String msgComando = null;
 		String msgAuxiliar = null;
 				
@@ -62,30 +62,40 @@ public class Vinculacao extends HttpServlet implements Servlet {
 		boolean cadVincular = "true".equals(request.getParameter("cadVincular"));
 		
 		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
-		VinculacaoContoller ctrVinculacao = VinculacaoContoller.getInstance();
-
+		CartaoContoller ctrCartao = CartaoContoller.getInstance();
+		
 		EntidadeUsuario usuario = null;
 		EntidadeCartao cartao = null;
 		EntidadeVinculacao vinculacao = null;
 		
+		String numCartao = request.getParameter("numCartao");
+		
 		try{
+			
+			if(vincular || cadVincular) {
+				page = "jsp/vinculacao.jsp";
+				request.setAttribute("numCartao", numCartao);
+			}
 			
 			if(cadVincular) {
 				
-				usuario = new EntidadeUsuario();
 				cartao = new EntidadeCartao();
 				
 				String cpf = request.getParameter("usuCpf");
 				cpf = Util.unMaskCnpj(cpf);
 				usuario = ctrUsuario.consultarUsuario(cpf);
 				
-				String numero = request.getParameter("numCartao");
-				String[] num = Util.getCartao(numero);		
+				if(usuario == null) {
+					usuario = ctrUsuario.consultarNovoUsuario(cpf);
+				}
+				
+				String[] num = Util.getCartao(numCartao);
 				cartao.setProjeto(Integer.parseInt(num[0]));
 				cartao.setDesign(Integer.parseInt(num[1]));
 				cartao.setNumeroExterno(Integer.parseInt(num[2]));
 				cartao.setUsuario(usuario);
 				
+				request.setAttribute("numCartao", numCartao);
 				request.setAttribute("cartao", cartao);
 				
 			}
@@ -95,20 +105,19 @@ public class Vinculacao extends HttpServlet implements Servlet {
 				cartao = new EntidadeCartao();
 				vinculacao = new EntidadeVinculacao();
 				
-				String cpf = request.getParameter("usuCpf");
-				cpf = Util.unMaskCnpj(cpf);
-				usuario = ctrUsuario.consultarUsuario(cpf);
+				String usrId = request.getParameter("usrId");
+				String idUsuario = request.getParameter("idUsuario");
 				
-				String numero = request.getParameter("numCartao");
-				String[] num = Util.getCartao(numero);		
+				String[] num = Util.getCartao(numCartao);		
 				cartao.setProjeto(Integer.parseInt(num[0]));
 				cartao.setDesign(Integer.parseInt(num[1]));
 				cartao.setNumeroExterno(Integer.parseInt(num[2]));
 				
-				vinculacao.setIdUsuario(usuario.getId());
+				vinculacao.setIdUsuario(Integer.parseInt(idUsuario));
+				vinculacao.setUsrId(Integer.parseInt(usrId));
 				vinculacao.setCartao(cartao);
 				
-				ctrVinculacao.vincularCartaoUsuario(vinculacao);
+				ctrCartao.vincularCartaoUsuario(vinculacao);
 				
 				msgAuxiliar = "Cartão cadastrado com sucesso!";
 				msgComando = "1";

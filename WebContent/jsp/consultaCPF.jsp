@@ -23,7 +23,11 @@
 			})
 		}
 		
-		if(msgComando == 2){
+		if(msgComando == 2) {
+			bootbox.alert(msgAuxiliar,function(){})
+		}
+		
+		if(msgComando == 3){
 			bootbox.alert(msgAuxiliar,function(){
 				formConsultarCPF.usuCpf.value = cpf;
 				formConsultarCPF.numCartao.value = numCartao;
@@ -70,6 +74,7 @@
 	}
 	
 	function goBack() {
+		formConsultarCPF.consCartao.value = "true";
 		formConsultarCPF.action = "consultaCartao";
 		formConsultarCPF.submit();
 	}
@@ -98,6 +103,7 @@
       <input type="hidden" name="consultar" value="false">
       <input type="hidden" name="consCadastro" value="false">
       <input type="hidden" name="cadVincular" value="false">
+      <input type="hidden" name="consCartao" value="false">
       <input type="hidden" name="usuCpf">
       <input type="hidden" name="numCartao" value="${ numCartao }">
 		<div class="container">

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import br.com.pe.urbana.controller.CartaooContoller;
+import br.com.pe.urbana.controller.CartaoContoller;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.util.Util;
 
@@ -58,7 +58,7 @@ public class ConsultaCartao extends HttpServlet implements Servlet {
 		boolean consultar = "true".equals(request.getParameter("consultar"));
 		boolean consCartao = "true".equals(request.getParameter("consCartao"));
 		
-		CartaooContoller controller = CartaooContoller.getInstance();
+		CartaoContoller controller = CartaoContoller.getInstance();
 
 		EntidadeCartao cartao = null;
 		
@@ -71,9 +71,9 @@ public class ConsultaCartao extends HttpServlet implements Servlet {
 			if(consultar) {
 				cartao = new EntidadeCartao();
 				
-				String numero = request.getParameter("numero");
+				String numCartao = request.getParameter("numero");
 				
-				String[] num = Util.getCartao(numero);
+				String[] num = Util.getCartao(numCartao);
 						
 				cartao.setProjeto(Integer.parseInt(num[0]));
 				cartao.setDesign(Integer.parseInt(num[1]));
@@ -102,7 +102,7 @@ public class ConsultaCartao extends HttpServlet implements Servlet {
 							
 							msgAuxiliar = "Cartão ainda não está vinculado!";
 							msgComando = "2";
-							request.setAttribute("numCartao", numero);	
+							request.setAttribute("numCartao", numCartao);	
 						}
 						
 					} else {
@@ -111,7 +111,6 @@ public class ConsultaCartao extends HttpServlet implements Servlet {
 						msgComando = "1";
 					}
 				}
-				
 			}
 			
 		} catch (Exception e) {

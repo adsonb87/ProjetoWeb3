@@ -41,6 +41,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/imagens.css" rel="stylesheet">
 	<link href="css/style2.css" rel="stylesheet">
+	<link href="css/panel-cad.css" rel="stylesheet">
 	<link href="css/header.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap-select.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">

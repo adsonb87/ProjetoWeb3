@@ -53,7 +53,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/cadastroUsuario.jsp";
+		String page = "jsp/inicio.jsp";
 		String msgComando = null;
 		String msgAuxiliar = null;
 				
@@ -89,53 +89,6 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 					usuario.setCpf(usuCpf);
 					request.setAttribute("usuario", usuario);
 				}
-			
-//			} 
-			
-//			else if(atualCadastro) {
-//				
-//				usuario = new EntidadeUsuario();
-//				endereco = new EntidadeEndereco();
-//				
-//				String usrId = request.getParameter("usrId");
-//				String nome = request.getParameter("nome");
-//				String cpf = request.getParameter("cpf");
-//					   cpf = Util.unMaskCnpj(cpf);
-//			    String telefone = request.getParameter("telefone");
-//			    String email = request.getParameter("email");
-//				String cep = request.getParameter("cep").replaceAll("-", "");
-//				String logradouro = request.getParameter("logradouro");
-//				String bairro = request.getParameter("bairro");
-//				String cidade = request.getParameter("cidade");
-//				String uf = request.getParameter("uf");
-//				String complemento = request.getParameter("complemento");
-//				String numero = request.getParameter("numero");
-//				
-//				endereco.setCep(cep);
-//				endereco.setLogradouro(logradouro);
-//				endereco.setBairro(bairro);
-//				endereco.setCidade(cidade);
-//				endereco.setUf(uf);
-//				endereco.setComplemento(complemento);
-//				endereco.setNumero(numero);
-//				
-//				usuario.setUsrId(Integer.parseInt(usrId));
-//				usuario.setNome(nome);
-//				usuario.setCpf(cpf);
-//				usuario.setTelefone(telefone);
-//				usuario.setEmail(email);
-//				usuario.setEndereco(endereco);
-//				
-//				//Caso não exista na COM_COMUM
-//				boolean flag = controller.consultarCPF(cpf);
-//				if(!flag) {
-//					controller.cadastrarUsuario(usuario);
-//				} else {
-//					controller.atualizarUsuario(usuario);
-//				}
-//				
-//				msgAuxiliar = "Atualização Realizado com Sucesso!";
-//				msgComando = "1";
 				
 			} else if(cadastrar) {
 				
@@ -172,7 +125,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 				usuario.setEndereco(endereco);
 				
 				//Caso não exista na tabela COM_COMUM
-				boolean flag = controller.consultarCPF(cpf);
+				boolean flag = controller.validarNovoUsuario(cpf);
 				if(!flag) {
 					controller.cadastrarUsuario(usuario);
 				} else {
@@ -200,6 +153,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 			msgComando = "1";
 		}
 		
+		request.setAttribute("numCartao", numCartao);
 		request.setAttribute("msgAuxiliar", msgAuxiliar);
 		request.setAttribute("msgComando", msgComando);
 		

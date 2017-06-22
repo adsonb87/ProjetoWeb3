@@ -16,6 +16,7 @@ import br.com.pe.urbana.dao.CartaoDAO;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
+import br.com.pe.urbana.entidade.EntidadeVinculacao;
 import br.com.pe.urbana.util.Util;
 
 public class CartaoControllerRep {
@@ -101,5 +102,11 @@ public class CartaoControllerRep {
 		
 		return flag;
     }
+    
+    public void vincularCartaoUsuario(EntidadeVinculacao vinculacao) throws Exception {
+
+	    CartaoDAO dao = CartaoDAO.getInstance();
+		dao.vincularCartaoUsuario(vinculacao);
+	}
 
 }

@@ -54,16 +54,13 @@ public class UsuarioControllerRep {
     public void cadastrarUsuario(EntidadeUsuario usuario) throws Exception {
 
 		UsuarioDAO dao = UsuarioDAO.getInstance();
-		
 		dao.cadastrarUsuario(usuario);
 	}
     
     public void atualizarUsuario(EntidadeUsuario usuario) throws Exception {
     	
     	UsuarioDAO dao = UsuarioDAO.getInstance();
-    	
     	dao.atualizarUsuario(usuario);
-    	
     }
     
     public List<String> getCidades()  throws ClassNotFoundException, 
@@ -141,11 +138,11 @@ public class UsuarioControllerRep {
 		return usuario;
     }
     
-    public boolean consultarCPF(String cpf) throws ClassNotFoundException, 
+    public boolean validarNovoUsuario(String cpf) throws ClassNotFoundException, 
     	NamingException, SQLException {
 		
     	UsuarioDAO dao = UsuarioDAO.getInstance();
-		ResultSet rs = dao.consultarCPF(cpf);
+		ResultSet rs = dao.validarNovoUsuario(cpf);
 		
 		boolean flag = false;
 
@@ -155,5 +152,38 @@ public class UsuarioControllerRep {
 		
 		return flag;
 	}
-
+    
+    public EntidadeUsuario consultarNovoUsuario(String cpf) throws ClassNotFoundException, 
+		NamingException, SQLException {
+	
+	    UsuarioDAO dao = UsuarioDAO.getInstance();
+		ResultSet rs = dao.consultarNovoUsuario(cpf);
+		
+		EntidadeUsuario usuario = null;
+		EntidadeEndereco endereco = null;
+		
+		if ((rs != null) && rs.next()) {
+			usuario = new EntidadeUsuario();
+			endereco = new EntidadeEndereco();
+	
+			usuario.setId(rs.getInt("USU_ID"));
+			usuario.setUsrId(rs.getInt("USR_ID"));
+			usuario.setNome(rs.getString("USU_NOME"));
+			usuario.setCpf(rs.getString("USU_CPF"));
+			usuario.setTelefone(rs.getString("USU_FONE"));
+			usuario.setEmail(rs.getString("USU_EMAIL"));
+			endereco.setLogradouro(rs.getString("USU_LOGRADOURO"));
+			endereco.setNumero(rs.getString("USU_NUMERO"));
+			endereco.setBairro(rs.getString("USU_BAIRRO"));
+			endereco.setCidade(rs.getString("USU_CIDADE"));
+			endereco.setUf(rs.getString("USU_UF"));
+			endereco.setCep(rs.getString("USU_CEP"));
+			endereco.setComplemento(rs.getString("USU_COMPLEMENTO"));
+			usuario.setEndereco(endereco);
+			
+		}			
+	
+		return usuario;
+	}
+    
 }

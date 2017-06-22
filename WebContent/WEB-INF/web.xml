@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>Vem Comum</display-name>
-
+  
+  <filter>
+    <description></description>
+    <display-name>filtro</display-name>
+    <filter-name>filtro</filter-name>
+    <filter-class>br.com.pe.urbana.servlet.Filtro</filter-class>
+    <init-param>
+      <param-name>avoid-context</param-name>
+      <param-value>css,font,js,jsp,jpg,png,imagens,login,fonts</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>filtro</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <jsp-config>
     <taglib>
       <taglib-uri>/WEB-INF/displaytag</taglib-uri>

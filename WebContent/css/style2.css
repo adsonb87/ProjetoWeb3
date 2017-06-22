@@ -71,10 +71,6 @@ p {
 	border-radius: 0px;
 }
 
-td > p {
-	font-weight: bolder;
-}
-
 /*Helpers*/
 
 .centered {

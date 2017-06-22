@@ -139,7 +139,24 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		return rs;
 	}
 	
-	public ResultSet consultarCPF(String cpf) throws ClassNotFoundException, NamingException, SQLException{
+	public ResultSet validarNovoUsuario(String cpf) throws ClassNotFoundException, NamingException, SQLException{
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("	SELECT *");
+		sb.append("	FROM COM_USUARIO");
+		sb.append("	WHERE USU_CPF = ?");
+
+		ParamDAO[] params = new ParamDAO[1];
+		
+		params[0] = new ParamDAO(cpf, Types.VARCHAR);
+		
+		ResultSet rs = super.executeQuery(sb.toString(), params);
+		
+		return rs;
+	}
+	
+	public ResultSet consultarNovoUsuario(String cpf) throws ClassNotFoundException, NamingException, SQLException{
 		
 		StringBuilder sb = new StringBuilder();
 		
