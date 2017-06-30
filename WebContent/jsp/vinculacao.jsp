@@ -25,9 +25,9 @@
 		formVinculacao.idUsuario.value = "${ cartao.usuario.id }";
 		formVinculacao.vincular.value = "true";
 		formVinculacao.action = "vinculacao";
-		formVinculacao.submit();	
+		formVinculacao.submit();
 	}
-	
+
 	function cancelar() {
 		formVinculacao.action = "inicio";
 		formVinculacao.submit();
@@ -68,10 +68,10 @@
 			            		</div>
 			            		<div class="panel-body">
 			              			<div class="row">
-			                			<div class="col-md-3 col-lg-3 " align="center"> 
+			                			<div class="col-md-3 col-lg-3 " align="center">
 			                				<img src="imagens/comum-avatar.png" alt="img01" class="img-responsive">
-			                			</div>	
-							                <div class=" col-md-9 col-lg-9 "> 
+			                			</div>
+							                <div class=" col-md-9 col-lg-9 ">
 							                	<table class="table table-user-information">
 							                    	<tbody>
 							                    		<tr>
@@ -101,7 +101,7 @@
 																<p name="email" value="${ cartao.usuario.email }">
 																	<c:if test="${empty cartao.usuario.email}">Não Informado</c:if>
 																	<c:if test="${not empty cartao.usuario.email }">${ cartao.usuario.email }</c:if>
-																</p>	
+																</p>
 															</td>
 								                      	</tr>
 								                      	<tr>
@@ -115,7 +115,7 @@
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Número:</td>
-								                      		<td>								                      			
+								                      		<td>
 								                      			<p name="numero" value="${ cartao.usuario.endereco.numero }">
 								                      				<c:if test="${empty cartao.usuario.endereco.numero}">Não Informado</c:if>
 																	<c:if test="${not empty cartao.usuario.endereco.numero }">${ cartao.usuario.endereco.numero }</c:if>
@@ -124,7 +124,7 @@
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Cidade:</td>
-								                      		<td>								                      			
+								                      		<td>
 								                      			<p name="cidade" value="${ cartao.usuario.endereco.cidade }">
 								                      				<c:if test="${empty cartao.usuario.endereco.cidade}">Não Informado</c:if>
 																	<c:if test="${not empty cartao.usuario.endereco.cidade }">${ cartao.usuario.endereco.cidade }</c:if>
@@ -133,7 +133,7 @@
 								                      	</tr>
 								                      	<tr>
 								                      		<td>UF:</td>
-								                      		<td>								                      			
+								                      		<td>
 								                      			<p name="uf" value="${ cartao.usuario.endereco.uf }">
 								                      				<c:if test="${empty cartao.usuario.endereco.uf}">Não Informado</c:if>
 																	<c:if test="${not empty cartao.usuario.endereco.uf }">${ cartao.usuario.endereco.uf }</c:if>
@@ -142,7 +142,7 @@
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Complemento:</td>
-								                      		<td>								                      			
+								                      		<td>
 								                      			<p name="complemento" value="${ cartao.usuario.endereco.complemento }">
 								                      				<c:if test="${empty cartao.usuario.endereco.complemento}">Não Informado</c:if>
 																	<c:if test="${not empty cartao.usuario.endereco.complemento }">${ cartao.usuario.endereco.complemento }</c:if>
@@ -150,11 +150,11 @@
 								                      		</td>
 								                      	</tr>
 													</tbody>
-							                  	</table>	
+							                  	</table>
 							                </div>
 										</div>
 									</div>
-								<div class="panel-footer" style="text-align: center;">
+								<div class="panel-footer btAcoes" style="text-align: center;">
 									<input class="btn btn-success" type="button" onclick="javascript:vincularCartao();" readonly="readonly" value='CONFIRMAR' name="cmdConfirmar	" >
 									<input class="btn btn-success" type="button" onclick="javascript:cancelar();" readonly="readonly" id="canc" value='CANCELAR' name="cmdCancelar"/>
 			                    </div>
