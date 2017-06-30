@@ -32,15 +32,15 @@ public abstract class ConnectionFactoryDB {
 
 		Connection conexao = null;
         
-	 	String strServer = "10.20.0.1";
-	 	String strUsuario = "urbana";
-     	String strDatabase = "SBEHOMOLOG";
-     	String strSenha = "urbanahomol";
+//	 	String strServer = "10.20.0.1";
+//	 	String strUsuario = "urbana";
+//     	String strDatabase = "SBEHOMOLOG";
+//     	String strSenha = "urbanahomol";
 
-//        String strServer = "10.10.0.21";
-//        String strUsuario = "urbana";
-//        String strDatabase = "setrans";
-//        String strSenha = "urbana2015";
+        String strServer = "10.10.0.21";
+        String strUsuario = "urbana";
+        String strDatabase = "setrans";
+        String strSenha = "urbana2015";
 
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());

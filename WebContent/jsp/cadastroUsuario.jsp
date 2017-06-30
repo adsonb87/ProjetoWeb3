@@ -25,8 +25,9 @@
 		
 		if(msgComando == 2){
 			bootbox.alert(msgAuxiliar,function(){
-				formCadUsuario.numCartao.value = numCartao;
-				formCadUsuario.action = "inicio";
+				formCadUsuario.usuCpf.value = cpf;
+				formCadUsuario.consCadastro.value= "true";
+				formCadUsuario.action = "solicitarCartao";
 				formCadUsuario.submit();
 			})
 		}
@@ -92,10 +93,7 @@
 		
 		//Validando EMAIL
 		var email = document.formCadUsuario.email.value;
-		if (email == "") {
-			bootbox.alert("Para continuar, informe o seu E-mail!",function(){})
-			return false;
-		} else {
+		if (email != "") {
 			var usuario = email.substring(0, email.indexOf("@"));
 			var dominio = email.substring(email.indexOf("@")+ 1, email.length);
 			if (!((usuario.length >=1) &&
@@ -249,7 +247,7 @@
 		return false; // do contrário nega
 	}
 	
-	function sem_acentoEnderecoo(e, args) {
+	function sem_acentoEndereco(e, args) {
 		if (document.all) { var evt = event.keyCode;} // caso seja IE
 		else { var evt = e.charCode; } // do contrário deve ser Mozilla
 		var valid_chars = 'abcdefghijlmnopqrstuvxzwykABCDEFGHIJLMNOPQRSTUVXZWYK0123456789 ' + args; // criando a lista de teclas permitidas
@@ -287,6 +285,7 @@
       <input type="hidden" name="cadastrar" value="fasle">
       <input type="hidden" name="atualCadastro" value="false">
       <input type="hidden" name="cadVincular" value="false">
+      <input type="hidden" name="consCadastro" value="false">
       <input type="hidden" name="usrId">
       <input type="hidden" name="usuCpf">
       <input type="hidden" name="numCartao" value="${ numCartao }">
@@ -317,7 +316,7 @@
 							<div class="input-group has-success">
 								<span class="input-group-addon" id="basic-addon1">Telefone:</span>
 								<input type="text" class="form-control" placeholder="DDD + Número" value="${ usuario.telefone }" aria-describedby="basic-addon1"
-								id="telefone" name="telefone" onkeypress="maskTelefone(this, maskTel);"  autocomplete="off" maxlength="15">
+								id="telefone" name="telefone" onkeypress="maskTelefone(this, maskTel);"  autocomplete="off" maxlength="13">
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -340,7 +339,7 @@
 							<div class="input-group has-success">
 								<span class="input-group-addon" id="basic-addon1">Logradouro:</span>
 								<input type="text" class="form-control" placeholder="Informe o seu Logradouro" value="${ usuario.endereco.logradouro }" aria-describedby="basic-addon1"
-								id="logradouro" name="logradouro" onkeyup="maiuscula(this)" onkeypress="return sem_acentoEnderecoo(event)" maxlength="100" autocomplete="off">
+								id="logradouro" name="logradouro" onkeyup="maiuscula(this)" onkeypress="return sem_acentoEndereco(event)" maxlength="100" autocomplete="off">
 							</div>
 						</div>
 					</div>
@@ -349,7 +348,7 @@
 							<div class="input-group has-success">
 								<span class="input-group-addon" id="basic-addon1">Bairro:</span>
 								<input type="text" class="form-control" placeholder="Informe o Bairro" value="${ usuario.endereco.bairro }" aria-describedby="basic-addon1"
-								id="bairro" name="bairro" onkeyup="maiuscula(this)" onkeypress="return sem_acentoEnderecoo(event)" maxlength="50" autocomplete="off">
+								id="bairro" name="bairro" onkeyup="maiuscula(this)" onkeypress="return sem_acentoEndereco(event)" maxlength="50" autocomplete="off">
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -372,12 +371,12 @@
 								<input type="text" class="form-control" placeholder="Informe a UF" value="${ usuario.endereco.uf }" aria-describedby="basic-addon1"
 								id="uf" name="uf" onkeyup="maiuscula(this)" onkeypress="return sem_acento(event)" maxlength="2" autocomplete="off">
 							</div>
-						</div>	
+						</div>
 						<div class="col-md-6">
 							<div class="input-group has-success">
 								<span class="input-group-addon" id="basic-addon1">Complemento:</span>
 								<input type="text" class="form-control" placeholder="Informe o Bairro" value="${ usuario.endereco.complemento }" aria-describedby="basic-addon1"
-								id="complemento" name="complemento" onkeyup="maiuscula(this)" onkeyup="maiuscula(this)" onkeypress="return sem_acentoEnderecoo(event)" maxlength="100" autocomplete="off">
+								id="complemento" name="complemento" onkeyup="maiuscula(this)" onkeyup="maiuscula(this)" onkeypress="return sem_acentoEndereco(event)" maxlength="100" autocomplete="off">
 							</div>
 						</div>
 					</div>
@@ -386,7 +385,7 @@
 							<div class="input-group has-success">
 								<span class="input-group-addon" id="basic-addon1">Número:</span>
 								<input type="text" class="form-control" placeholder="Informe o Bairro" value="${ usuario.endereco.numero }" aria-describedby="basic-addon1"
-								id="numero" name="numero" onkeypress="return sem_letra(event)" maxlength="10" autocomplete="off">
+								id="numero" name="numero" maxlength="8" onkeypress="return sem_letra(event)" autocomplete="off">
 							</div>
 						</div>
 					</div>

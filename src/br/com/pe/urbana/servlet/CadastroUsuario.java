@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.controller.UsuarioContoller;
-import br.com.pe.urbana.entidade.EntidadeEndereco;
+import br.com.pe.urbana.entidade.Endereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
@@ -64,7 +64,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 		UsuarioContoller controller = UsuarioContoller.getInstance();
 
 		EntidadeUsuario usuario = null;
-		EntidadeEndereco endereco = null;
+		Endereco endereco = null;
 		
 		String numCartao = request.getParameter("numCartao");
 	
@@ -80,7 +80,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 				String usuCpf = request.getParameter("usuCpf");
 				usuCpf = Util.unMaskCnpj(usuCpf);
 
-				usuario = controller.consultarUsuario(usuCpf);
+				//usuario = controller.consultarUsuario(usuCpf);
 				
 				if(usuario != null) {
 					request.setAttribute("usuario", usuario);
@@ -93,7 +93,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 			} else if(cadastrar) {
 				
 				usuario = new EntidadeUsuario();
-				endereco = new EntidadeEndereco();
+				endereco = new Endereco();
 				
 				String usrId = request.getParameter("usrId");
 				String nome = request.getParameter("nome");
@@ -117,7 +117,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 				endereco.setComplemento(complemento);
 				endereco.setNumero(numero);
 				
-				usuario.setUsrId(Integer.parseInt(usrId));
+				usuario.setUsrIdOrigem(Integer.parseInt(usrId));
 				usuario.setNome(nome);
 				usuario.setCpf(cpf);
 				usuario.setTelefone(telefone);
@@ -132,14 +132,18 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 					controller.atualizarUsuario(usuario);
 				}
 				
-				//Caso Usuário não possua cartão, direcione para outra página
-				if(numCartao != null) {
+				//Caso Usuário: (SIM)Cartão
+				if(numCartao != "") {
 					msgAuxiliar = "Cadastro Realizado com Sucesso!";
 					msgComando = "1";
 					request.setAttribute("usuCpf", cpf);
+					request.setAttribute("numCartao", numCartao);
+					
+				//Caso Usuário: (NÃO)Cartão
 				} else {
-					msgAuxiliar = "Dirija-se ao VEM";
+					msgAuxiliar = "Cadastro Realizado com Sucesso!";
 					msgComando = "2";
+					request.setAttribute("usuCpf", cpf);
 				}
 			
 			}
@@ -153,7 +157,6 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 			msgComando = "1";
 		}
 		
-		request.setAttribute("numCartao", numCartao);
 		request.setAttribute("msgAuxiliar", msgAuxiliar);
 		request.setAttribute("msgComando", msgComando);
 		

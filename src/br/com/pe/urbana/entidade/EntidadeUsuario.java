@@ -3,18 +3,26 @@ package br.com.pe.urbana.entidade;
 public class EntidadeUsuario {
 	
 	private int id;
-	
-	private int usrId;
-	
-	private String nome;
+		
+	private int usrIdOrigem;
 	
 	private String cpf;
+
+	private String nome;
+	
+	private String dataNascimento;
+	
+	private String nomeMae;
 	
 	private String telefone;
 	
 	private String email;
 	
-	private EntidadeEndereco endereco;
+	private EntidadeCartao cartao;
+	
+	private Endereco endereco;
+
+	private String regDate;
 
 	public int getId() {
 		return id;
@@ -24,20 +32,12 @@ public class EntidadeUsuario {
 		this.id = id;
 	}
 
-	public int getUsrId() {
-		return usrId;
+	public int getUsrIdOrigem() {
+		return usrIdOrigem;
 	}
 
-	public void setUsrId(int usrId) {
-		this.usrId = usrId;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setUsrIdOrigem(int usrIdOrigem) {
+		this.usrIdOrigem = usrIdOrigem;
 	}
 
 	public String getCpf() {
@@ -48,6 +48,30 @@ public class EntidadeUsuario {
 		this.cpf = cpf;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getNomeMae() {
+		return nomeMae;
+	}
+
+	public void setNomeMae(String nomeMae) {
+		this.nomeMae = nomeMae;
+	}
+
 	public String getTelefone() {
 		return telefone;
 	}
@@ -55,7 +79,7 @@ public class EntidadeUsuario {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -64,12 +88,28 @@ public class EntidadeUsuario {
 		this.email = email;
 	}
 
-	public EntidadeEndereco getEndereco() {
+	public EntidadeCartao getCartao() {
+		return cartao;
+	}
+
+	public void setCartao(EntidadeCartao cartao) {
+		this.cartao = cartao;
+	}
+
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(EntidadeEndereco endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 	
 }

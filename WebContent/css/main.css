@@ -67,10 +67,11 @@ form>.container{
     margin: 0 auto;
     margin-bottom: 10px;
 }
-.input-group{
+.input-group,
+.form-group{
 	width: 400px;
 	margin: 0 auto;
-	margin-top: 15px;
+	margin-top: 5px;
 }
 .table tr {
 	background-color: #329246;
@@ -304,7 +305,8 @@ form>.container{
 	.formConsulta{
 		margin-top: 20px;
 	}
-	.input-group{
+	.input-group,
+	.form-group{
 		width: 100%;
 	}
 	.dropdown-menu > li{
@@ -329,8 +331,8 @@ form>.container{
 		width: 100%;
 		top: 0;
 	}
-	.input-group .inputsLogin > span {width: 40%;}
-	.input-group .inputsLogin > input {width: 100%;}
+	.input-group .form-group .inputsLogin > span {width: 40%;}
+	.input-group .form-group .inputsLogin > input {width: 100%;}
 
 	.bootstrap-select > .dropdown-menu > ul{
 	    background-color: #fff;
@@ -353,7 +355,8 @@ form>.container{
 /* PARA DISPOSITIVOS NO MÍNIMO 769px DE LARGURA (desktop) */
 /* PARA MONITORES MENORES  */
 @media (max-width:800px)  {
-	.input-group {
+	.input-group,
+	.form-group {
     width: 100%;
 	}
 }

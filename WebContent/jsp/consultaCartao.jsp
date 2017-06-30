@@ -81,7 +81,7 @@
 		<div class="container">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h4>Passo 1 de 4 - Informe o número do Cartão</h4>
+					<h4>Informe o número do Cartão</h4>
 				</div>
 				<div class="panel-body">
 					<div class="row">

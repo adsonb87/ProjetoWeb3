@@ -15,16 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import br.com.pe.urbana.controller.CartaoContoller;
 import br.com.pe.urbana.controller.UsuarioContoller;
+import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
-@WebServlet("/consultaCPF")
-public class ConsultaCPF extends HttpServlet implements Servlet {
+@WebServlet("/consultaCadastro")
+public class ConsultaCadastro extends HttpServlet implements Servlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = Logger.getLogger(ConsultaCPF.class);
+	private static final Logger LOG = Logger.getLogger(ConsultaCadastro.class);
 	
 	static {
 		// Configura o Log4j com o arquivo do projeto
@@ -39,7 +41,7 @@ public class ConsultaCPF extends HttpServlet implements Servlet {
 		PropertyConfigurator.configure(props);
 	}
 	
-	public ConsultaCPF() {
+	public ConsultaCadastro() {
 		super();
 	}
 	
@@ -51,77 +53,69 @@ public class ConsultaCPF extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/inicio.jsp";
-		String msgComando = null;
+		String page = "jsp/consultaCadastro.jsp";
+		
+		String msgAuxCartao = null;
+		String msgAuxUsuario = null;
 		String msgAuxiliar = null;
+		String msgComando = null;
 				
-		boolean consultar = "true".equals(request.getParameter("consultar"));
+		boolean consCpf = "true".equals(request.getParameter("consCpf"));
 		boolean consCartao = "true".equals(request.getParameter("consCartao"));
-		boolean consultarCadastro = "true".equals(request.getParameter("consultarCadastro"));
+		boolean consCadastro = "true".equals(request.getParameter("consCadastro"));
 		
-		UsuarioContoller controller = UsuarioContoller.getInstance();
+		CartaoContoller ctrCartao = CartaoContoller.getInstance();
+		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 
+		EntidadeCartao cartao = null;
 		EntidadeUsuario usuario = null;
-		
-		String numCartao = request.getParameter("numCartao");
 		
 		try{
 			
-			if(consultar || consCartao || consultarCadastro) {
-				page = "jsp/consultaCPF.jsp";
-				request.setAttribute("numCartao", numCartao);
+			if(consCadastro || consCpf || consCartao) {
+				page = "jsp/consultaCadastro.jsp";
 			}
-		
-			if(consultar) {
+			
+			if (consCartao) {
+				String crdSnr = request.getParameter("numeroCartao");
+				cartao = ctrCartao.consultarCartao(Integer.parseInt(crdSnr));
+				
+				if(cartao == null) {
+					msgAuxCartao = "Não encontrado";
+					msgComando = "1";	
+				} else if(cartao.getCpf() != null) {
+					msgAuxCartao = "Já vinculado a um usuário";
+					msgComando = "1";
+				} else if(cartao.getMotivoBloq() != null) {
+					msgAuxCartao = "Em Lista de restrição";
+					msgComando = "1";
+				} else {
+					//msgAuxCartao = "OK!";
+				}					
+			}
+			
+			if(consCpf) {
 				
 				String cpf = request.getParameter("cpf");
 				cpf = Util.unMaskCnpj(cpf);
-				//usuario = controller.consultarUsuario(cpf);
-				
-				//Caso o usuário: (SIM)Cadastro (SIM)Catão
-				if(usuario != null && numCartao != "") {
-					
-					msgAuxiliar = "Você já possui cadastro!";
+				boolean flag = ctrUsuario.consultarUsuario(cpf);
+				if(flag) {
+					msgAuxUsuario = "Já possui Vem Comum";
 					msgComando = "1";
-		
-					request.setAttribute("usuCpf", usuario.getCpf());
-					request.setAttribute("numCartao", numCartao);
-					
-				//Caso o usuário: (NÃO)Cadastro (SIM)Catão
-				}else if(usuario == null  && numCartao != "") {
-					
-					msgAuxiliar = "Você ainda possui cadastro!";
-					msgComando = "2";
-		
-					request.setAttribute("usuCpf", cpf);
-					request.setAttribute("numCartao", numCartao);
-					
-				//Caso o usuário: (SIM)Cadastro (NÂO)Catão
-				} else if (usuario != null){
-					
-					msgAuxiliar = "Você já possui cadastro!";
-					msgComando = "3";
-		
-					request.setAttribute("usuCpf", usuario.getCpf());
-					
-				//Caso o usuário: (NÂO)Cadastro (NÂO)Catão	
 				} else {
-					
-					msgAuxiliar = "Você ainda possui cadastro!";
-					msgComando = "4";
-					
-					request.setAttribute("usuCpf", cpf);
-					
+					//msgAuxUsuario = "OK!";
 				}
-				
+						
 			}
 			
 		} catch (Exception e) {
 			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
-			msgComando = "1";
+			msgComando = "2";
 		}
 		
+		request.setAttribute("msgAuxCartao", msgAuxCartao);	
+		request.setAttribute("msgAuxUsuario", msgAuxUsuario);
 		request.setAttribute("msgAuxiliar", msgAuxiliar);
 		request.setAttribute("msgComando", msgComando);
 		

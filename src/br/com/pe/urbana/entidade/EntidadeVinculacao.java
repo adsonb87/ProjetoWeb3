@@ -9,6 +9,8 @@ public class EntidadeVinculacao {
 	private int usrId;
 	
 	private EntidadeCartao cartao;
+	
+	private String regDate;
 
 	public int getId() {
 		return id;
@@ -42,4 +44,12 @@ public class EntidadeVinculacao {
 		this.cartao = cartao;
 	}
 
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	
 }

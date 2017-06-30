@@ -3,8 +3,8 @@
 <script language="JavaScript" type="text/JavaScript" charset="utf-8">
 
 	function navegar(acao) {
-		formVinculacao.action = acao;
-		formVinculacao.submit();
+		formSolicitacao.action = acao;
+		formSolicitacao.submit();
 	}
 
 	function verificar() {
@@ -13,24 +13,23 @@
 
 		if(msgComando == 1) {
 			bootbox.alert(msgAuxiliar,function(){
-				formVinculacao.action = "inicio";
-				formVinculacao.submit();
+				formSolicitacao.action = "inicio";
+				formSolicitacao.submit();
 			})
 		}
 	}
 
-	function vincularCartao() {
-		formVinculacao.numCartao.value = "${ numCartao }";
-		formVinculacao.usrId.value = "${ cartao.usuario.usrId }";
-		formVinculacao.idUsuario.value = "${ cartao.usuario.id }";
-		formVinculacao.vincular.value = "true";
-		formVinculacao.action = "vinculacao";
-		formVinculacao.submit();	
+	function solicitarCartao() {
+		formSolicitacao.usrId.value = "${ usuario.usrId }";
+		formSolicitacao.idUsuario.value = "${ usuario.id }";
+		formSolicitacao.solicitar.value = "true";
+		formSolicitacao.action = "solicitarCartao";
+		formSolicitacao.submit();	
 	}
 	
 	function cancelar() {
-		formVinculacao.action = "inicio";
-		formVinculacao.submit();
+		formSolicitacao.action = "inicio";
+		formSolicitacao.submit();
 	}
 
 	function sem_letra(e, args) {
@@ -49,22 +48,21 @@
 </script>
 </head>
 <body onload="verificar()">
-	<form name=formVinculacao method="POST" action="formVinculacao" onSubmit="return false;">
-      <input type="hidden" name="vincular" value="false">
-      <input type="hidden" name="numCartao">
+	<form name=formSolicitacao method="POST" action="formSolicitacao" onSubmit="return false;">
+      <input type="hidden" name="solicitar" value="false">
       <input type="hidden" name="usrId">
       <input type="hidden" name="idUsuario">
 		<div class="container">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h4>Confirmando os Dados</h4>
+					<h4>Solicitar Cartão</h4>
 				</div>
 				<div class="panel-body">
 					<div class="row">
        					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
    							<div class="panel panel-success">
 			            		<div class="panel-heading">
-			              			<h3 class="panel-title">${ numCartao }</h3>
+			              			<h3 class="panel-title">${ usuario.nome }</h3>
 			            		</div>
 			            		<div class="panel-body">
 			              			<div class="row">
@@ -74,79 +72,59 @@
 							                <div class=" col-md-9 col-lg-9 "> 
 							                	<table class="table table-user-information">
 							                    	<tbody>
-							                    		<tr>
-									                        <td>Nome:</td>
-									                        <td>
-									                        	<p name="nome" value="${ cartao.usuario.nome }">${ cartao.usuario.nome }</p>
-									                        </td>
-								                      	</tr>
 														<tr>
 									                    	<td>CPF:</td>
 									                        <td>
-									                        	<p name="cpf" value="${ cartao.usuario.cpf }">${ cartao.usuario.cpf }</p>
+									                        	${ usuario.cpf }
 									                        </td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Telefone:</td>
 								                      		<td>
-																<p name=telefone value="${ cartao.usuario.telefone }">
-																	<c:if test="${empty cartao.usuario.telefone}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.telefone }">${ cartao.usuario.telefone }</c:if>
-																</p>
+																<c:if test="${empty usuario.telefone}">Não Informado</c:if>
+																<c:if test="${not empty usuario.telefone }">${ usuario.telefone }</c:if>
 								                      		</td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Email:</td>
 								                      		<td>
-																<p name="email" value="${ cartao.usuario.email }">
-																	<c:if test="${empty cartao.usuario.email}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.email }">${ cartao.usuario.email }</c:if>
-																</p>	
+																<c:if test="${empty usuario.email}">Não Informado</c:if>
+																<c:if test="${not empty usuario.email }">${ usuario.email }</c:if>
 															</td>
 								                      	</tr>
 								                      	<tr>
 									                    	<td>Rua:</td>
 									                        <td>
-									                        	<p name="logradouro" value="${ cartao.usuario.endereco.logradouro }">
-									                        		<c:if test="${empty cartao.usuario.endereco.logradouro}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.logradouro }">${ cartao.usuario.endereco.logradouro }</c:if>
-									                        	</p>
+									                        	<c:if test="${empty usuario.endereco.logradouro}">Não Informado</c:if>
+																<c:if test="${not empty usuario.endereco.logradouro }">${ usuario.endereco.logradouro }</c:if>
 									                        </td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Número:</td>
 								                      		<td>								                      			
-								                      			<p name="numero" value="${ cartao.usuario.endereco.numero }">
-								                      				<c:if test="${empty cartao.usuario.endereco.numero}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.numero }">${ cartao.usuario.endereco.numero }</c:if>
-								                      			</p>
+								                      			<c:if test="${empty usuario.endereco.numero}">Não Informado</c:if>
+																<c:if test="${not empty usuario.endereco.numero }">${ usuario.endereco.numero }</c:if>
 								                      		</td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Cidade:</td>
 								                      		<td>								                      			
-								                      			<p name="cidade" value="${ cartao.usuario.endereco.cidade }">
-								                      				<c:if test="${empty cartao.usuario.endereco.cidade}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.cidade }">${ cartao.usuario.endereco.cidade }</c:if>
-								                      			</p>
+								                      			<c:if test="${empty usuario.endereco.cidade}">Não Informado</c:if>
+																<c:if test="${not empty usuario.endereco.cidade }">${ usuario.endereco.cidade }</c:if>
 								                      		</td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>UF:</td>
 								                      		<td>								                      			
-								                      			<p name="uf" value="${ cartao.usuario.endereco.uf }">
-								                      				<c:if test="${empty cartao.usuario.endereco.uf}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.uf }">${ cartao.usuario.endereco.uf }</c:if>
-								                      			</p>
+								                      			<c:if test="${empty usuario.endereco.uf}">Não Informado</c:if>
+																<c:if test="${not empty usuario.endereco.uf }">${ usuario.endereco.uf }</c:if>
 								                      		</td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Complemento:</td>
 								                      		<td>								                      			
-								                      			<p name="complemento" value="${ cartao.usuario.endereco.complemento }">
-								                      				<c:if test="${empty cartao.usuario.endereco.complemento}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.complemento }">${ cartao.usuario.endereco.complemento }</c:if>
-								                      			</p>
+								                      			<c:if test="${empty usuario.endereco.complemento}">Não Informado</c:if>
+																<c:if test="${not empty usuario.endereco.complemento }">${ usuario.endereco.complemento }</c:if>
 								                      		</td>
 								                      	</tr>
 													</tbody>
@@ -155,7 +133,7 @@
 										</div>
 									</div>
 								<div class="panel-footer" style="text-align: center;">
-									<input class="btn btn-success" type="button" onclick="javascript:vincularCartao();" readonly="readonly" value='CONFIRMAR' name="cmdConfirmar	" >
+									<input class="btn btn-success" type="button" onclick="javascript:solicitarCartao();" readonly="readonly" value='SOLICITAR' name="cmdConfirmar	" >
 									<input class="btn btn-success" type="button" onclick="javascript:cancelar();" readonly="readonly" id="canc" value='CANCELAR' name="cmdCancelar"/>
 			                    </div>
 			          		</div>

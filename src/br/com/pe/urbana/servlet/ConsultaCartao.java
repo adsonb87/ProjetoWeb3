@@ -62,62 +62,63 @@ public class ConsultaCartao extends HttpServlet implements Servlet {
 
 		EntidadeCartao cartao = null;
 		
-		try{
-			
-			if(consultar || consCartao) {
-				page = "jsp/consultaCartao.jsp";
-			}
-		
-			if(consultar) {
-				cartao = new EntidadeCartao();
-				
-				String numCartao = request.getParameter("numero");
-				
-				String[] num = Util.getCartao(numCartao);
-						
-				cartao.setProjeto(Integer.parseInt(num[0]));
-				cartao.setDesign(Integer.parseInt(num[1]));
-				cartao.setNumeroExterno(Integer.parseInt(num[2]));
-				
-				EntidadeCartao card = null;
-				
-				if(cartao.getProjeto() != 90 || cartao.getDesign() != 06) {
-					
-					msgAuxiliar = "Cartão inválido";
-					msgComando = "1";
-					
-				} else {
-					
-					boolean flag = controller.validarCartao(cartao);
-					if(flag) {
-						
-						card = controller.consultarCartao(cartao);
-						
-						if(card != null) {
-							
-							msgAuxiliar = "Cartão já está vinculado a um CPF!";
-							msgComando = "1";
-						
-						} else {
-							
-							msgAuxiliar = "Cartão ainda não está vinculado!";
-							msgComando = "2";
-							request.setAttribute("numCartao", numCartao);	
-						}
-						
-					} else {
-						
-						msgAuxiliar = "Cartão não encontrado, Tente novamente!";
-						msgComando = "1";
-					}
-				}
-			}
-			
-		} catch (Exception e) {
-			
-			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
-			msgComando = "1";
-		}
+//		try{
+//			
+//			if(consultar || consCartao) {
+//				page = "jsp/consultaCartao.jsp";
+//			}
+//		
+//			if(consultar) {
+//				cartao = new EntidadeCartao();
+//				
+//				String numCartao = request.getParameter("numero");
+//				
+//				String[] num = Util.getCartao(numCartao);
+//						
+//				cartao.setProjeto(Integer.parseInt(num[0]));
+//				cartao.setDesign(Integer.parseInt(num[1]));
+//				cartao.setNumeroExterno(Integer.parseInt(num[2]));
+//				
+//				EntidadeCartao card = null;
+//				
+//				if(cartao.getProjeto() != 90 || cartao.getDesign() != 06) {
+//					
+//					msgAuxiliar = "Cartão inválido";
+//					msgComando = "1";
+//					
+//				} else {
+//					
+//					boolean flag = controller.validarCartao(cartao);
+//					if(flag) {
+//						
+//						card = controller.consultarCartao(cartao);
+//						
+//						if(card != null) {
+//							
+//							msgAuxiliar = "Cartão já está vinculado a um CPF!";
+//							msgComando = "1";
+//						
+//						} else {
+//							
+//							msgAuxiliar = "Cartão ainda não está vinculado!";
+//							msgComando = "2";
+//							request.setAttribute("numCartao", numCartao);	
+//						}
+//						
+//					} else {
+//						
+//						msgAuxiliar = "Cartão não encontrado, Tente novamente!";
+//						msgComando = "1";
+//					}
+//				}
+//				
+//			}
+//			
+//		} catch (Exception e) {
+//			
+//			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
+//			msgComando = "1";
+//		}
 		
 		request.setAttribute("msgAuxiliar", msgAuxiliar);
 		request.setAttribute("msgComando", msgComando);

@@ -1,6 +1,6 @@
 package br.com.pe.urbana.entidade;
 
-public class EntidadeEndereco {
+public class Endereco {
 
 	private String cep;
 	
@@ -17,7 +17,7 @@ public class EntidadeEndereco {
 	private String estado;
 	
 	private String complemento;
-
+	
 	public String getCep() {
 		return cep;
 	}

@@ -17,17 +17,15 @@ import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.controller.CartaoContoller;
 import br.com.pe.urbana.controller.UsuarioContoller;
-import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
-import br.com.pe.urbana.entidade.EntidadeVinculacao;
 import br.com.pe.urbana.util.Util;
 
-@WebServlet("/vinculacao")
-public class Vinculacao extends HttpServlet implements Servlet {
+@WebServlet("/solicitarCartao")
+public class SolicitarCartao extends HttpServlet implements Servlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = Logger.getLogger(Vinculacao.class);
+	private static final Logger LOG = Logger.getLogger(SolicitarCartao.class);
 	
 	static {
 		// Configura o Log4j com o arquivo do projeto
@@ -42,7 +40,7 @@ public class Vinculacao extends HttpServlet implements Servlet {
 		PropertyConfigurator.configure(props);
 	}
 	
-	public Vinculacao() {
+	public SolicitarCartao() {
 		super();
 	}
 	
@@ -54,32 +52,28 @@ public class Vinculacao extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/vinculacao.jsp";
+		String page = "jsp/solicitarCartao.jsp";
 		String msgComando = null;
 		String msgAuxiliar = null;
 				
-		boolean vincular = "true".equals(request.getParameter("vincular"));
-		boolean cadVincular = "true".equals(request.getParameter("cadVincular"));
+		boolean consCadastro = "true".equals(request.getParameter("consCadastro"));
+		boolean solicitar = "true".equals(request.getParameter("solicitar"));
 		
 		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 		CartaoContoller ctrCartao = CartaoContoller.getInstance();
 		
 		EntidadeUsuario usuario = null;
-		EntidadeCartao cartao = null;
-		EntidadeVinculacao vinculacao = null;
 		
 		String numCartao = request.getParameter("numCartao");
 		
 		try{
 			
-			if(vincular || cadVincular) {
-				page = "jsp/vinculacao.jsp";
+			if(consCadastro || solicitar) {
+				page = "jsp/solicitarCartao.jsp";
 				request.setAttribute("numCartao", numCartao);
 			}
 			
-			if(cadVincular) {
-				
-				cartao = new EntidadeCartao();
+			if(consCadastro) {
 				
 				String cpf = request.getParameter("usuCpf");
 				cpf = Util.unMaskCnpj(cpf);
@@ -90,36 +84,23 @@ public class Vinculacao extends HttpServlet implements Servlet {
 					usuario = ctrUsuario.consultarNovoUsuario(cpf);
 				}
 				
-				String[] num = Util.getCartao(numCartao);
-//				cartao.setProjeto(Integer.parseInt(num[0]));
-//				cartao.setDesign(Integer.parseInt(num[1]));
-//				cartao.setNumeroExterno(Integer.parseInt(num[2]));
-				
-				request.setAttribute("numCartao", numCartao);
-				request.setAttribute("cartao", cartao);
+				request.setAttribute("usuario", usuario);
 				
 			}
 		
-			if(vincular) {
+			if(solicitar) {
 				
-				cartao = new EntidadeCartao();
-				vinculacao = new EntidadeVinculacao();
+				usuario = new EntidadeUsuario();
 				
-				String usrId = request.getParameter("usrId");
 				String idUsuario = request.getParameter("idUsuario");
+				String usrId = request.getParameter("usrId");
 				
-				String[] num = Util.getCartao(numCartao);		
-				//cartao.setProjeto(Integer.parseInt(num[0]));
-				//cartao.setDesign(Integer.parseInt(num[1]));
-				//cartao.setNumeroExterno(Integer.parseInt(num[2]));
+				usuario.setId(Integer.parseInt(idUsuario));
+				usuario.setUsrIdOrigem(Integer.parseInt(usrId));
 				
-				vinculacao.setIdUsuario(Integer.parseInt(idUsuario));
-				vinculacao.setUsrId(Integer.parseInt(usrId));
-				vinculacao.setCartao(cartao);
+				//ctrCartao.solicitarCartao(usuario);
 				
-				//ctrCartao.vincularCartaoUsuario(vinculacao);
-				
-				msgAuxiliar = "Cartão cadastrado com sucesso!";
+				msgAuxiliar = "Cartão solicitado com sucesso!";
 				msgComando = "1";
 				
 			}

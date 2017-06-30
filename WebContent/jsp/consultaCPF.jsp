@@ -13,30 +13,46 @@
 		var cpf = "${usuCpf}";
 		var numCartao = "${numCartao}";
 
-		if(msgComando == 1) {
-			bootbox.alert(msgAuxiliar,function(){
-				formConsultarCPF.usuCpf.value = cpf;
-				formConsultarCPF.numCartao.value = numCartao;
-				formConsultarCPF.cadVincular.value= "true";
-				formConsultarCPF.action = "vinculacao";
-				formConsultarCPF.submit();
-			})
-		}
-		
-		if(msgComando == 2) {
-			bootbox.alert(msgAuxiliar,function(){})
-		}
-		
-		if(msgComando == 3){
-			bootbox.alert(msgAuxiliar,function(){
-				formConsultarCPF.usuCpf.value = cpf;
-				formConsultarCPF.numCartao.value = numCartao;
-				formConsultarCPF.consCadastro.value= "true";
-				formConsultarCPF.action = "cadastroUsuario";
-				formConsultarCPF.submit();
-			})
+		switch(msgComando) {
+			case "1":
+				bootbox.alert(msgAuxiliar,function(){
+					formConsultarCPF.usuCpf.value = cpf;
+					formConsultarCPF.numCartao.value = numCartao;
+					formConsultarCPF.cadVincular.value= "true";
+					formConsultarCPF.action = "vinculacao";
+					formConsultarCPF.submit();
+				})
+				break;
+				
+			case "2":
+				bootbox.alert(msgAuxiliar,function(){
+					formConsultarCPF.usuCpf.value = cpf;
+					formConsultarCPF.numCartao.value = numCartao;
+					formConsultarCPF.consCadastro.value= "true";
+					formConsultarCPF.action = "cadastroUsuario";
+					formConsultarCPF.submit();
+				})
+				break;
+				
+			case "3":
+				bootbox.alert(msgAuxiliar,function(){
+					formConsultarCPF.usuCpf.value = cpf;
+					formConsultarCPF.consCadastro.value= "true";
+					formConsultarCPF.action = "solicitarCartao";
+					formConsultarCPF.submit();
+				})
+				break;
+				
+			case "4":
+				bootbox.alert(msgAuxiliar,function(){
+					formConsultarCPF.usuCpf.value = cpf;
+					formConsultarCPF.consCadastro.value= "true";
+					formConsultarCPF.action = "cadastroUsuario";
+					formConsultarCPF.submit();
+				})						
 		}
 	}
+
 
 	function validarCampos() {
 		if (document.formConsultarCPF.cpf.value == "") {

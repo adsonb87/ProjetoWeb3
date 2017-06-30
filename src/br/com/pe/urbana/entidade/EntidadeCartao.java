@@ -2,44 +2,84 @@ package br.com.pe.urbana.entidade;
 
 public class EntidadeCartao {
 	
-	private int projeto;
+	private int id;
 	
-	private int design;
+	private int usrId;
 	
-	private int numeroExterno;
+	private String viaCartao;
+
+	private String motivoBloq;
 	
-	private EntidadeUsuario usuario;
+	private String cpf;
+	
+	private int cdId;
+	
+	private int crdSnr;
 
-	public int getProjeto() {
-		return projeto;
+	private int crdSnrAtual;
+
+	public int getId() {
+		return id;
 	}
 
-	public void setProjeto(int projeto) {
-		this.projeto = projeto;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getDesign() {
-		return design;
+	public int getUsrId() {
+		return usrId;
 	}
 
-	public void setDesign(int tipo) {
-		this.design = tipo;
+	public void setUsrId(int usrId) {
+		this.usrId = usrId;
 	}
 
-	public int getNumeroExterno() {
-		return numeroExterno;
+	public String getViaCartao() {
+		return viaCartao;
 	}
 
-	public void setNumeroExterno(int numeroExterno) {
-		this.numeroExterno = numeroExterno;
+	public void setViaCartao(String viaCartao) {
+		this.viaCartao = viaCartao;
 	}
 
-	public EntidadeUsuario getUsuario() {
-		return usuario;
+	public String getMotivoBloq() {
+		return motivoBloq;
 	}
 
-	public void setUsuario(EntidadeUsuario usuario) {
-		this.usuario = usuario;
+	public void setMotivoBloq(String motivoBloq) {
+		this.motivoBloq = motivoBloq;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public int getCdId() {
+		return cdId;
+	}
+
+	public void setCdId(int cdId) {
+		this.cdId = cdId;
+	}
+
+	public int getCrdSnr() {
+		return crdSnr;
+	}
+
+	public void setCrdSnr(int crdSnr) {
+		this.crdSnr = crdSnr;
+	}
+
+	public int getCrdSnrAtual() {
+		return crdSnrAtual;
+	}
+
+	public void setCrdSnrAtual(int crdSnrAtual) {
+		this.crdSnrAtual = crdSnrAtual;
 	}
 	
 }
