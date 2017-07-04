@@ -13,7 +13,7 @@
 		var cpf = "${usuCpf}";
 		var crdSnr = "${crdSnr}";
 		var numCartao = "${numCartao}";
-	
+
 		if(msgComando == 1){
 			bootbox.alert(msgAuxiliar,function(){
 				formCadUsuario.usuCpf.value = cpf;
@@ -24,7 +24,7 @@
 				formCadUsuario.submit();
 			})
 		}
-		
+
 		if(msgComando == 2){
 			$('#realizarCadastro').val('ATUALIZAR');
 			$('#cpf').attr("disabled", true);
@@ -39,27 +39,27 @@
 				formCadUsuario.submit();
 			})
 		}
-		
+
 	}
-	
+
 	function validarEmail(email) {
 		usuario = email.value.substring(0, email.value.indexOf("@"));
 		dominio = email.value.substring(email.value.indexOf("@")+ 1, email.value.length);
 		if (!(usuario.length >=1) &&
-		    (dominio.length >=3) && 
-		    (usuario.search("@")==-1) && 
+		    (dominio.length >=3) &&
+		    (usuario.search("@")==-1) &&
 		    (dominio.search("@")==-1) &&
-		    (usuario.search(" ")==-1) && 
+		    (usuario.search(" ")==-1) &&
 		    (dominio.search(" ")==-1) &&
-		    (dominio.search(".")!=-1) &&      
-		    (dominio.indexOf(".") >=1)&& 
+		    (dominio.search(".")!=-1) &&
+		    (dominio.indexOf(".") >=1)&&
 		    (dominio.lastIndexOf(".") < dominio.length - 1)) {
 			bootbox.alert("Para continuar, informe um Email válido",function(){})
 		}
 	}
 
 	function validarCampos() {
-		
+
 		//Validando NOME
 		var nome = document.formCadUsuario.nome.value.trim();
 		if (nome == "") {
@@ -72,7 +72,7 @@
 				return false;
 			}
 		}
-		
+
 		//Validando CPF
 		if (document.formCadUsuario.cpf.value != "") {
 			var cpf_Int = parseInt(cpf.value);
@@ -85,7 +85,7 @@
 			bootbox.alert("Para continuar, informe o seu CPF!",function(){})
 			return false;
 		}
-		
+
 		//Validando TELEFONE
 		if (document.formCadUsuario.telefone.value == "")  {
 			bootbox.alert("Para continuar, informe o seu Telefone!",function(){})
@@ -98,25 +98,26 @@
 				return false;
 			}
 		}
-		
+
 		//Validando EMAIL
 		var email = document.formCadUsuario.email.value;
 		if (email != "") {
 			var usuario = email.substring(0, email.indexOf("@"));
 			var dominio = email.substring(email.indexOf("@")+ 1, email.length);
 			if (!((usuario.length >=1) &&
-			    (dominio.length >= 3) && 
-			    (usuario.search("@") == -1) && 
+			    (dominio.length >= 3) &&
+			    (usuario.search("@") == -1) &&
 			    (dominio.search("@") == -1) &&
-			    (usuario.search(" ") == -1) && 
+			    (usuario.search(" ") == -1) &&
 			    (dominio.search(" ") == -1) &&
-			    (dominio.search(".") != -1) &&      
-			    (dominio.indexOf(".") >= 1)&& 
+			    (dominio.search(".") != -1) &&
+			    (dominio.indexOf(".") >= 1)&&
 			    (dominio.lastIndexOf(".") < dominio.length - 1))) {
 				bootbox.alert("Para continuar, informe um Email válido",function(){})
 				return false;
 			}
 		}		
+
 		return true;
 	}
 
@@ -134,12 +135,12 @@
 			formCadUsuario.submit();
 		}
 	}
-	
+
 	function limparCampos() {
 		$('#nome').val('');
 		$('#telefone').val('');
 	}
-	
+
 	function goBack() {
 		formCadUsuario.action = "consultaCPF";
 		formCadUsuario.submit();
@@ -150,7 +151,7 @@
 		else { var evt = e.charCode; } // do contrário deve ser Mozilla
 		var valid_chars = 'abcdefghijlmnopqrstuvxzwykABCDEFGHIJLMNOPQRSTUVXZWYK ' + args; // criando a lista de teclas permitidas
 		var chr = String.fromCharCode(evt); // pegando a tecla digitada
-		if (valid_chars.indexOf(chr) > -1) { return true; } 
+		if (valid_chars.indexOf(chr) > -1) { return true; }
 		// se a tecla estiver na lista de permissão permite-a
 		// para permitir teclas como <BACKSPACE> adicionamos uma permissão para
 		// códigos de tecla menores que 09 por exemplo (geralmente uso menores que 20)
@@ -163,27 +164,27 @@
 		else { var evt = e.charCode; } // do contrário deve ser Mozilla
 		var valid_chars = 'abcdefghijlmnopqrstuvxzwykABCDEFGHIJLMNOPQRSTUVXZWYK.@0123456789_-' + args; // criando a lista de teclas permitidas
 		var chr = String.fromCharCode(evt); // pegando a tecla digitada
-		if (valid_chars.indexOf(chr) > -1) { return true; } 
+		if (valid_chars.indexOf(chr) > -1) { return true; }
 		// se a tecla estiver na lista de permissão permite-a
 		// para permitir teclas como <BACKSPACE> adicionamos uma permissão para
 		// códigos de tecla menores que 09 por exemplo (geralmente uso menores que 20)
 		if (valid_chars.indexOf(chr) > -1 || evt < 9) { return true; } // se a tecla estiver na lista de permissão permite-a
 		return false; // do contrário nega
 	}
-	
+
 	function sem_letra(e, args) {
 		if (document.all) { var evt = event.keyCode;} // caso seja IE
 		else { var evt = e.charCode; } // do contrário deve ser Mozilla
 		var valid_chars = '0123456789() ' + args; // criando a lista de teclas permitidas
 		var chr = String.fromCharCode(evt); // pegando a tecla digitada
-		if (valid_chars.indexOf(chr) > -1) { return true; } 
+		if (valid_chars.indexOf(chr) > -1) { return true; }
 		// se a tecla estiver na lista de permissão permite-a
 		// para permitir teclas como <BACKSPACE> adicionamos uma permissão para
 		// códigos de tecla menores que 09 por exemplo (geralmente uso menores que 20)
 		if (valid_chars.indexOf(chr) > -1 || evt < 9) { return true; } // se a tecla estiver na lista de permissão permite-a
 		return false; // do contrário nega
 	}
-	
+
 	function maiuscula(z) {
 		v = z.value.toUpperCase();
 		z.value = v;
@@ -255,7 +256,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer" style="text-align: center;">
+				<div class="panel-footer btAcoes" style="text-align: center;">
 					<input class="btn btn-success" type="submit" onclick="javascript:cadastrarUsuario();" readonly="readonly" id="realizarCadastro" value='CADASTRAR' name="cmdCadastrar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>

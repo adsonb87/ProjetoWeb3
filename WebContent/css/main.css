@@ -333,6 +333,12 @@ form>.container{
 	.bootstrap-select > .dropdown-menu > ul{
 	    background-color: #fff;
 	}
+	.container .jumbotron, .container-fluid .jumbotron {
+		padding: 0;
+	}
+	.btAcoes {
+		padding: 8px;
+	}
 }
 /* PARA DISPOSITIVOS  ATÃ‰ 768px DE LARGURA (mobile) */
 

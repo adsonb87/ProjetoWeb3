@@ -35,7 +35,7 @@
 		formVinculacao.action = "cadastroUsuario";
 		formVinculacao.submit();
 	}
-	
+
 	function cancelar() {
 		formVinculacao.action = "inicio";
 		formVinculacao.submit();
@@ -89,10 +89,10 @@
 			            		</div>
 			            		<div class="panel-body">
 			              			<div class="row">
-			                			<div class="col-md-3 col-lg-3 " align="center"> 
+			                			<div class="col-md-3 col-lg-3 " align="center">
 			                				<img src="imagens/comum-avatar.png" alt="img01" class="img-responsive">
-			                			</div>	
-							                <div class=" col-md-9 col-lg-9 "> 
+			                			</div>
+							                <div class=" col-md-9 col-lg-9 ">
 							                	<table class="table table-user-information">
 							                    	<tbody>
 							                    		<tr>
@@ -126,7 +126,7 @@
 															</td>
 								                      	</tr>
 													</tbody>
-							                  	</table>	
+							                  	</table>
 							                </div>
 										</div>
 									</div>
@@ -137,7 +137,7 @@
 		                        		<i class="glyphicon glyphicon-edit"></i></a>
 		                           	<a onclick="return cancelar();" data-original-title="Cancelar" data-toggle="tooltip" type="button" class="btn btn-danger">
 		                           		<i class="glyphicon glyphicon-remove"></i></a>
-			                    </div>
+		                    	</div>
 			          		</div>
 			        	</div>
 			    	</div>

@@ -23,7 +23,7 @@
 					formConsultarCPF.submit();
 				})
 				break;
-				
+
 			case "2":
 				bootbox.alert(msgAuxiliar,function(){
 					formConsultarCPF.usuCpf.value = cpf;
@@ -33,7 +33,7 @@
 					formConsultarCPF.submit();
 				})
 				break;
-				
+
 			case "3":
 				bootbox.alert(msgAuxiliar,function(){
 					formConsultarCPF.usuCpf.value = cpf;
@@ -42,14 +42,14 @@
 					formConsultarCPF.submit();
 				})
 				break;
-				
+
 			case "4":
 				bootbox.alert(msgAuxiliar,function(){
 					formConsultarCPF.usuCpf.value = cpf;
 					formConsultarCPF.consCadastro.value= "true";
 					formConsultarCPF.action = "cadastroUsuario";
 					formConsultarCPF.submit();
-				})						
+				})
 		}
 	}
 
@@ -88,13 +88,13 @@
 			formConsultarCPF.submit();
 		}
 	}
-	
+
 	function goBack() {
 		formConsultarCPF.consCartao.value = "true";
 		formConsultarCPF.action = "consultaCartao";
 		formConsultarCPF.submit();
 	}
-	
+
 	function goBackInicio() {
 		formConsultarCPF.action = "inicio";
 		formConsultarCPF.submit();
@@ -143,7 +143,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer" style="text-align: center;">
+				<div class="panel-footer btAcoes" style="text-align: center;">
 					<input class="btn btn-success" type="submit" onclick="javascript:consultarUsuario();" readonly="readonly" value='CONTINUAR' name="cmdContinuar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>

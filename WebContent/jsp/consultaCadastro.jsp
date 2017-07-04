@@ -19,7 +19,7 @@
 		if(msgComando == 1) {
 			$('#modalConsulta').modal('show');
 		}
-		
+
 		if(msgComando == 2) {
 			formConsCadastro.cadVincular.value = "true";
 			formConsCadastro.action = "vinculacao";
@@ -48,7 +48,7 @@
 			bootbox.alert("Para continuar, informe o Número do seu Cartão",function(){})
 			return false;
 		}
-		
+
 		if (document.formConsCadastro.cpf.value == "") {
 			bootbox.alert("Para realizar a consulta é obrigatório informar: o CPF",function(){})
 			return false;
@@ -79,10 +79,10 @@
 			formConsCadastro.consCartao.value = "true";
 			formConsCadastro.consCpf.value = "true";
 			formConsCadastro.action = "consultaCadastro";
-			formConsCadastro.submit();	
+			formConsCadastro.submit();
 		}
 	}
-	
+
 	function goBack() {
 		formConsCadastro.action = "inicio";
 		formConsCadastro.submit();
@@ -125,7 +125,7 @@
 								<div class="input-group">
 									<div class="input-group-addon">90.06</div>
 							    <input type="text" class="form-control" id="numeroCartao" name="numeroCartao">
-						      	</div>							  
+						      	</div>
 							</div>
 	            		</div>
 						<div class="col-md-12">
@@ -136,7 +136,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer" style="text-align: center;">
+				<div class="panel-footer btAcoes" style="text-align: center;">
 					<input class="btn btn-success" type="button" onclick="javascript:consultarCadastro();" readonly="readonly" value='CONTINUAR' name="cmdContinuar" >
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>
@@ -167,7 +167,7 @@
 				    </div>
 				  </div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</form>
 	<script type="text/javascript">
