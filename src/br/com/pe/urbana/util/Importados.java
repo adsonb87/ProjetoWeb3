@@ -15,7 +15,7 @@ public class Importados {
 		
 		try {
 			recebidos = FileUtils.readLines(new File("C:/Users/andres/Desktop/Arquivos/recebidos.txt"));
-			cadastrados = FileUtils.readLines(new File("C:/Users/andres/Desktop/Arquivos/cadastrados.txt"));
+			cadastrados = FileUtils.readLines(new File("C:/Users/andres/Desktop/Arquivos/importados.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -24,7 +24,7 @@ public class Importados {
 		java.util.Collections.sort(cadastrados);
 		
 		System.out.println("Recebidos: " + recebidos.size());
-		System.out.println("Cadastrados: " + cadastrados.size());
+		System.out.println("Importados: " + cadastrados.size());
 		
 		recebidos.removeAll(cadastrados);
 		

@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -59,7 +60,9 @@ public class ConsultaCadastro extends HttpServlet implements Servlet {
 		String msgAuxUsuario = null;
 		String msgAuxiliar = null;
 		String msgComando = null;
-				
+
+		HttpSession session = request.getSession();
+	
 		boolean consCpf = "true".equals(request.getParameter("consCpf"));
 		boolean consCartao = "true".equals(request.getParameter("consCartao"));
 		boolean consCadastro = "true".equals(request.getParameter("consCadastro"));
@@ -76,48 +79,97 @@ public class ConsultaCadastro extends HttpServlet implements Servlet {
 				page = "jsp/consultaCadastro.jsp";
 			}
 			
+			String numCartao = request.getParameter("numeroCartao");
+			String crdSnr = Util.getCrdSnr(numCartao);
+			
+			String cpf = request.getParameter("cpf");
+			cpf = Util.unMaskCnpj(cpf);
+			
+			boolean card = false;
+			boolean user = false;
+			
 			if (consCartao) {
-				String crdSnr = request.getParameter("numeroCartao");
-				cartao = ctrCartao.consultarCartao(Integer.parseInt(crdSnr));
+				EntidadeCartao cardAux = null;
 				
-				if(cartao == null) {
-					msgAuxCartao = "Não encontrado";
-					msgComando = "1";	
-				} else if(cartao.getCpf() != null) {
-					msgAuxCartao = "Já vinculado a um usuário";
-					msgComando = "1";
-				} else if(cartao.getMotivoBloq() != null) {
-					msgAuxCartao = "Em Lista de restrição";
-					msgComando = "1";
+				cartao = ctrCartao.consultarCartao(crdSnr);
+				
+				//SE O CARTÃO FOI VINCULADO NO DIA CORRENTE(COM_USUARIO)
+				if(cartao != null) {
+					cardAux = ctrCartao.consultarCartaoVinculado(cartao.getUsrIdCartao());
+					
+					if(cartao.getCpf() != null || cardAux != null) {
+						msgAuxCartao = "Já vinculado a um usuário";
+						msgComando = "1";
+					} else if(cartao.getMotivoBloq() != null) {
+						msgAuxCartao = "Em Lista de restrição";
+						msgComando = "1";
+					} else {
+						card = true;
+					}
+					
 				} else {
-					//msgAuxCartao = "OK!";
-				}					
+					msgAuxCartao = "Não encontrado";
+					msgComando = "1";
+				}				
 			}
 			
 			if(consCpf) {
-				
-				String cpf = request.getParameter("cpf");
-				cpf = Util.unMaskCnpj(cpf);
+	
 				boolean flag = ctrUsuario.consultarUsuario(cpf);
-				if(flag) {
+				boolean flagNovo = ctrUsuario.consultarNovoUsuario(cpf);
+
+				if(flag || flagNovo) {
 					msgAuxUsuario = "Já possui Vem Comum";
 					msgComando = "1";
 				} else {
-					//msgAuxUsuario = "OK!";
+					user = true;
 				}
-						
+			
+			}
+			
+			if(card || user) {
+				
+				cartao = ctrCartao.consultarCartao(crdSnr);
+				usuario = ctrUsuario.consultarCpf(cpf);
+				
+				//CASO USUARIO TENHA CADASTRO NO MERCURY
+				//DAR PRIORIDADE AO COMANDO ANTERIOR
+				if(usuario != null && msgComando == null) {
+	
+					msgComando = "2";
+					
+					cartao.setNumCartao(numCartao);	
+					usuario.setCartao(cartao);					
+					session.setAttribute("usuario", usuario);
+				
+				//CASO USUARIO NÃO TENHA CADASTRO
+				//DAR PRIORIDADE AO COMANDO ANTERIOR
+				} else if(msgComando == null) {
+					
+					msgAuxUsuario = "Você ainda não possui cadastro!";
+					msgComando = "3";
+					
+					usuario = new EntidadeUsuario();
+					
+					cartao.setNumCartao(numCartao);	
+					usuario.setCartao(cartao);
+					usuario.setCpf(cpf);
+					session.setAttribute("usuario", usuario);
+					
+				}
+				
 			}
 			
 		} catch (Exception e) {
 			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
-			msgComando = "2";
+			msgComando = "4";
 		}
 		
 		request.setAttribute("msgAuxCartao", msgAuxCartao);	
 		request.setAttribute("msgAuxUsuario", msgAuxUsuario);
-		request.setAttribute("msgAuxiliar", msgAuxiliar);
 		request.setAttribute("msgComando", msgComando);
+		request.setAttribute("msgAuxiliar", msgAuxiliar);
 		
 		request.getRequestDispatcher(page).forward(request, response);
 		

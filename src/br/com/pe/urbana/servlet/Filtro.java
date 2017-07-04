@@ -27,7 +27,7 @@ public class Filtro implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		String [] arrContext = {"inicio", "consultaCartao", "consultaCPF", "cadastroUsuario", "vinculacao", "solicitarCartao", "consultaCadastro"};
+		String [] arrContext = {"inicio", "consultaCartao", "consultaCPF", "cadastroUsuario", "vinculacao", "consultaCadastro"};
 		ArrayList<String> lArray = new ArrayList<String>();
 
 		for(String context: arrContext){

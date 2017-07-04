@@ -11,15 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.controller.CartaoContoller;
-import br.com.pe.urbana.controller.UsuarioContoller;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
-import br.com.pe.urbana.entidade.EntidadeVinculacao;
 import br.com.pe.urbana.util.Util;
 
 @WebServlet("/vinculacao")
@@ -58,67 +57,56 @@ public class Vinculacao extends HttpServlet implements Servlet {
 		String msgComando = null;
 		String msgAuxiliar = null;
 				
+		HttpSession session = request.getSession();
+
 		boolean vincular = "true".equals(request.getParameter("vincular"));
 		boolean cadVincular = "true".equals(request.getParameter("cadVincular"));
 		
-		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 		CartaoContoller ctrCartao = CartaoContoller.getInstance();
 		
 		EntidadeUsuario usuario = null;
 		EntidadeCartao cartao = null;
-		EntidadeVinculacao vinculacao = null;
-		
-		String numCartao = request.getParameter("numCartao");
 		
 		try{
 			
 			if(vincular || cadVincular) {
 				page = "jsp/vinculacao.jsp";
-				request.setAttribute("numCartao", numCartao);
 			}
 			
 			if(cadVincular) {
 				
-				cartao = new EntidadeCartao();
+				usuario = (EntidadeUsuario)session.getAttribute("usuario");
 				
-				String cpf = request.getParameter("usuCpf");
-				cpf = Util.unMaskCnpj(cpf);
-				//usuario = ctrUsuario.consultarUsuario(cpf);
-				
-				//Caso não exista no mercury
-				if(usuario == null) {
-					usuario = ctrUsuario.consultarNovoUsuario(cpf);
-				}
-				
-				String[] num = Util.getCartao(numCartao);
-//				cartao.setProjeto(Integer.parseInt(num[0]));
-//				cartao.setDesign(Integer.parseInt(num[1]));
-//				cartao.setNumeroExterno(Integer.parseInt(num[2]));
-				
-				request.setAttribute("numCartao", numCartao);
-				request.setAttribute("cartao", cartao);
+				request.setAttribute("usuario", usuario);
+				session.removeAttribute("usuario");
 				
 			}
 		
 			if(vincular) {
 				
 				cartao = new EntidadeCartao();
-				vinculacao = new EntidadeVinculacao();
+				usuario = new EntidadeUsuario();
 				
-				String usrId = request.getParameter("usrId");
-				String idUsuario = request.getParameter("idUsuario");
+				String usrIdCartao = request.getParameter("usrIdCartao");
+				String usrIdOrigem = request.getParameter("usrIdOrigem");
+				String cpfUser = request.getParameter("cpf");
+				String nome = request.getParameter("nome");
+				String dataNascimento = request.getParameter("dataNascimento");
+				String nomeMae = request.getParameter("nomeMae");
+				String telefone = request.getParameter("telefone");
+				String email = request.getParameter("email");
 				
-				String[] num = Util.getCartao(numCartao);		
-				//cartao.setProjeto(Integer.parseInt(num[0]));
-				//cartao.setDesign(Integer.parseInt(num[1]));
-				//cartao.setNumeroExterno(Integer.parseInt(num[2]));
+				cartao.setUsrIdCartao(Integer.parseInt(usrIdCartao));
+				usuario.setCartao(cartao);
+				usuario.setUsrIdOrigem(Integer.parseInt(usrIdOrigem));
+				usuario.setCpf(cpfUser);
+				usuario.setNome(nome);
+				usuario.setDataNascimento(dataNascimento);
+				usuario.setNomeMae(nomeMae);
+				usuario.setTelefone(telefone);
+				usuario.setEmail(email);
 				
-				vinculacao.setIdUsuario(Integer.parseInt(idUsuario));
-				vinculacao.setUsrId(Integer.parseInt(usrId));
-				vinculacao.setCartao(cartao);
-				
-				//ctrCartao.vincularCartaoUsuario(vinculacao);
-				
+				ctrCartao.vincularCardUser(usuario);
 				msgAuxiliar = "Cartão cadastrado com sucesso!";
 				msgComando = "1";
 				

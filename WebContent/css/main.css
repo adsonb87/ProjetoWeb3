@@ -162,10 +162,6 @@ form>.container{
 		top: 0;
 }
 
-.glyphicon-menu-hamburger, .glyphicon-remove{
-	font-size: 3ch;
-}
-
 .table-responsive{
 	height: 300px;
 }
@@ -295,8 +291,8 @@ form>.container{
 	}
 	.panel-footer > .btn{
 		width: auto;
-		height: 40px;
-		font-size: 15px;
+		/*height: 40px;
+		font-size: 15px;*/
 	}
 	.cabecalho .produto h3{
 		margin: 0;
@@ -357,7 +353,10 @@ form>.container{
 @media (max-width:800px)  {
 	.input-group,
 	.form-group {
-    width: 100%;
+    	width: 100%;
+	}
+	.btn {
+		padding: 6px 37px
 	}
 }
 /* PARA MONITORES MENORES  */

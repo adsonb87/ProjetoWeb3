@@ -12,15 +12,31 @@
 		var msgAuxCartao = "${ msgAuxCartao }";
 		var msgAuxUsuario = "${ msgAuxUsuario }";
 		var msgAuxiliar = "${ msgAuxiliar }";
+		var cpf = "${usuCpf}";
+		var crdSnr = "${crdSnr}";
+		var numCartao = "${numCartao}";
 
 		if(msgComando == 1) {
 			$('#modalConsulta').modal('show');
 		}
 		
 		if(msgComando == 2) {
+			formConsCadastro.cadVincular.value = "true";
+			formConsCadastro.action = "vinculacao";
+			formConsCadastro.submit();
+		}
+		
+		if(msgComando == 3) {
+			bootbox.alert(msgAuxUsuario,function(){
+				formConsCadastro.consCadastro.value = "true";
+				formConsCadastro.action = "cadastroUsuario";
+				formConsCadastro.submit();
+			})
+		}
+		
+		if(msgComando == 4) {
 			bootbox.alert(msgAuxiliar,function(){
-				formConsCadastro.usuCpf.value = cpf;
-				formConsCadastro.consCadastro.value= "true";
+				formConsCadastro.consCadastro.value = "true";
 				formConsCadastro.action = "consultaCadastro";
 				formConsCadastro.submit();
 			})
@@ -92,6 +108,9 @@
       <input type="hidden" name="consCadastro" value="false">
       <input type="hidden" name="consCpf" value="false">
       <input type="hidden" name="consCartao" value="false">
+      <input type="hidden" name="cadVincular" value="false">
+      <input type="hidden" name="usuCpf">
+      <input type="hidden" name="crdSnr">
       <input type="hidden" name="numCartao">
 		<div class="container">
 			<div class="panel panel-primary">
@@ -138,7 +157,7 @@
 				        	<label class="label-atencao" id="labelOk">${ msgAuxCartao }</label>
 				        </div>
 				        <div>
-				        	<label>CPF: </label>
+				        	<label>Usuário: </label>
 				        	<label class="label-atencao" id="labelAten">${ msgAuxUsuario }</label>
 				        </div>
 				      </div>

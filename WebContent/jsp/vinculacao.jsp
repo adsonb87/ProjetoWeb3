@@ -20,18 +20,30 @@
 	}
 
 	function vincularCartao() {
-		formVinculacao.numCartao.value = "${ numCartao }";
-		formVinculacao.usrId.value = "${ cartao.usuario.usrId }";
-		formVinculacao.idUsuario.value = "${ cartao.usuario.id }";
+		formVinculacao.usrIdCartao.value = "${ usuario.cartao.usrIdCartao }";
+		formVinculacao.usrIdOrigem.value = "${ usuario.usrIdOrigem }";
 		formVinculacao.vincular.value = "true";
 		formVinculacao.action = "vinculacao";
-		formVinculacao.submit();	
+		formVinculacao.submit();
+	}
+	
+	function alterarCadastro() {
+		formVinculacao.usrIdOrigem.value = "${ usuario.usrIdOrigem }";
+		formVinculacao.numCartao.value = "${ usuario.cartao.numCartao }";
+		formVinculacao.crdSnr.value = "${ usuario.cartao.crdSnr }";
+		formVinculacao.altCadastro.value = "true";
+		formVinculacao.action = "cadastroUsuario";
+		formVinculacao.submit();
 	}
 	
 	function cancelar() {
 		formVinculacao.action = "inicio";
 		formVinculacao.submit();
 	}
+	
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
 
 	function sem_letra(e, args) {
 		if (document.all) { var evt = event.keyCode;} // caso seja IE
@@ -45,15 +57,24 @@
 		if (valid_chars.indexOf(chr) > -1 || evt < 9) { return true; } // se a tecla estiver na lista de permissão permite-a
 		return false; // do contrário nega
 	}
-
+	
 </script>
 </head>
 <body onload="verificar()">
 	<form name=formVinculacao method="POST" action="formVinculacao" onSubmit="return false;">
-      <input type="hidden" name="vincular" value="false">
+      <input type="hidden" name="vincular">
+      <input type="hidden" name="altCadastro">
       <input type="hidden" name="numCartao">
-      <input type="hidden" name="usrId">
+      <input type="hidden" name="crdSnr">
       <input type="hidden" name="idUsuario">
+      <input type="hidden" name="usrIdCartao">
+      <input type="hidden" name="usrIdOrigem">
+      <input type="hidden" name="nome" value="${ usuario.nome }">
+      <input type="hidden" name="cpf" value="${ usuario.cpf }"> 
+	  <input type="hidden" name="dataNascimento" value="${ usuario.dataNascimento }">
+	  <input type="hidden" name="nomeMae" value="${ usuario.nomeMae }">
+	  <input type="hidden" name=telefone value="${ usuario.telefone }">
+	  <input type="hidden" name="email" value="${ usuario.email }">
 		<div class="container">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -64,7 +85,7 @@
        					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
    							<div class="panel panel-success">
 			            		<div class="panel-heading">
-			              			<h3 class="panel-title">${ numCartao }</h3>
+			              			<h3 class="panel-title">90.06.${ usuario.cartao.numCartao }</h3>
 			            		</div>
 			            		<div class="panel-body">
 			              			<div class="row">
@@ -76,87 +97,46 @@
 							                    	<tbody>
 							                    		<tr>
 									                        <td>Nome:</td>
-									                        <td>
-									                        	<p name="nome" value="${ cartao.usuario.nome }">${ cartao.usuario.nome }</p>
-									                        </td>
+									                        <td>${ usuario.nome }</td>
 								                      	</tr>
 														<tr>
 									                    	<td>CPF:</td>
-									                        <td>
-									                        	<p name="cpf" value="${ cartao.usuario.cpf }">${ cartao.usuario.cpf }</p>
-									                        </td>
+										                    <td>${ usuario.cpf }</td>
+								                      	</tr>
+								                      	<tr>
+									                    	<td>Data Nascimento:</td>
+									                        <td>${ usuario.dataNascimento }</td>
+								                      	</tr>
+								                      	<tr>
+									                        <td>Nome da Mãe:</td>
+									                        <td>${ usuario.nomeMae }</td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Telefone:</td>
 								                      		<td>
-																<p name=telefone value="${ cartao.usuario.telefone }">
-																	<c:if test="${empty cartao.usuario.telefone}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.telefone }">${ cartao.usuario.telefone }</c:if>
-																</p>
+																<c:if test="${empty usuario.telefone}">Não Informado</c:if>
+																<c:if test="${not empty usuario.telefone }">${ usuario.telefone }</c:if>
 								                      		</td>
 								                      	</tr>
 								                      	<tr>
 								                      		<td>Email:</td>
 								                      		<td>
-																<p name="email" value="${ cartao.usuario.email }">
-																	<c:if test="${empty cartao.usuario.email}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.email }">${ cartao.usuario.email }</c:if>
-																</p>	
+																<c:if test="${empty usuario.email}">Não Informado</c:if>
+																<c:if test="${not empty usuario.email }">${ usuario.email }</c:if>
 															</td>
-								                      	</tr>
-								                      	<tr>
-									                    	<td>Rua:</td>
-									                        <td>
-									                        	<p name="logradouro" value="${ cartao.usuario.endereco.logradouro }">
-									                        		<c:if test="${empty cartao.usuario.endereco.logradouro}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.logradouro }">${ cartao.usuario.endereco.logradouro }</c:if>
-									                        	</p>
-									                        </td>
-								                      	</tr>
-								                      	<tr>
-								                      		<td>Número:</td>
-								                      		<td>								                      			
-								                      			<p name="numero" value="${ cartao.usuario.endereco.numero }">
-								                      				<c:if test="${empty cartao.usuario.endereco.numero}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.numero }">${ cartao.usuario.endereco.numero }</c:if>
-								                      			</p>
-								                      		</td>
-								                      	</tr>
-								                      	<tr>
-								                      		<td>Cidade:</td>
-								                      		<td>								                      			
-								                      			<p name="cidade" value="${ cartao.usuario.endereco.cidade }">
-								                      				<c:if test="${empty cartao.usuario.endereco.cidade}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.cidade }">${ cartao.usuario.endereco.cidade }</c:if>
-								                      			</p>
-								                      		</td>
-								                      	</tr>
-								                      	<tr>
-								                      		<td>UF:</td>
-								                      		<td>								                      			
-								                      			<p name="uf" value="${ cartao.usuario.endereco.uf }">
-								                      				<c:if test="${empty cartao.usuario.endereco.uf}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.uf }">${ cartao.usuario.endereco.uf }</c:if>
-								                      			</p>
-								                      		</td>
-								                      	</tr>
-								                      	<tr>
-								                      		<td>Complemento:</td>
-								                      		<td>								                      			
-								                      			<p name="complemento" value="${ cartao.usuario.endereco.complemento }">
-								                      				<c:if test="${empty cartao.usuario.endereco.complemento}">Não Informado</c:if>
-																	<c:if test="${not empty cartao.usuario.endereco.complemento }">${ cartao.usuario.endereco.complemento }</c:if>
-								                      			</p>
-								                      		</td>
 								                      	</tr>
 													</tbody>
 							                  	</table>	
 							                </div>
 										</div>
 									</div>
-								<div class="panel-footer" style="text-align: center;">
-									<input class="btn btn-success" type="button" onclick="javascript:vincularCartao();" readonly="readonly" value='CONFIRMAR' name="cmdConfirmar	" >
-									<input class="btn btn-success" type="button" onclick="javascript:cancelar();" readonly="readonly" id="canc" value='CANCELAR' name="cmdCancelar"/>
+								<div class="panel-footer panel-vinculacao">
+									<a onclick="return vincularCartao();" data-original-title="Confirmar" data-toggle="tooltip" type="button" class="btn btn-success">
+										<i class="glyphicon glyphicon glyphicon-ok"></i></a>
+		                        	<a onclick="return alterarCadastro();" data-original-title="Editar" data-toggle="tooltip" type="button" class="btn btn-warning">
+		                        		<i class="glyphicon glyphicon-edit"></i></a>
+		                           	<a onclick="return cancelar();" data-original-title="Cancelar" data-toggle="tooltip" type="button" class="btn btn-danger">
+		                           		<i class="glyphicon glyphicon-remove"></i></a>
 			                    </div>
 			          		</div>
 			        	</div>

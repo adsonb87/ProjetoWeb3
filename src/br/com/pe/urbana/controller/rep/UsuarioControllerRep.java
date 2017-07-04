@@ -16,6 +16,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.dao.UsuarioDAO;
 import br.com.pe.urbana.entidade.Endereco;
+import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
@@ -66,6 +67,21 @@ public class UsuarioControllerRep {
 		return flag;
     }
     
+    public boolean consultarNovoUsuario(String cpf) throws ClassNotFoundException, 
+		NamingException, SQLException {
+		
+		UsuarioDAO dao = UsuarioDAO.getInstance();
+		ResultSet rs = dao.consultarNovoUsuario(cpf);
+		
+		boolean flag = false;
+	
+		if ((rs != null) && rs.next()) {
+			flag = true;
+		}
+		
+		return flag;
+    }
+    
     public EntidadeUsuario consultarCpf(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 	
@@ -100,16 +116,46 @@ public class UsuarioControllerRep {
 		return usuario;
 	}
     
+    public EntidadeUsuario consultarNovoCpf(String cpf) throws ClassNotFoundException, 
+		NamingException, SQLException {
+	
+	    UsuarioDAO dao = UsuarioDAO.getInstance();
+		ResultSet rs = dao.consultarNovoCpf(cpf);
+		
+		EntidadeUsuario usuario = null;
+		EntidadeCartao cartao = null;
+		
+		if ((rs != null) && rs.next()) {
+			usuario = new EntidadeUsuario();
+			cartao = new EntidadeCartao();
+			
+			usuario.setId(rs.getInt("USU_ID"));
+			usuario.setUsrIdOrigem(rs.getInt("USR_ID_ORIG"));
+			usuario.setCpf(rs.getString("USU_CPF"));
+			usuario.setNome(rs.getString("USU_NOME"));
+			usuario.setDataNascimento(rs.getString("USU_DT_NASC"));
+			usuario.setNomeMae(rs.getString("USU_NOME_MAE"));
+			usuario.setTelefone(rs.getString("USU_TELEFONE"));
+			usuario.setEmail(rs.getString("USU_EMAIL"));
+			
+			cartao.setUsrIdCartao(rs.getInt("USR_ID_CART"));
+			usuario.setCartao(cartao);
+			
+		}			
+	
+		return usuario;
+	}
+    
     public void cadastrarUsuario(EntidadeUsuario usuario) throws Exception {
 
 		UsuarioDAO dao = UsuarioDAO.getInstance();
 		dao.cadastrarUsuario(usuario);
 	}
     
-    public void atualizarUsuario(EntidadeUsuario usuario) throws Exception {
+    public void alterarUsuario(EntidadeUsuario usuario) throws Exception {
     	
     	UsuarioDAO dao = UsuarioDAO.getInstance();
-    	dao.atualizarUsuario(usuario);
+    	dao.alterarUsuario(usuario);
     }
     
     public List<String> getCidades()  throws ClassNotFoundException, 
@@ -154,53 +200,5 @@ public class UsuarioControllerRep {
 			
 		return lista;
     }
-    
-    public boolean validarNovoUsuario(String cpf) throws ClassNotFoundException, 
-    	NamingException, SQLException {
-		
-    	UsuarioDAO dao = UsuarioDAO.getInstance();
-		ResultSet rs = dao.validarNovoUsuario(cpf);
-		
-		boolean flag = false;
-
-		if ((rs != null) && rs.next()) {
-			flag = true;
-		}
-		
-		return flag;
-	}
-    
-    public EntidadeUsuario consultarNovoUsuario(String cpf) throws ClassNotFoundException, 
-		NamingException, SQLException {
-	
-	    UsuarioDAO dao = UsuarioDAO.getInstance();
-		ResultSet rs = dao.consultarNovoUsuario(cpf);
-		
-		EntidadeUsuario usuario = null;
-		Endereco endereco = null;
-		
-		if ((rs != null) && rs.next()) {
-			usuario = new EntidadeUsuario();
-			endereco = new Endereco();
-	
-			usuario.setId(rs.getInt("USU_ID"));
-			usuario.setUsrIdOrigem(rs.getInt("USR_ID"));
-			usuario.setNome(rs.getString("USU_NOME"));
-			usuario.setCpf(rs.getString("USU_CPF"));
-			usuario.setTelefone(rs.getString("USU_FONE"));
-			usuario.setEmail(rs.getString("USU_EMAIL"));
-			endereco.setLogradouro(rs.getString("USU_LOGRADOURO"));
-			endereco.setNumero(rs.getString("USU_NUMERO"));
-			endereco.setBairro(rs.getString("USU_BAIRRO"));
-			endereco.setCidade(rs.getString("USU_CIDADE"));
-			endereco.setUf(rs.getString("USU_UF"));
-			endereco.setCep(rs.getString("USU_CEP"));
-			endereco.setComplemento(rs.getString("USU_COMPLEMENTO"));
-			usuario.setEndereco(endereco);
-			
-		}			
-	
-		return usuario;
-	}
     
 }

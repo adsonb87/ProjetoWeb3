@@ -1,7 +1,8 @@
 jQuery(function($){
 	$("#cpf").mask("999.999.999-99");
 	$("#cep").mask("99999-999");
-	//$("#numeroCartao").mask("99.99.99999999-9");
+	$("#numeroCartao").mask("99999999-9");
+	$("#dataNascimento").mask("99/99/9999");
 });
 
 function maskTelefone(obj, fun){

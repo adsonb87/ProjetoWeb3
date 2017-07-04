@@ -73,18 +73,25 @@ public class Util {
 		return cnpj;
 	}
 	
-	public static String[] getCartao(String numero) {
+	public static String getCrdSnr(String numeroCartao) {
 		
-		String[] card = new String[3];
+		String crdSnr = null;
 		
-		if(numero != null && !numero.equals("")){
-			String[] text1 = numero.split(Pattern.quote("."));
-			card[0] = text1[0];
-			card[1] = text1[1];
-			String num = text1[2];
-			String[] text2 = num.split(Pattern.quote("-"));
-			card[2] = text2[0];		
+		if(numeroCartao != null && !numeroCartao.equals("")){			
+			String[] text2 = numeroCartao.split(Pattern.quote("-"));
+			crdSnr = text2[0];		
 		}
-		return card;
+		return crdSnr;
 	}
+	
+	public static String getTelefone(String telefone) {
+		
+		if(telefone != null && !telefone.equals("")) {
+			telefone = telefone.replace("(", "");
+			telefone = telefone.replace(")", "");
+		}
+		
+		return telefone;
+	}
+	
 }

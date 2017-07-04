@@ -74,10 +74,8 @@ hr {
 }
 
 /* Comum */
-p {
-	margin-bottom: 5px;
-	color: #ff3535;
-	font-weight: bold;
+c {
+	color: #000000;
 }
 
 .label-atencao{
@@ -504,10 +502,6 @@ ul.icons li .icon-large:before {
 
 #botaoLogin:hover {
 	color: white;
-}
-
-.panel-footer > .btn {
-	width: 20%;
 }
 
 .panel-primary > .panel-heading > h4 {

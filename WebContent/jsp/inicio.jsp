@@ -29,13 +29,13 @@
 	}
 
 	function consultarCartao() {
-		formInicio.consCartao.value = "true";
-		formInicio.action = "consultaCartao";
+		formInicio.consCadastro.value = "true";
+		formInicio.action = "consultaCadastro";
 		formInicio.submit();
 	}
 	
 	function consultarCadastro() {
-		formInicio.consultarCadastro.value = "true";
+		formInicio.consCadastro.value = "true";
 		formInicio.action = "consultaCPF";
 		formInicio.submit();
 	}
@@ -44,7 +44,7 @@
 </head>
 <body onload="verificar()">
 	<form name=formInicio method="POST" action="formInicio" onSubmit="return false;">
-    <input type="hidden" name="consultarCadastro" value="false">
+    <input type="hidden" name="consCadastro" value="false">
     <input type="hidden" name="consCartao" value="false">
 	<div class="container">
 			<div class="jumbotron blocoInicial">

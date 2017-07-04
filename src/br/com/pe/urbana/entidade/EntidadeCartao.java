@@ -4,7 +4,7 @@ public class EntidadeCartao {
 	
 	private int id;
 	
-	private int usrId;
+	private int usrIdCartao;
 	
 	private String viaCartao;
 
@@ -12,11 +12,15 @@ public class EntidadeCartao {
 	
 	private String cpf;
 	
+	private int issId;
+	
 	private int cdId;
 	
 	private int crdSnr;
 
 	private int crdSnrAtual;
+
+	private String numCartao;
 
 	public int getId() {
 		return id;
@@ -26,12 +30,12 @@ public class EntidadeCartao {
 		this.id = id;
 	}
 
-	public int getUsrId() {
-		return usrId;
+	public int getUsrIdCartao() {
+		return usrIdCartao;
 	}
 
-	public void setUsrId(int usrId) {
-		this.usrId = usrId;
+	public void setUsrIdCartao(int usrIdCartao) {
+		this.usrIdCartao = usrIdCartao;
 	}
 
 	public String getViaCartao() {
@@ -58,6 +62,14 @@ public class EntidadeCartao {
 		this.cpf = cpf;
 	}
 
+	public int getIssId() {
+		return issId;
+	}
+
+	public void setIssId(int issId) {
+		this.issId = issId;
+	}
+
 	public int getCdId() {
 		return cdId;
 	}
@@ -81,5 +93,13 @@ public class EntidadeCartao {
 	public void setCrdSnrAtual(int crdSnrAtual) {
 		this.crdSnrAtual = crdSnrAtual;
 	}
-	
+
+	public String getNumCartao() {
+		return numCartao;
+	}
+
+	public void setNumCartao(String numCartao) {
+		this.numCartao = numCartao;
+	}
+
 }

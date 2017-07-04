@@ -45,6 +45,23 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		return rs;
 	}
 	
+	public ResultSet consultarNovoUsuario(String cpf) throws ClassNotFoundException, NamingException, SQLException{
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("	SELECT *");
+		sb.append("	FROM COM_USUARIO");
+		sb.append("	WHERE USU_CPF = ?");
+
+		ParamDAO[] params = new ParamDAO[1];
+		
+		params[0] = new ParamDAO(cpf, Types.VARCHAR);
+		
+		ResultSet rs = super.executeQuery(sb.toString(), params);
+		
+		return rs;
+	}
+	
 	public ResultSet consultarCpf(String cpf) throws ClassNotFoundException, NamingException, SQLException{
 		
 		StringBuilder sb = new StringBuilder();
@@ -53,7 +70,7 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		sb.append("	 	UDC.USR_ID,");
 		sb.append("		UDC.USRDOC_NUMBER CPF,");
 		sb.append("		US.USR_NAME NOME,");
-		sb.append("		US.USR_BIRTHDATE DATA_NASC,");
+		sb.append("		TO_CHAR (US.USR_BIRTHDATE,'DD/MM/YYYY') DATA_NASC,");
 		sb.append("		US.USR_NAMEMOTHER NOME_MAE,");
 		sb.append("		UT.USRTEL_NUMBER TELEFONE,");
 		sb.append("		UM.USREM_ACCOUNT EMAIL,");
@@ -80,57 +97,65 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		return rs;
 	}
 	
-	public void cadastrarUsuario(EntidadeUsuario usuario) throws Exception{
+	public ResultSet consultarNovoCpf(String cpf) throws ClassNotFoundException, NamingException, SQLException{
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("	INSERT INTO COM_USUARIO (USR_ID_CART, USR_ID_ORIG, USU_CPF, USU_NOME, USU_DT_NASC, USU_NOME_MAE, USU_TELEFONE, USU_EMAIL,");
-		sb.append(" 	USU_CEP, USU_LOGRADOURO, USU_NUMERO, USU_BAIRRO, USU_CIDADE, USU_UF, USU_COMPLEMENTO, USU_REGDATE)");
-		sb.append("	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+		sb.append("	SELECT ");
+		sb.append("		USU_ID,");
+		sb.append("		USR_ID_CART,");
+		sb.append("		USR_ID_ORIG,");
+		sb.append("		USU_CPF,");
+		sb.append("		USU_NOME,");
+		sb.append("		TO_CHAR (USU_DT_NASC,'DD/MM/YYYY') USU_DT_NASC,");
+		sb.append("		USU_NOME_MAE,");
+		sb.append("		USU_TELEFONE,");
+		sb.append("		USU_EMAIL");
+		sb.append("	FROM COM_USUARIO");
+		sb.append("	WHERE USU_CPF = ?");
+
+		ParamDAO[] params = new ParamDAO[1];
 		
-		ParamDAO[] params = new ParamDAO[15];
+		params[0] = new ParamDAO(cpf, Types.VARCHAR);
 		
-		params[0] = new ParamDAO(usuario.getCartao(), Types.INTEGER);
-		params[1] = new ParamDAO(usuario.getUsrIdOrigem(), Types.INTEGER);
-		params[2] = new ParamDAO(usuario.getCpf(), Types.VARCHAR);
-		params[3] = new ParamDAO(usuario.getNome(), Types.VARCHAR);
-		params[4] = new ParamDAO(usuario.getDataNascimento(), Types.VARCHAR);
-		params[5] = new ParamDAO(usuario.getNomeMae(), Types.VARCHAR);
-		params[6] = new ParamDAO(usuario.getTelefone(), Types.VARCHAR);
-		params[7] = new ParamDAO(usuario.getEmail(), Types.VARCHAR);
-		params[8] = new ParamDAO(Integer.parseInt(usuario.getEndereco().getCep()), Types.INTEGER);
-		params[9] = new ParamDAO(usuario.getEndereco().getLogradouro(), Types.VARCHAR);
-		params[10] = new ParamDAO(usuario.getEndereco().getNumero(), Types.VARCHAR);
-		params[11] = new ParamDAO(usuario.getEndereco().getBairro(), Types.VARCHAR);
-		params[12] = new ParamDAO(usuario.getEndereco().getCidade(), Types.VARCHAR);
-		params[13] = new ParamDAO(usuario.getEndereco().getUf(), Types.VARCHAR);
-		params[14] = new ParamDAO(usuario.getEndereco().getComplemento(), Types.VARCHAR);
+		ResultSet rs = super.executeQuery(sb.toString(), params);
+		
+		return rs;
+	}
+	
+	public void cadastrarUsuario(EntidadeUsuario usuario) throws Exception {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("	INSERT INTO COM_USUARIO (USU_CPF, USU_NOME, USU_DT_NASC,");
+		sb.append("		USU_NOME_MAE, USU_TELEFONE, USU_EMAIL, USU_REGDATE)");
+		sb.append("	VALUES (?, ?, ?, ?, ?, ?, SYSDATE)");
+		
+		ParamDAO[] params = new ParamDAO[6];
+		
+		params[0] = new ParamDAO(usuario.getCpf(), Types.VARCHAR);
+		params[1] = new ParamDAO(usuario.getNome(), Types.VARCHAR);
+		params[2] = new ParamDAO(usuario.getDataNascimento(), Types.VARCHAR);
+		params[3] = new ParamDAO(usuario.getNomeMae(), Types.VARCHAR);
+		params[4] = new ParamDAO(usuario.getTelefone(), Types.VARCHAR);
+		params[5] = new ParamDAO(usuario.getEmail(), Types.VARCHAR);
 		
 		super.executeUpdate(sb.toString(), params);
 		
 	}
 	
-	public void atualizarUsuario(EntidadeUsuario usuario) throws Exception {
+	public void alterarUsuario(EntidadeUsuario usuario) throws Exception {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("	UPDATE COM_USUARIO SET USU_NOME = ?, USU_CEP = ?, USU_LOGRADOURO = ?, USU_NUMERO = ?,");
-		sb.append("		USU_BAIRRO = ?, USU_CIDADE = ?, USU_UF = ?, USU_COMPLEMENTO = ?, USU_FONE = ?, USU_EMAIL = ?, USU_REGDATE = SYSDATE");
+		sb.append("	UPDATE COM_USUARIO SET USU_FONE = ?, USU_EMAIL = ?, USU_REGDATE = SYSDATE");
 		sb.append(" WHERE USU_CPF = ?");
 		
-		ParamDAO[] params = new ParamDAO[11];
+		ParamDAO[] params = new ParamDAO[3];
 		
-		params[0] = new ParamDAO(usuario.getNome(), Types.VARCHAR);
-		params[1] = new ParamDAO(Integer.parseInt(usuario.getEndereco().getCep()), Types.INTEGER);
-		params[2] = new ParamDAO(usuario.getEndereco().getLogradouro(), Types.VARCHAR);
-		params[3] = new ParamDAO(usuario.getEndereco().getNumero(), Types.VARCHAR);
-		params[4] = new ParamDAO(usuario.getEndereco().getBairro(), Types.VARCHAR);
-		params[5] = new ParamDAO(usuario.getEndereco().getCidade(), Types.VARCHAR);
-		params[6] = new ParamDAO(usuario.getEndereco().getUf(), Types.VARCHAR);
-		params[7] = new ParamDAO(usuario.getEndereco().getComplemento(), Types.VARCHAR);
-		params[8] = new ParamDAO(usuario.getTelefone(), Types.VARCHAR);
-		params[9] = new ParamDAO(usuario.getEmail(), Types.VARCHAR);
-		params[10] = new ParamDAO(usuario.getCpf(), Types.VARCHAR);
+		params[0] = new ParamDAO(usuario.getTelefone(), Types.VARCHAR);
+		params[1] = new ParamDAO(usuario.getEmail(), Types.VARCHAR);
+		params[2] = new ParamDAO(usuario.getCpf(), Types.VARCHAR);
 		
 		super.executeUpdate(sb.toString(), params);
 	
@@ -158,40 +183,6 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		sb.append(" ORDER BY USU_ID ASC");
 		
 		ResultSet rs = super.executeQuery(sb.toString());
-		
-		return rs;
-	}
-	
-	public ResultSet validarNovoUsuario(String cpf) throws ClassNotFoundException, NamingException, SQLException{
-		
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("	SELECT *");
-		sb.append("	FROM COM_USUARIO");
-		sb.append("	WHERE USU_CPF = ?");
-
-		ParamDAO[] params = new ParamDAO[1];
-		
-		params[0] = new ParamDAO(cpf, Types.VARCHAR);
-		
-		ResultSet rs = super.executeQuery(sb.toString(), params);
-		
-		return rs;
-	}
-	
-	public ResultSet consultarNovoUsuario(String cpf) throws ClassNotFoundException, NamingException, SQLException{
-		
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("	SELECT *");
-		sb.append("	FROM COM_USUARIO");
-		sb.append("	WHERE USU_CPF = ?");
-
-		ParamDAO[] params = new ParamDAO[1];
-		
-		params[0] = new ParamDAO(cpf, Types.VARCHAR);
-		
-		ResultSet rs = super.executeQuery(sb.toString(), params);
 		
 		return rs;
 	}

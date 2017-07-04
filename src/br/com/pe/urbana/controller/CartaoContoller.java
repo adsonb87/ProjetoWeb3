@@ -6,6 +6,7 @@ import javax.naming.NamingException;
 
 import br.com.pe.urbana.controller.rep.CartaoControllerRep;
 import br.com.pe.urbana.entidade.EntidadeCartao;
+import br.com.pe.urbana.entidade.EntidadeUsuario;
 
 public class CartaoContoller {
 
@@ -24,7 +25,7 @@ public class CartaoContoller {
 		return instance;
 	}
 		
-	public EntidadeCartao consultarCartao(int crdSnr) throws ClassNotFoundException, 
+	public EntidadeCartao consultarCartao(String crdSnr) throws ClassNotFoundException, 
 		NamingException, SQLException {
 		
 		EntidadeCartao card = null;
@@ -33,6 +34,31 @@ public class CartaoContoller {
 		card = controllerRep.consultarCartao(crdSnr);
 		
 		return card;
+	}
+	
+	public EntidadeCartao consultarCartaoVinculado(int usrIdCartao) throws ClassNotFoundException, 
+		NamingException, SQLException {
+
+		EntidadeCartao card = null;
+
+		CartaoControllerRep controllerRep = CartaoControllerRep.getInstance();
+		card = controllerRep.consultarCartaoVinculado(usrIdCartao);
+		
+		return card;
+	}
+	
+	public void vincularCardUser(EntidadeUsuario usuario) throws Exception {
+		
+		CartaoControllerRep controllerRep = CartaoControllerRep.getInstance();
+		controllerRep.vincularCardUser(usuario);
+		
+	}
+	
+	public void atualizarCardUser(EntidadeUsuario usuario) throws Exception {
+		
+		CartaoControllerRep controllerRep = CartaoControllerRep.getInstance();
+		controllerRep.atualizarCardUser(usuario);
+		
 	}
 	
 }

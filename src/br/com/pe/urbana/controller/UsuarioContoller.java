@@ -35,6 +35,15 @@ public class UsuarioContoller {
 		return flag;
 	}
 	
+	public boolean consultarNovoUsuario(String cpf) throws ClassNotFoundException, 
+		NamingException, SQLException {
+		
+		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
+		boolean flag = controllerRep.consultarNovoUsuario(cpf);
+		
+		return flag;
+	}
+	
 	public EntidadeUsuario consultarCpf(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 		
@@ -47,6 +56,18 @@ public class UsuarioContoller {
 		
 	}
 	
+	public EntidadeUsuario consultarNovoCpf(String cpf) throws ClassNotFoundException, 
+		NamingException, SQLException {
+		
+		EntidadeUsuario usuario = null;
+		
+		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
+		usuario = controllerRep.consultarNovoCpf(cpf);
+		
+		return usuario;
+		
+	}
+	
 	public void cadastrarUsuario(EntidadeUsuario usuario) throws Exception {
 		
 		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
@@ -54,10 +75,10 @@ public class UsuarioContoller {
 		
 	}
 	
-	public void atualizarUsuario(EntidadeUsuario usuario) throws Exception {
+	public void alterarUsuario(EntidadeUsuario usuario) throws Exception {
 		
 		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
-		controllerRep.atualizarUsuario(usuario);
+		controllerRep.alterarUsuario(usuario);
 		
 	}
 	
@@ -82,27 +103,6 @@ public class UsuarioContoller {
 		lista = controllerRep.listarUsuarios();
 		
 		return lista;		
-	}
-	
-	public boolean validarNovoUsuario(String cpf) throws ClassNotFoundException, 
-		NamingException, SQLException {
-		
-		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
-		boolean flag = controllerRep.validarNovoUsuario(cpf);
-		
-		return flag;
-	}
-	
-	public EntidadeUsuario consultarNovoUsuario(String cpf) throws ClassNotFoundException, 
-		NamingException, SQLException {
-		
-		EntidadeUsuario usuario = null;
-		
-		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
-		usuario = controllerRep.consultarNovoUsuario(cpf);
-		
-		return usuario;
-		
 	}
 	
 }

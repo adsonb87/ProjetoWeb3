@@ -13,10 +13,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.dao.CartaoDAO;
+import br.com.pe.urbana.dao.UsuarioDAO;
 import br.com.pe.urbana.entidade.EntidadeCartao;
-import br.com.pe.urbana.entidade.Endereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
-import br.com.pe.urbana.entidade.EntidadeVinculacao;
 import br.com.pe.urbana.util.Util;
 
 public class CartaoControllerRep {
@@ -51,7 +50,7 @@ public class CartaoControllerRep {
 		return instance;
 	}
     
-    public EntidadeCartao consultarCartao(int crdSnr) throws ClassNotFoundException, 
+    public EntidadeCartao consultarCartao(String crdSnr) throws ClassNotFoundException, 
 		NamingException, SQLException {
 	
 	    CartaoDAO dao = CartaoDAO.getInstance();
@@ -63,9 +62,11 @@ public class CartaoControllerRep {
 			
 			card = new EntidadeCartao();
 			
-			card.setUsrId(rs.getInt("USR_ID"));
+			card.setUsrIdCartao(rs.getInt("USR_ID"));
 			card.setViaCartao(rs.getString("VIA_CARTAO"));
 			card.setMotivoBloq(rs.getString("MOT_BLOQ"));
+			card.setIssId(rs.getInt("ISS_ID"));
+			card.setCdId(rs.getInt("CD_ID"));
 			card.setCrdSnr(rs.getInt("CRD_SNR"));
 			card.setCrdSnrAtual(rs.getInt("CRD_SNR_ATUAL"));
 			card.setCpf(rs.getString("CPF"));
@@ -74,5 +75,35 @@ public class CartaoControllerRep {
 		
 		return card;
 	}
+    
+    public EntidadeCartao consultarCartaoVinculado(int usrIdCartao) throws ClassNotFoundException, 
+		NamingException, SQLException {
+		
+		CartaoDAO dao = CartaoDAO.getInstance();
+		ResultSet rs = dao.consultarCartaoVinculado(usrIdCartao);
+		EntidadeCartao card = null;
+			
+		if ((rs != null) && rs.next()) {
+			
+			card = new EntidadeCartao();
+			
+			card.setCpf(rs.getString("USU_CPF"));
+			
+		}
+		
+		return card;
+	}
 
+    public void vincularCardUser(EntidadeUsuario usuario) throws Exception {
+
+    	CartaoDAO dao = CartaoDAO.getInstance();
+		dao.vincularCardUser(usuario);
+	}
+    
+    public void atualizarCardUser(EntidadeUsuario usuario) throws Exception {
+    	
+    	CartaoDAO dao = CartaoDAO.getInstance();
+		dao.atualizarCardUser(usuario);
+    }
+    
 }
