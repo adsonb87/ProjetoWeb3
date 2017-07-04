@@ -45,7 +45,7 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		return rs;
 	}
 	
-	public ResultSet consultarNovoUsuario(String cpf) throws ClassNotFoundException, NamingException, SQLException{
+	public ResultSet consultarUsuarioNovo(String cpf) throws ClassNotFoundException, NamingException, SQLException{
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -97,7 +97,7 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		return rs;
 	}
 	
-	public ResultSet consultarNovoCpf(String cpf) throws ClassNotFoundException, NamingException, SQLException{
+	public ResultSet consultarCpfNovo(String cpf) throws ClassNotFoundException, NamingException, SQLException{
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -140,6 +140,35 @@ public class UsuarioDAO extends ConnectionFactoryDB {
 		params[4] = new ParamDAO(usuario.getTelefone(), Types.VARCHAR);
 		params[5] = new ParamDAO(usuario.getEmail(), Types.VARCHAR);
 		
+		super.executeUpdate(sb.toString(), params);
+		
+	}
+	
+	public void cadastrarUsuarioNovo(EntidadeUsuario usuario) throws Exception {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("	INSERT INTO COM_USUARIO (USR_ID_ORIG, USU_CPF, USU_NOME, USU_DT_NASC, USU_NOME_MAE, USU_TELEFONE, USU_EMAIL,");
+		sb.append("		USU_CEP, USU_LOGRADOURO, USU_NUMERO, USU_BAIRRO, USU_CIDADE, USU_UF, USU_COMPLEMENTO, USU_REGDATE)");
+		sb.append("	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+		
+		ParamDAO[] params = new ParamDAO[14];
+		
+		params[0] = new ParamDAO(usuario.getUsrIdOrigem() != 0 ? usuario.getUsrIdOrigem() : null, Types.INTEGER);
+		params[1] = new ParamDAO(usuario.getCpf(), Types.VARCHAR);
+		params[2] = new ParamDAO(usuario.getNome(), Types.VARCHAR);
+		params[3] = new ParamDAO(usuario.getDataNascimento(), Types.VARCHAR);
+		params[4] = new ParamDAO(usuario.getNomeMae(), Types.VARCHAR);
+		params[5] = new ParamDAO(usuario.getTelefone(), Types.VARCHAR);
+		params[6] = new ParamDAO(usuario.getEmail(), Types.VARCHAR);
+		params[7] = new ParamDAO(usuario.getEndereco().getCep(), Types.VARCHAR);
+		params[8] = new ParamDAO(usuario.getEndereco().getLogradouro(), Types.VARCHAR);
+		params[9] = new ParamDAO(usuario.getEndereco().getNumero(), Types.VARCHAR);
+		params[10] = new ParamDAO(usuario.getEndereco().getBairro(), Types.VARCHAR);
+		params[11] = new ParamDAO(usuario.getEndereco().getCidade(), Types.VARCHAR);
+		params[12] = new ParamDAO(usuario.getEndereco().getUf(), Types.VARCHAR);
+		params[13] = new ParamDAO(usuario.getEndereco().getComplemento(), Types.VARCHAR);
+				
 		super.executeUpdate(sb.toString(), params);
 		
 	}

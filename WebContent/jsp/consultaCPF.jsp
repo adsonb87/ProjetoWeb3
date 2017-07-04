@@ -10,44 +10,28 @@
 	function verificar() {
 		var msgComando = "${msgComando}";
 		var msgAuxiliar = "${msgAuxiliar}";
-		var cpf = "${usuCpf}";
-		var numCartao = "${numCartao}";
 
 		switch(msgComando) {
 			case "1":
 				bootbox.alert(msgAuxiliar,function(){
-					formConsultarCPF.usuCpf.value = cpf;
-					formConsultarCPF.numCartao.value = numCartao;
-					formConsultarCPF.cadVincular.value= "true";
-					formConsultarCPF.action = "vinculacao";
+					formConsultarCPF.consCadastro.value= "true";
+					formConsultarCPF.action = "consultaCPF";
 					formConsultarCPF.submit();
 				})
 				break;
 
 			case "2":
 				bootbox.alert(msgAuxiliar,function(){
-					formConsultarCPF.usuCpf.value = cpf;
-					formConsultarCPF.numCartao.value = numCartao;
-					formConsultarCPF.consCadastro.value= "true";
-					formConsultarCPF.action = "cadastroUsuario";
+					formConsultarCPF.altCadastro.value= "true";
+					formConsultarCPF.action = "cadastroUsuarioNovo";
 					formConsultarCPF.submit();
 				})
 				break;
-
+				
 			case "3":
 				bootbox.alert(msgAuxiliar,function(){
-					formConsultarCPF.usuCpf.value = cpf;
-					formConsultarCPF.consCadastro.value= "true";
-					formConsultarCPF.action = "solicitarCartao";
-					formConsultarCPF.submit();
-				})
-				break;
-
-			case "4":
-				bootbox.alert(msgAuxiliar,function(){
-					formConsultarCPF.usuCpf.value = cpf;
-					formConsultarCPF.consCadastro.value= "true";
-					formConsultarCPF.action = "cadastroUsuario";
+					formConsultarCPF.novoCadastro.value= "true";
+					formConsultarCPF.action = "cadastroUsuarioNovo";
 					formConsultarCPF.submit();
 				})
 		}
@@ -78,7 +62,7 @@
 	}
 
 	function limparCampos() {
-		document.getElementById('cpf').value = '';
+		$('#cpf').val('');
 	}
 
 	function consultarUsuario() {
@@ -90,8 +74,7 @@
 	}
 
 	function goBack() {
-		formConsultarCPF.consCartao.value = "true";
-		formConsultarCPF.action = "consultaCartao";
+		formConsultarCPF.action = "inicio";
 		formConsultarCPF.submit();
 	}
 
@@ -121,12 +104,10 @@
 </head>
 <body onload="verificar()">
 	<form name=formConsultarCPF method="POST" action="formConsultarCPF" onSubmit="return false;">
-      <input type="hidden" name="consultar" value="false">
-      <input type="hidden" name="consCadastro" value="false">
-      <input type="hidden" name="cadVincular" value="false">
-      <input type="hidden" name="consCartao" value="false">
-      <input type="hidden" name="usuCpf">
-      <input type="hidden" name="numCartao" value="${ numCartao }">
+      <input type="hidden" name="consultar">
+      <input type="hidden" name="consCadastro">
+      <input type="hidden" name="altCadastro">
+      <input type="hidden" name="novoCadastro">
 		<div class="container">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -135,8 +116,8 @@
 				<div class="panel-body">
 					<div class="row">
             			<div class="col-md-12">
-							<div class="input-group has-success">
-								<span class="input-group-addon" id="basic-addon1">CPF:</span>
+							<div class="form-group has-success">
+								<label class="control-label" for="cpf">CPF</label>
 								<input type="text" class="form-control" placeholder="Informe o CPF" value="${ usuario.cpf }" aria-describedby="basic-addon1"
 								id="cpf" name="cpf">
 							</div>

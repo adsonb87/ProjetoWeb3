@@ -130,14 +130,25 @@
 							                </div>
 										</div>
 									</div>
-								<div class="panel-footer panel-vinculacao">
-									<a onclick="return vincularCartao();" data-original-title="Confirmar" data-toggle="tooltip" type="button" class="btn btn-success">
-										<i class="glyphicon glyphicon glyphicon-ok"></i></a>
-		                        	<a onclick="return alterarCadastro();" data-original-title="Editar" data-toggle="tooltip" type="button" class="btn btn-warning">
-		                        		<i class="glyphicon glyphicon-edit"></i></a>
-		                           	<a onclick="return cancelar();" data-original-title="Cancelar" data-toggle="tooltip" type="button" class="btn btn-danger">
-		                           		<i class="glyphicon glyphicon-remove"></i></a>
-		                    	</div>
+								<div class="panel-footer">
+									<div class="row row-vinculacao">
+										<div class="col-lg-offset-6 col-md-offset-6 col-xs-4 col-lg-2 col-md-2">
+											<button type="button" class="btn btn-success btn-vinc"  onclick="javascript:vincularCartao();">
+												<span class="glyphicon glyphicon-ok"></span>
+											</button>										
+										</div>
+										<div class="col-xs-4 col-lg-2 col-md-2">
+											<button type="button" class="btn btn-warning btn-vinc"  onclick="javascript:alterarCadastro();">
+												<span class="glyphicon glyphicon-edit"></span>
+											</button>
+										</div>
+										<div class="col-xs-4 col-lg-2 col-md-2">
+											<button type="button" class="btn btn-danger btn-vinc"  onclick="javascript:cancelar();">
+												<span class="glyphicon glyphicon-remove"></span>
+											</button>
+										</div>
+									</div>
+								</div>
 			          		</div>
 			        	</div>
 			    	</div>

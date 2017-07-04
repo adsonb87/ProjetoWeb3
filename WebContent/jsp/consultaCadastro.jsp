@@ -15,31 +15,32 @@
 		var cpf = "${usuCpf}";
 		var crdSnr = "${crdSnr}";
 		var numCartao = "${numCartao}";
-
-		if(msgComando == 1) {
-			$('#modalConsulta').modal('show');
-		}
-
-		if(msgComando == 2) {
-			formConsCadastro.cadVincular.value = "true";
-			formConsCadastro.action = "vinculacao";
-			formConsCadastro.submit();
-		}
 		
-		if(msgComando == 3) {
-			bootbox.alert(msgAuxUsuario,function(){
-				formConsCadastro.consCadastro.value = "true";
-				formConsCadastro.action = "cadastroUsuario";
+		switch(msgComando) {
+			case "1":
+				$('#modalConsulta').modal('show');
+				break;
+	
+			case "2":
+				formConsCadastro.cadVincular.value = "true";
+				formConsCadastro.action = "vinculacao";
 				formConsCadastro.submit();
-			})
-		}
-		
-		if(msgComando == 4) {
-			bootbox.alert(msgAuxiliar,function(){
-				formConsCadastro.consCadastro.value = "true";
-				formConsCadastro.action = "consultaCadastro";
-				formConsCadastro.submit();
-			})
+				break;
+	
+			case "3":
+				bootbox.alert(msgAuxUsuario,function(){
+					formConsCadastro.consCadastro.value = "true";
+					formConsCadastro.action = "cadastroUsuario";
+					formConsCadastro.submit();
+				})
+				break;
+	
+			case "4":
+				bootbox.alert(msgAuxiliar,function(){
+					formConsCadastro.consCadastro.value = "true";
+					formConsCadastro.action = "consultaCadastro";
+					formConsCadastro.submit();
+				})
 		}
 	}
 
@@ -137,7 +138,7 @@
 					</div>
 				</div>
 				<div class="panel-footer btAcoes" style="text-align: center;">
-					<input class="btn btn-success" type="button" onclick="javascript:consultarCadastro();" readonly="readonly" value='CONTINUAR' name="cmdContinuar" >
+					<input class="btn btn-success" type="submit" onclick="javascript:consultarCadastro();" readonly="readonly" value='CONTINUAR' name="cmdContinuar" >
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>
 				</div>

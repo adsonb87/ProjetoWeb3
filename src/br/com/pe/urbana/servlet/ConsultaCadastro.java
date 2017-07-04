@@ -54,7 +54,7 @@ public class ConsultaCadastro extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/consultaCadastro.jsp";
+		String page = "jsp/inicio.jsp";
 		
 		String msgAuxCartao = null;
 		String msgAuxUsuario = null;
@@ -116,7 +116,7 @@ public class ConsultaCadastro extends HttpServlet implements Servlet {
 			if(consCpf) {
 	
 				boolean flag = ctrUsuario.consultarUsuario(cpf);
-				boolean flagNovo = ctrUsuario.consultarNovoUsuario(cpf);
+				boolean flagNovo = ctrUsuario.consultarUsuarioNovo(cpf);
 
 				if(flag || flagNovo) {
 					msgAuxUsuario = "Já possui Vem Comum";

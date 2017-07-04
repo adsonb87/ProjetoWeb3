@@ -88,6 +88,9 @@ c {
 	font-weight: bold;
 }
 
+.btn-vinc {
+	width: 100%;
+}
 /*Helpers*/
 
 .centered {

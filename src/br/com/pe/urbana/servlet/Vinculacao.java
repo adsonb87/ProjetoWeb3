@@ -53,7 +53,7 @@ public class Vinculacao extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/vinculacao.jsp";
+		String page = "jsp/inicio.jsp";
 		String msgComando = null;
 		String msgAuxiliar = null;
 				

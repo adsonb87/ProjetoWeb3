@@ -8,33 +8,16 @@
 	}
 
 	function verificar() {
-		var msgComando = "<%=request.getAttribute("msgComando")%>";
-		var msgAuxiliar = "<%=request.getAttribute("msgAuxiliar")%>";
-
-		if(msgComando == 1) {
-			bootbox.alert(msgAuxiliar,function(){
-				formInicio.usuCpf.value = cpf
-				formInicio.consCadastro.value= "true";
-				formInicio.action = "cadastroUsuario";
-				formInicio.submit();
-			})
-		}
 		
-		if(msgComando == 2){
-			formInicio.usuCpf.value = cpf
-			formInicio.consCadastro.value= "true";
-			formInicio.action = "cadastroUsuario";
-			formInicio.submit();
-		}
 	}
 
-	function consultarCartao() {
+	function consultaCadastro() {
 		formInicio.consCadastro.value = "true";
 		formInicio.action = "consultaCadastro";
 		formInicio.submit();
 	}
 	
-	function consultarCadastro() {
+	function consultaCPF() {
 		formInicio.consCadastro.value = "true";
 		formInicio.action = "consultaCPF";
 		formInicio.submit();
@@ -56,7 +39,7 @@
 									<img style="height: 249px;" src="imagens/cartoesComum.png" alt="img01">
 									<figcaption>
 										<h3>VOCÊ JÁ TEM NOSSO CARTÃO COMUM?</h3>
-										<a onclick="javascript:consultarCartao();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a>
+										<a onclick="javascript:consultaCadastro();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a>
 									</figcaption>
 								</figure>
 							</li>
@@ -69,7 +52,7 @@
 									<img style="height: 249px;" src="imagens/cartoesComum.png" alt="img01">
 									<figcaption style="width: 50%;">
 										<h3>VOCÊ AINDA NÃO TEM NOSSO CARTÃO COMUM?</h3>
-										 <a onclick="javascript:consultarCadastro();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a>
+										 <a onclick="javascript:consultaCPF();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a>
 <!-- 									 <a onclick="" class="btn btn-success botaoMenu" href="#">Clique Aqui</a> -->
 									</figcaption>
 								</figure>

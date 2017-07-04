@@ -67,11 +67,11 @@ public class UsuarioControllerRep {
 		return flag;
     }
     
-    public boolean consultarNovoUsuario(String cpf) throws ClassNotFoundException, 
+    public boolean consultarUsuarioNovo(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 		
 		UsuarioDAO dao = UsuarioDAO.getInstance();
-		ResultSet rs = dao.consultarNovoUsuario(cpf);
+		ResultSet rs = dao.consultarUsuarioNovo(cpf);
 		
 		boolean flag = false;
 	
@@ -116,11 +116,11 @@ public class UsuarioControllerRep {
 		return usuario;
 	}
     
-    public EntidadeUsuario consultarNovoCpf(String cpf) throws ClassNotFoundException, 
+    public EntidadeUsuario consultarCpfNovo(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 	
 	    UsuarioDAO dao = UsuarioDAO.getInstance();
-		ResultSet rs = dao.consultarNovoCpf(cpf);
+		ResultSet rs = dao.consultarCpfNovo(cpf);
 		
 		EntidadeUsuario usuario = null;
 		EntidadeCartao cartao = null;
@@ -150,6 +150,12 @@ public class UsuarioControllerRep {
 
 		UsuarioDAO dao = UsuarioDAO.getInstance();
 		dao.cadastrarUsuario(usuario);
+	}
+    
+    public void cadastrarUsuarioNovo(EntidadeUsuario usuario) throws Exception {
+
+		UsuarioDAO dao = UsuarioDAO.getInstance();
+		dao.cadastrarUsuarioNovo(usuario);
 	}
     
     public void alterarUsuario(EntidadeUsuario usuario) throws Exception {

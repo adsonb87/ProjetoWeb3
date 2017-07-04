@@ -71,7 +71,7 @@ form>.container{
 .form-group{
 	width: 400px;
 	margin: 0 auto;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 .table tr {
 	background-color: #329246;
@@ -339,6 +339,12 @@ form>.container{
 	.btAcoes {
 		padding: 8px;
 	}
+	.btn-vinc{
+	    padding: 4% 10%;
+	}
+	.panel-vinculacao {
+		text-align: center;
+	}
 }
 /* PARA DISPOSITIVOS  ATÃ‰ 768px DE LARGURA (mobile) */
 
@@ -353,6 +359,12 @@ form>.container{
 		margin-top: 15%;
 		width: 40%;
 	}
+	.btn-vinc {
+		width: 100%;
+	}
+	.row-vinculacao{
+		text-align: right;
+	}
 }
 /* PARA DISPOSITIVOS NO M�NIMO 769px DE LARGURA (desktop) */
 /* PARA MONITORES MENORES  */
@@ -360,9 +372,6 @@ form>.container{
 	.input-group,
 	.form-group {
     	width: 100%;
-	}
-	.btn {
-		padding: 6px 37px
 	}
 }
 /* PARA MONITORES MENORES  */
