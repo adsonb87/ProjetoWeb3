@@ -25,7 +25,7 @@ public class Inicio extends HttpServlet implements Servlet {
 	private static final Logger LOG = Logger.getLogger(Inicio.class);
 	
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream(Util.PATH));
@@ -50,6 +50,8 @@ public class Inicio extends HttpServlet implements Servlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String page = "jsp/inicio.jsp";
+		
+		request.setAttribute("servlet", "inicio");
 		
 		request.getRequestDispatcher(page).forward(request, response);
 		

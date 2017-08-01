@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.controller.UsuarioContoller;
-import br.com.pe.urbana.entidade.Endereco;
+import br.com.pe.urbana.entidade.EnderecoUsuario;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
@@ -30,7 +30,7 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 	private static final Logger LOG = Logger.getLogger(CadastroUsuarioNovo.class);
 	
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream(Util.PATH));
@@ -63,15 +63,16 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 		boolean cadastrar = "true".equals(request.getParameter("cadastrar"));
 		boolean altCadastro = "true".equals(request.getParameter("altCadastro"));
 		boolean novoCadastro = "true".equals(request.getParameter("novoCadastro"));
+		boolean alterarCad = "true".equals(request.getParameter("alterarCad"));
 		
 		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 
 		EntidadeUsuario usuario = null;
-		Endereco endereco = null;
+		EnderecoUsuario endereco = null;
 	
 		try{
 			
-			if(cadastrar || altCadastro || novoCadastro) {
+			if(cadastrar || altCadastro || novoCadastro || alterarCad) {
 				page = "jsp/cadastroUsuarioNovo.jsp";
 			}
 			
@@ -81,7 +82,7 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 				
 				request.setAttribute("usuario", usuario);
 				session.removeAttribute("usuario");
-
+				msgComando = "1";
 				
 			} else if(novoCadastro) {
 				
@@ -90,20 +91,17 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 				request.setAttribute("usuario", usuario);
 				session.removeAttribute("usuario");
 
-				
-			} else if(cadastrar) {
-				
+			}else if(alterarCad) {
+			
 				usuario = new EntidadeUsuario();
-				endereco = new Endereco();
+				endereco = new EnderecoUsuario();
 				
 				String usrIdOrigem = request.getParameter("usrIdOrigem");
 				String cpf = request.getParameter("cpf");
-					   cpf = Util.unMaskCnpj(cpf);
 				String nome = request.getParameter("nome");
 				String dataNascimento = request.getParameter("dataNascimento");
 				String nomeMae = request.getParameter("nomeMae");
 				String telefone = request.getParameter("telefone");
-					   telefone = Util.getTelefone(telefone);
 			    String email = request.getParameter("email");
 				String cep = request.getParameter("cep").replaceAll("-", "");
 				String logradouro = request.getParameter("logradouro");
@@ -129,11 +127,58 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 				endereco.setNumero(numero);
 				usuario.setEndereco(endereco);
 				
-				ctrUsuario.cadastrarUsuarioNovo(usuario);
-
-				msgAuxiliar = "Cadastro realizado com sucesso";
+				request.setAttribute("usuario", usuario);
 				msgComando = "1";
-			
+				
+			} else if(cadastrar) {
+				
+				usuario = new EntidadeUsuario();
+				endereco = new EnderecoUsuario();
+				
+				String usrIdOrigem = request.getParameter("usrIdOrigem");
+				String cpf = request.getParameter("cpf");
+				String nome = request.getParameter("nome");
+				String dataNascimento = request.getParameter("dataNascimento");
+				String nomeMae = request.getParameter("nomeMae");
+				String telefone = request.getParameter("telefone");
+			    String email = request.getParameter("email");
+				String cep = request.getParameter("cep").replaceAll("-", "");
+				String logradouro = request.getParameter("logradouro");
+				String bairro = request.getParameter("bairro");
+				String cidade = request.getParameter("cidade");
+				String uf = request.getParameter("uf");
+				String complemento = request.getParameter("complemento");
+				String numero = request.getParameter("numero");
+
+				usuario.setUsrIdOrigem(Integer.parseInt(usrIdOrigem));
+				usuario.setCpf(cpf);
+				usuario.setNome(nome);
+				usuario.setDataNascimento(dataNascimento);
+				usuario.setNomeMae(nomeMae);
+				usuario.setTelefone(telefone);
+				usuario.setEmail(email);
+				endereco.setCep(cep);
+				endereco.setLogradouro(logradouro);
+				endereco.setBairro(bairro);
+				endereco.setCidade(cidade);
+				endereco.setUf(uf);
+				endereco.setComplemento(complemento);
+				endereco.setNumero(numero);
+				usuario.setEndereco(endereco);
+				
+				boolean flag = ctrUsuario.consultarUsuario(cpf);
+				boolean flagNovo = ctrUsuario.consultarUsuarioNovo(cpf);
+				
+				if(!(flag || flagNovo)){
+					//ctrUsuario.cadastrarUsuarioNovo(usuario);
+					session.setAttribute("usuario", usuario);
+					msgAuxiliar = "Cadastro realizado com sucesso";
+					msgComando = "2";
+				} else {
+					msgAuxiliar = "Cadastro já foi realizado";
+					msgComando = "3";
+				}
+				
 			}
 			
 			List<String> cidades = ctrUsuario.getCidades();
@@ -142,7 +187,7 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 		} catch (Exception e) {
 			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
-			msgComando = "1";
+			msgComando = "3";
 		}
 		
 		request.setAttribute("msgAuxiliar", msgAuxiliar);

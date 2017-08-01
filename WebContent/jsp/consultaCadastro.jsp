@@ -61,10 +61,7 @@
 			var cpf_Int = parseInt(cpf.value);
 			var valido = (!isNaN(cpf_Int) && (isValidoCNPJ(cpf) || isValidoCPF(cpf.value)));
 			if (!valido) {
-				bootbox.alert("CPF inválido!",function(){
-					formConsCadastro.action = "consultaCadastro";
-					formConsCadastro.submit();
-				})
+				bootbox.alert("CPF inválido!",function(){})
 				return false;
 			}
 		}
@@ -125,7 +122,7 @@
 								<label class="control-label" for="numeroCartao">Número Cartão</label>
 								<div class="input-group">
 									<div class="input-group-addon">90.06</div>
-							    <input type="text" class="form-control" id="numeroCartao" name="numeroCartao">
+							    	<input type="text" class="form-control" id="numeroCartao" name="numeroCartao">
 						      	</div>
 							</div>
 	            		</div>

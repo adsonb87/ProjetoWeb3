@@ -30,7 +30,7 @@ public class ConsultaCadastro extends HttpServlet implements Servlet {
 	private static final Logger LOG = Logger.getLogger(ConsultaCadastro.class);
 	
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream(Util.PATH));

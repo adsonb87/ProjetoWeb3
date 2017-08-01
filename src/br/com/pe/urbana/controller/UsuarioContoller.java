@@ -82,13 +82,6 @@ public class UsuarioContoller {
 		
 	}
 	
-	public void alterarUsuario(EntidadeUsuario usuario) throws Exception {
-		
-		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
-		controllerRep.alterarUsuario(usuario);
-		
-	}
-	
 	public List<String> getCidades()  throws ClassNotFoundException, 
 		NamingException, SQLException {
 
@@ -99,17 +92,14 @@ public class UsuarioContoller {
 		
 		return lista;
 	}
-
 	
-	public List<EntidadeUsuario> listarUsuarios() throws ClassNotFoundException, 
+	public boolean consUsuario(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 		
-		List<EntidadeUsuario> lista = new ArrayList<EntidadeUsuario>();
 		UsuarioControllerRep controllerRep = UsuarioControllerRep.getInstance();
+		boolean flag = controllerRep.consUsuario(cpf);
 		
-		lista = controllerRep.listarUsuarios();
-		
-		return lista;		
+		return flag;
 	}
 	
 }

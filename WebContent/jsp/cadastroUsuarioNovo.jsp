@@ -12,12 +12,25 @@
 		var msgAuxiliar = "${msgAuxiliar}";
 		
 		if(msgComando == "1") {
+			$('#cpf').attr("disabled", true);
+			$('#nome').attr("disabled", true);
+			$('#dataNascimento').attr("disabled", true);
+			$('#nomeMae').attr("disabled", true);
+			$('#realizarCadastro').val('ATUALIZAR');
+		}
+		
+		if(msgComando == "2") {
+			formCadUsuario.confirmar.value = "true";
+			formCadUsuario.action = "solicitarCartao";
+			formCadUsuario.submit();
+		}	
+		
+		if(msgComando == "3") {
 			bootbox.alert(msgAuxiliar,function(){
 				formCadUsuario.action = "inicio";
 				formCadUsuario.submit();
 			})
 		}
-	
 	}
 
 	function validarEmail(email) {
@@ -39,16 +52,16 @@
 	function validarCampos() {
 
 		//VALIDANDO CPF
-		if (document.formCadUsuario.cpf.value != "") {
+		if (document.formCadUsuario.cpf.value == "") {
+			bootbox.alert("Para continuar, informe o seu CPF!",function(){})
+			return false;
+		} else {
 			var cpf_Int = parseInt(cpf.value);
 			var valido = (!isNaN(cpf_Int) && (isValidoCNPJ(cpf) || isValidoCPF(cpf.value)));
 			if (!valido) {
 				bootbox.alert("CPF inválido!",function(){})
 				return false;
 			}
-		} else {
-			bootbox.alert("Para continuar, informe o seu CPF!",function(){})
-			return false;
 		}
 		
 		//VALIDANDO NOME
@@ -60,6 +73,19 @@
 			var cont = nome.length;
 			if(cont < 3){
 				bootbox.alert("Para continuar, informe um nome válido!",function(){})
+				return false;
+			}
+		}
+		
+		//VALIDANDO DATA NASCIMENTO
+		var data = document.formCadUsuario.dataNascimento.value;
+		if(data == "") {
+			bootbox.alert("Para continuar, informe sua Data de Nascimento!",function(){})
+			return false;
+		} else {
+			var RegExPattern = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+			if (!((data.match(RegExPattern)) && (data!=''))) {
+				bootbox.alert("Data de Nascimento inválida!",function(){})
 				return false;
 			}
 		}
@@ -139,6 +165,11 @@
 
 	function cadastrarUsuario() {
 		if (validarCampos()) {
+			$('#cpf').attr("disabled", false);
+			$('#nome').attr("disabled", false);
+			$('#dataNascimento').attr("disabled", false);
+			$('#nomeMae').attr("disabled", false);
+			$("#realizarCadastro").prop("disabled",true);
 			formCadUsuario.usrIdOrigem.value = "${ usuario.usrIdOrigem }";
 			formCadUsuario.cadastrar.value = "true";
 			formCadUsuario.action = "cadastroUsuarioNovo";
@@ -147,10 +178,6 @@
 	}
 
 	function limparCampos() {
-		$('#cpf').val('');
-		$('#nome').val('');
-		$('#dataNascimento').val('');
-		$('#nomeMae').val('');
 		$('#telefone').val('');
 		$('#email').val('');
 		$('#cep').val('');
@@ -287,8 +314,9 @@
 </head>
 <body onload="verificar()">
 	<form name=formCadUsuario method="POST" action="formCadUsuario" onSubmit="return false;">
-      <input type="hidden" name="cadastrar" value="fasle">
-      <input type="hidden" name="consCadastro" value="false">
+      <input type="hidden" name="cadastrar">
+      <input type="hidden" name="confirmar">
+      <input type="hidden" name="consCadastro">
       <input type="hidden" name="usrIdOrigem">
 		<div class="container">
 			<div class="panel panel-primary">

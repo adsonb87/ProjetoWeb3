@@ -58,10 +58,10 @@
 			bootbox.alert("Para continuar, informe um Email válido",function(){})
 		}
 	}
-
+	
 	function validarCampos() {
 
-		//Validando NOME
+		//VALIDANDO NOME
 		var nome = document.formCadUsuario.nome.value.trim();
 		if (nome == "") {
 			bootbox.alert("Para continuar, informe o seu Nome!",function(){})
@@ -74,23 +74,36 @@
 			}
 		}
 
-		//Validando CPF
-		if (document.formCadUsuario.cpf.value != "") {
+		//VALIDANDO CPF
+		if (document.formCadUsuario.cpf.value == "") {
+			bootbox.alert("Para continuar, informe o seu CPF!",function(){})
+			return false;
+		} else {
 			var cpf_Int = parseInt(cpf.value);
 			var valido = (!isNaN(cpf_Int) && (isValidoCNPJ(cpf) || isValidoCPF(cpf.value)));
 			if (!valido) {
 				bootbox.alert("CPF inválido!",function(){})
 				return false;
 			}
-		} else {
-			bootbox.alert("Para continuar, informe o seu CPF!",function(){})
+		}
+		
+		//VALIDANDO DATA NASCIMENTO
+		var data = document.formCadUsuario.dataNascimento.value;
+		if(data == "") {
+			bootbox.alert("Para continuar, informe sua Data de Nascimento!",function(){})
 			return false;
+		} else {
+			var RegExPattern = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+			if (!((data.match(RegExPattern)) && (data!=''))) {
+				bootbox.alert("Data de Nascimento inválida!",function(){})
+				return false;
+			}
 		}
 
-		//Validando TELEFONE
+		//VALIDANDO TELEFONE
 		if (document.formCadUsuario.telefone.value == "")  {
 			bootbox.alert("Para continuar, informe o seu Telefone!",function(){})
-			return false;
+			return false;	
 		} else {
 			var txt = $('#telefone').val().replace(/[^\d]+/g,'');
 			var cont = txt.length;
@@ -100,7 +113,7 @@
 			}
 		}
 
-		//Validando EMAIL
+		//VALIDANDO EMAIL
 		var email = document.formCadUsuario.email.value;
 		if (email != "") {
 			var usuario = email.substring(0, email.indexOf("@"));

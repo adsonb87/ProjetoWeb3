@@ -12,8 +12,7 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import br.com.pe.urbana.dao.CartaoDAO;
-import br.com.pe.urbana.dao.UsuarioDAO;
+import br.com.pe.urbana.dao.CartaoDao;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
@@ -29,7 +28,7 @@ public class CartaoControllerRep {
 	}
     
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
     	Properties props = new Properties();
     	try {
 			props.load(new FileInputStream(Util.PATH));
@@ -53,7 +52,7 @@ public class CartaoControllerRep {
     public EntidadeCartao consultarCartao(String crdSnr) throws ClassNotFoundException, 
 		NamingException, SQLException {
 	
-	    CartaoDAO dao = CartaoDAO.getInstance();
+	    CartaoDao dao = CartaoDao.getInstance();
 		ResultSet rs = dao.consultarCartao(crdSnr);
 		EntidadeCartao card = null;
 
@@ -79,7 +78,7 @@ public class CartaoControllerRep {
     public EntidadeCartao consultarCartaoVinculado(int usrIdCartao) throws ClassNotFoundException, 
 		NamingException, SQLException {
 		
-		CartaoDAO dao = CartaoDAO.getInstance();
+		CartaoDao dao = CartaoDao.getInstance();
 		ResultSet rs = dao.consultarCartaoVinculado(usrIdCartao);
 		EntidadeCartao card = null;
 			
@@ -96,13 +95,13 @@ public class CartaoControllerRep {
 
     public void vincularCardUser(EntidadeUsuario usuario) throws Exception {
 
-    	CartaoDAO dao = CartaoDAO.getInstance();
+    	CartaoDao dao = CartaoDao.getInstance();
 		dao.vincularCardUser(usuario);
 	}
     
     public void atualizarCardUser(EntidadeUsuario usuario) throws Exception {
     	
-    	CartaoDAO dao = CartaoDAO.getInstance();
+    	CartaoDao dao = CartaoDao.getInstance();
 		dao.atualizarCardUser(usuario);
     }
     

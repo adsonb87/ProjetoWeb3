@@ -20,6 +20,7 @@
 	}
 
 	function vincularCartao() {
+		$("#btnOk").prop("disabled",true);
 		formVinculacao.usrIdCartao.value = "${ usuario.cartao.usrIdCartao }";
 		formVinculacao.usrIdOrigem.value = "${ usuario.usrIdOrigem }";
 		formVinculacao.vincular.value = "true";
@@ -39,23 +40,6 @@
 	function cancelar() {
 		formVinculacao.action = "inicio";
 		formVinculacao.submit();
-	}
-	
-	$(document).ready(function() {
-		$('[data-toggle="tooltip"]').tooltip();
-	});
-
-	function sem_letra(e, args) {
-		if (document.all) { var evt = event.keyCode;} // caso seja IE
-		else { var evt = e.charCode; } // do contrário deve ser Mozilla
-		var valid_chars = '0123456789' + args; // criando a lista de teclas permitidas
-		var chr = String.fromCharCode(evt); // pegando a tecla digitada
-		if (valid_chars.indexOf(chr) > -1) { return true; }
-		// se a tecla estiver na lista de permissão permite-a
-		// para permitir teclas como <BACKSPACE> adicionamos uma permissão para
-		// códigos de tecla menores que 09 por exemplo (geralmente uso menores que 20)
-		if (valid_chars.indexOf(chr) > -1 || evt < 9) { return true; } // se a tecla estiver na lista de permissão permite-a
-		return false; // do contrário nega
 	}
 	
 </script>
@@ -130,29 +114,15 @@
 							                </div>
 										</div>
 									</div>
-								<div class="panel-footer">
-									<div class="row row-vinculacao">
-										<div class="col-lg-offset-6 col-md-offset-6 col-xs-4 col-lg-2 col-md-2">
-											<button type="button" class="btn btn-success btn-vinc"  onclick="javascript:vincularCartao();">
-												<span class="glyphicon glyphicon-ok"></span>
-											</button>										
-										</div>
-										<div class="col-xs-4 col-lg-2 col-md-2">
-											<button type="button" class="btn btn-warning btn-vinc"  onclick="javascript:alterarCadastro();">
-												<span class="glyphicon glyphicon-edit"></span>
-											</button>
-										</div>
-										<div class="col-xs-4 col-lg-2 col-md-2">
-											<button type="button" class="btn btn-danger btn-vinc"  onclick="javascript:cancelar();">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</div>
-									</div>
+								<div class="panel-footer btAcoes">
+									<input type="button" class="btn btn-success" onclick="javascript:vincularCartao();" id="btnOk" value="CONFIRMAR">
+									<input type="button" class="btn btn-warning" onclick="javascript:alterarCadastro();" id="btnEdit" value="ALTERAR">
+									<input type="button" class="btn btn-danger" onclick="javascript:cancelar();" id="btnCanc" value="CANCELAR">
 								</div>
-			          		</div>
-			        	</div>
-			    	</div>
-				</div>
+							</div>
+		          		</div>
+		        	</div>
+		    	</div>
 			</div>
 		</div>
 	</form>

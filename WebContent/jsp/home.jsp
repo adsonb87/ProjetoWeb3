@@ -34,20 +34,19 @@
 	<script type="text/javascript" src="js/filtros.js"></script>
 	<script language="javascript" src="js/Calendario.js" type=""></script>
 	<script language="javascript" src="js/utilitarios.js" charset="utf-8" type=""></script>
-	<script language="javascript" src="js/bootstrap-select.min.js"  charset="utf-8"  type=""></script>	
+	<script language="javascript" src="js/bootstrap-select.min.js"  charset="utf-8"  type=""></script>
 	<!-- /JS -->
 
 	<!-- CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/imagens.css" rel="stylesheet">
 	<link href="css/style2.css" rel="stylesheet">
-	<link href="css/panel-cad.css" rel="stylesheet">
 	<link href="css/header.css" rel="stylesheet">
-	<link href="css/semaforo.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap-select.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link href="css/panel-cad.css" rel="stylesheet">
 	<!-- /CSS -->
 	<!-- /importando arquivos -->
 

@@ -3,6 +3,7 @@ jQuery(function($){
 	$("#cep").mask("99999-999");
 	$("#numeroCartao").mask("99999999-9");
 	$("#dataNascimento").mask("99/99/9999");
+	$("#login").mask("999.999.999-99");
 });
 
 function maskTelefone(obj, fun){

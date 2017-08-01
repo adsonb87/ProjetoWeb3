@@ -1,6 +1,8 @@
 package br.com.pe.urbana.entidade;
 
-public class EntidadeUsuario {
+import br.com.caelum.stella.format.CPFFormatter;
+
+public class EntidadeUsuario extends Entidade{
 	
 	private int id;
 		
@@ -20,9 +22,7 @@ public class EntidadeUsuario {
 	
 	private EntidadeCartao cartao;
 	
-	private Endereco endereco;
-
-	private String regDate;
+	private EnderecoUsuario endereco;
 
 	public int getId() {
 		return id;
@@ -96,20 +96,23 @@ public class EntidadeUsuario {
 		this.cartao = cartao;
 	}
 
-	public Endereco getEndereco() {
+	public EnderecoUsuario getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
+	public void setEndereco(EnderecoUsuario endereco) {
 		this.endereco = endereco;
 	}
 
-	public String getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
+	@Override
+	public String toString() {
+		return "[cpf=" + cpf + ", nome=" + nome + ", cep=" + endereco.getCep() + ", logradouro=" + endereco.getLogradouro() 
+			+ ", bairro=" + endereco.getBairro() + ", cidade=" + endereco.getCidade() + ", numero=" + endereco.getNumero() 
+			+ ", uf=" + endereco.getUf() + ", complemento=" + endereco.getComplemento() +"]";
 	}
 	
+	public String getCpfFormatado() {
+		return new CPFFormatter().format(cpf);
+	}
+		
 }

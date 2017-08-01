@@ -28,7 +28,7 @@ public class ConsultaCPF extends HttpServlet implements Servlet {
 	private static final Logger LOG = Logger.getLogger(ConsultaCPF.class);
 	
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream(Util.PATH));
@@ -73,15 +73,15 @@ public class ConsultaCPF extends HttpServlet implements Servlet {
 			
 			if(consultar) {
 				
-				String cpf = request.getParameter("cpf");
-				cpf = Util.unMaskCnpj(cpf);
+				String cpf = Util.unMaskCnpj(request.getParameter("cpf"));
+				
 				usuario = ctrUsuario.consultarCpf(cpf);
 				
 				boolean flag = ctrUsuario.consultarUsuario(cpf);
 				boolean flagNovo = ctrUsuario.consultarUsuarioNovo(cpf);
 
 				if(flag || flagNovo) {
-					msgAuxiliar = "Já possui Vem Comum";
+					msgAuxiliar = "você Já possui Vem Comum";
 					msgComando = "1";
 					
 				} else if (usuario != null){

@@ -29,7 +29,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 	private static final Logger LOG = Logger.getLogger(CadastroUsuario.class);
 	
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream(Util.PATH));
@@ -87,12 +87,10 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 				
 				String usrIdOrigem = request.getParameter("usrIdOrigem");
 				String cpf = request.getParameter("cpf");
-					   cpf = Util.unMaskCnpj(cpf);
 				String nome = request.getParameter("nome");
 				String dataNascimento = request.getParameter("dataNascimento");
 				String nomeMae = request.getParameter("nomeMae");
 				String telefone = request.getParameter("telefone");
-					   telefone = Util.getTelefone(telefone);
 			    String email = request.getParameter("email");
 
 				usuario.setUsrIdOrigem(Integer.parseInt(usrIdOrigem));
@@ -127,7 +125,7 @@ public class CadastroUsuario extends HttpServlet implements Servlet {
 				String dataNascimento = request.getParameter("dataNascimento");
 				String nomeMae = request.getParameter("nomeMae");
 				String telefone = request.getParameter("telefone");
-					   telefone = Util.getTelefone(telefone);
+					   telefone = Util.unMaskTelefone(telefone);
 			    String email = request.getParameter("email");
 				String crdSnr = request.getParameter("crdSnr");
 				String numCartao = request.getParameter("numCartao");

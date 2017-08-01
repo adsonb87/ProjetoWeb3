@@ -1,85 +1,6 @@
-
-
-function Mudarestado(el) {
-    var display = document.getElementById(el).style.display;
-    if(display == "inline-block")
-        document.getElementById(el).style.display = 'none';
-    else
-        document.getElementById(el).style.display = 'inline-block';
-}
-
 function navegar(acao){
 	formHome.action = acao;
 	formHome.submit();
-}
-
-function validandoCampos() {
-	if (document.formHome.login.value == "") {
-		bootbox.alert("Ã‰ necessÃ¡rio informar o Login!",function(){})
-		return false;
-	}
-	if (document.formHome.password.value == "") {
-		bootbox.alert("Ã‰ necessÃ¡rio informar a Senha!",function(){})
-		return false;
-	}
-	return true;
-
-}
-
-
-function acessar() {
-	if (validandoCampos()) {
-		formHome.execCons.value = "true";
-		formHome.action = "login";
-		formHome.submit();
-	}
-}
-
-function consultar() {
-	formHome.action = "consulta";
-	formHome.submit();
-}
-
-function consultaCPF() {
-	formHome.action = "consultaCPF";
-	formHome.submit();
-}
-
-function modalExame() {
-	$('#modalExame').modal('show');
-}
-
-function modalLogin() {
-	$('#modalLogin').modal('show');
-}
-
-function modalInfo() {
-	$('#modalInfo').modal('show');
-}
-
-$(document).ready(function() {
-	$('#modalLogin').on('hidden.bs.modal', function() {
-		formHome.login.value = "";
-		formHome.password.value = "";
-	})
-});
-
-function aceitarTermo(combo) {
-	if (combo.checked) {
-		$('#aceito').removeClass('disabled');
-	} else {
-		$('#aceito').addClass('disabled');
-	}
-}
-
-function modalAviso() {
-	$('#modalAviso').modal('show');
-}
-
-function Enter(e) {
-	if (e.keyCode == 13) {
-		acessar();
-	}
 }
 
 function verificacao() {
@@ -90,7 +11,7 @@ function verificacao() {
 	}
 
 function pesquisaNaTabela() {
-  //Função para pesquisa dinâmica em tabelas - INÍCIO
+  //Funï¿½ï¿½o para pesquisa dinï¿½mica em tabelas - INï¿½CIO
     $(".form-control").keyup(function(){
                //pega o css da tabela
                 var tabela = $(this).attr('alt');
@@ -106,5 +27,5 @@ function pesquisaNaTabela() {
                 return (elem.textContent || elem.innerText || $(elem).text() || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
             }
         });
-  //Função para pesquisa dinâmica em tabelas - FIM
+  //Funï¿½ï¿½o para pesquisa dinï¿½mica em tabelas - FIM
 }

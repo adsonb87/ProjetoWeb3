@@ -14,8 +14,8 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import br.com.pe.urbana.dao.UsuarioDAO;
-import br.com.pe.urbana.entidade.Endereco;
+import br.com.pe.urbana.dao.UsuarioDao;
+import br.com.pe.urbana.entidade.EnderecoUsuario;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
@@ -31,7 +31,7 @@ public class UsuarioControllerRep {
 	}
     
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
     	Properties props = new Properties();
     	try {
 			props.load(new FileInputStream(Util.PATH));
@@ -55,7 +55,7 @@ public class UsuarioControllerRep {
     public boolean consultarUsuario(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 		
-		UsuarioDAO dao = UsuarioDAO.getInstance();
+		UsuarioDao dao = UsuarioDao.getInstance();
 		ResultSet rs = dao.consultarUsuario(cpf);
 		
 		boolean flag = false;
@@ -70,7 +70,7 @@ public class UsuarioControllerRep {
     public boolean consultarUsuarioNovo(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 		
-		UsuarioDAO dao = UsuarioDAO.getInstance();
+		UsuarioDao dao = UsuarioDao.getInstance();
 		ResultSet rs = dao.consultarUsuarioNovo(cpf);
 		
 		boolean flag = false;
@@ -85,15 +85,15 @@ public class UsuarioControllerRep {
     public EntidadeUsuario consultarCpf(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 	
-	    UsuarioDAO dao = UsuarioDAO.getInstance();
+	    UsuarioDao dao = UsuarioDao.getInstance();
 		ResultSet rs = dao.consultarCpf(cpf);
 		
 		EntidadeUsuario usuario = null;
-		Endereco endereco = null;
+		EnderecoUsuario endereco = null;
 		
 		if ((rs != null) && rs.next()) {
 			usuario = new EntidadeUsuario();
-			endereco = new Endereco();
+			endereco = new EnderecoUsuario();
 	
 			usuario.setUsrIdOrigem(rs.getInt("USR_ID"));
 			usuario.setCpf(rs.getString("CPF"));
@@ -119,14 +119,16 @@ public class UsuarioControllerRep {
     public EntidadeUsuario consultarCpfNovo(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
 	
-	    UsuarioDAO dao = UsuarioDAO.getInstance();
+	    UsuarioDao dao = UsuarioDao.getInstance();
 		ResultSet rs = dao.consultarCpfNovo(cpf);
 		
 		EntidadeUsuario usuario = null;
+		EnderecoUsuario endereco = null;
 		EntidadeCartao cartao = null;
 		
 		if ((rs != null) && rs.next()) {
 			usuario = new EntidadeUsuario();
+			endereco = new EnderecoUsuario();
 			cartao = new EntidadeCartao();
 			
 			usuario.setId(rs.getInt("USU_ID"));
@@ -138,6 +140,15 @@ public class UsuarioControllerRep {
 			usuario.setTelefone(rs.getString("USU_TELEFONE"));
 			usuario.setEmail(rs.getString("USU_EMAIL"));
 			
+			endereco.setCep(String.valueOf(rs.getInt("USU_CEP")));
+			endereco.setLogradouro(rs.getString("USU_LOGRADOURO"));
+			endereco.setNumero(String.valueOf(rs.getInt("USU_NUMERO")));
+			endereco.setBairro(rs.getString("USU_BAIRRO"));
+			endereco.setCidade(rs.getString("USU_CIDADE"));
+			endereco.setUf(rs.getString("USU_UF"));
+			endereco.setComplemento(rs.getString("USU_COMPLEMENTO"));
+			usuario.setEndereco(endereco);
+			
 			cartao.setUsrIdCartao(rs.getInt("USR_ID_CART"));
 			usuario.setCartao(cartao);
 			
@@ -148,26 +159,20 @@ public class UsuarioControllerRep {
     
     public void cadastrarUsuario(EntidadeUsuario usuario) throws Exception {
 
-		UsuarioDAO dao = UsuarioDAO.getInstance();
+		UsuarioDao dao = UsuarioDao.getInstance();
 		dao.cadastrarUsuario(usuario);
 	}
     
     public void cadastrarUsuarioNovo(EntidadeUsuario usuario) throws Exception {
 
-		UsuarioDAO dao = UsuarioDAO.getInstance();
+		UsuarioDao dao = UsuarioDao.getInstance();
 		dao.cadastrarUsuarioNovo(usuario);
 	}
-    
-    public void alterarUsuario(EntidadeUsuario usuario) throws Exception {
-    	
-    	UsuarioDAO dao = UsuarioDAO.getInstance();
-    	dao.alterarUsuario(usuario);
-    }
-    
+        
     public List<String> getCidades()  throws ClassNotFoundException, 
 		NamingException, SQLException {
 	
-		UsuarioDAO dao = UsuarioDAO.getInstance();
+		UsuarioDao dao = UsuarioDao.getInstance();
 		List<String> lista = null;
 		ResultSet rs = dao.getCidades();
 	
@@ -182,29 +187,20 @@ public class UsuarioControllerRep {
 		
 		return lista;
 	}
-    
-    public List<EntidadeUsuario> listarUsuarios() throws ClassNotFoundException, 
+   
+    public boolean consUsuario(String cpf) throws ClassNotFoundException, 
 		NamingException, SQLException {
-
-	    UsuarioDAO dao = UsuarioDAO.getInstance();
-		ResultSet rs = dao.listarUsuarios();
 		
-		List<EntidadeUsuario> lista = null;
+		UsuarioDao dao = UsuarioDao.getInstance();
+		ResultSet rs = dao.consUsuario(cpf);
+		
+		boolean flag = false;
 	
-		if (rs != null) {
-			lista = new ArrayList<EntidadeUsuario>();
-			while (rs.next()) {
-				EntidadeUsuario usuario = new EntidadeUsuario();
-				
-				usuario.setId(rs.getInt("USU_ID"));
-				usuario.setNome(rs.getString("USU_NOME"));
-				usuario.setCpf(rs.getString("USU_CPF"));
-	
-				lista.add(usuario);
-			}
+		if ((rs != null) && rs.next()) {
+			flag = true;
 		}
-			
-		return lista;
+		
+		return flag;
     }
     
 }

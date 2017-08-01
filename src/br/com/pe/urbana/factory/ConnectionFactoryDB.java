@@ -35,7 +35,7 @@ public abstract class ConnectionFactoryDB {
 //	 	String strServer = "10.20.0.1";
 //	 	String strUsuario = "urbana";
 //     	String strDatabase = "SBEHOMOLOG";
-//     	String strSenha = "urbanahomol";
+//     	String strSenha = "urbana2015";
 
         String strServer = "10.10.0.21";
         String strUsuario = "urbana";

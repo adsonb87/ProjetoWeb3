@@ -73,6 +73,10 @@ form>.container{
 	margin: 0 auto;
 	margin-top: 10px;
 }
+
+.form-modal-login{
+	width: 250px;
+}
 .table tr {
 	background-color: #329246;
 	color: #fff;
@@ -163,7 +167,8 @@ form>.container{
 }
 
 .table-responsive{
-	height: 300px;
+	height: auto;
+	max-height: 400px;
 }
 
 .bootstrap-select > .dropdown-menu > ul{
@@ -320,8 +325,8 @@ form>.container{
 	}
 	.painelLogin{
 		margin: 0 auto;
-    margin-top: 180px;
-    width: 90%;
+	    margin-top: 180px;
+	    width: 90%;
 	}
 	#sidebar-wrapper.active{
 		width: 100%;
@@ -338,9 +343,10 @@ form>.container{
 	}
 	.btAcoes {
 		padding: 8px;
+		text-align: center;
 	}
-	.btn-vinc{
-	    padding: 4% 10%;
+	.btn{
+	    padding: 6px 6px;
 	}
 	.panel-vinculacao {
 		text-align: center;
@@ -359,11 +365,15 @@ form>.container{
 		margin-top: 15%;
 		width: 40%;
 	}
-	.btn-vinc {
-		width: 100%;
-	}
 	.row-vinculacao{
 		text-align: right;
+	}
+	.btAcoes {
+		text-align: center;
+	}
+	
+	.modalLogin{
+		margin-top: 200px;
 	}
 }
 /* PARA DISPOSITIVOS NO MÍNIMO 769px DE LARGURA (desktop) */

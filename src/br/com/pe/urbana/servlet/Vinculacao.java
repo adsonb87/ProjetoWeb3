@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.controller.CartaoContoller;
+import br.com.pe.urbana.controller.UsuarioContoller;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
@@ -29,7 +30,7 @@ public class Vinculacao extends HttpServlet implements Servlet {
 	private static final Logger LOG = Logger.getLogger(Vinculacao.class);
 	
 	static {
-		// Configura o Log4j com o arquivo do projeto
+		// CONFIGURA O LOG4J COM O ARQUIVO DO PROJET
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream(Util.PATH));
@@ -63,6 +64,7 @@ public class Vinculacao extends HttpServlet implements Servlet {
 		boolean cadVincular = "true".equals(request.getParameter("cadVincular"));
 		
 		CartaoContoller ctrCartao = CartaoContoller.getInstance();
+		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 		
 		EntidadeUsuario usuario = null;
 		EntidadeCartao cartao = null;
@@ -89,26 +91,33 @@ public class Vinculacao extends HttpServlet implements Servlet {
 				
 				String usrIdCartao = request.getParameter("usrIdCartao");
 				String usrIdOrigem = request.getParameter("usrIdOrigem");
-				String cpfUser = request.getParameter("cpf");
+				String cpf = Util.unMaskCnpj(request.getParameter("cpf"));
 				String nome = request.getParameter("nome");
 				String dataNascimento = request.getParameter("dataNascimento");
 				String nomeMae = request.getParameter("nomeMae");
-				String telefone = request.getParameter("telefone");
+				String telefone = Util.unMaskTelefone(request.getParameter("telefone"));
 				String email = request.getParameter("email");
 				
 				cartao.setUsrIdCartao(Integer.parseInt(usrIdCartao));
 				usuario.setCartao(cartao);
 				usuario.setUsrIdOrigem(Integer.parseInt(usrIdOrigem));
-				usuario.setCpf(cpfUser);
+				usuario.setCpf(cpf);
 				usuario.setNome(nome);
 				usuario.setDataNascimento(dataNascimento);
 				usuario.setNomeMae(nomeMae);
 				usuario.setTelefone(telefone);
 				usuario.setEmail(email);
 				
-				ctrCartao.vincularCardUser(usuario);
-				msgAuxiliar = "Cartão cadastrado com sucesso!";
-				msgComando = "1";
+				boolean flag = ctrUsuario.consultarUsuarioNovo(cpf);
+				
+				if(!flag){
+					ctrCartao.vincularCardUser(usuario);
+					msgAuxiliar = "Cartão cadastrado com sucesso!";
+					msgComando = "1";
+				} else {
+					msgAuxiliar = "Cartão já foi cadastrado";
+					msgComando = "1";
+				}
 				
 			}
 			
