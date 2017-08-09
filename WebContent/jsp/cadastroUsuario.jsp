@@ -137,6 +137,7 @@
 
 	function cadastrarUsuario() {
 		if (validarCampos()) {
+			$("#realizarCadastro").prop("disabled",true);
 			$('#cpf').attr("disabled", false);
 			$('#nome').attr("disabled", false);
 			$('#dataNascimento').attr("disabled", false);
@@ -270,7 +271,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer btAcoes" style="text-align: center;">
+				<div class="panel-footer btAcoes">
 					<input class="btn btn-success" type="submit" onclick="javascript:cadastrarUsuario();" readonly="readonly" id="realizarCadastro" value='CADASTRAR' name="cmdCadastrar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>

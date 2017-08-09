@@ -67,7 +67,6 @@ public class UserControllerRep {
 			user = new EntidadeUser();
 			
 			user.setId(rs.getInt("US_ID"));
-			user.setNome(rs.getString("US_NOME"));
 			user.setLogin(rs.getString("US_LOGIN"));
 			user.setPassword(rs.getString("US_SENHA"));
 			user.setRegUser(rs.getString("US_REGUSER"));

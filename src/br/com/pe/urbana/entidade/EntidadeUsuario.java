@@ -1,6 +1,7 @@
 package br.com.pe.urbana.entidade;
 
 import br.com.caelum.stella.format.CPFFormatter;
+import br.com.pe.urbana.util.Util;
 
 public class EntidadeUsuario extends Entidade{
 	
@@ -22,7 +23,7 @@ public class EntidadeUsuario extends Entidade{
 	
 	private EntidadeCartao cartao;
 	
-	private EnderecoUsuario endereco;
+	private EntidadeEndereco endereco;
 
 	public int getId() {
 		return id;
@@ -96,23 +97,26 @@ public class EntidadeUsuario extends Entidade{
 		this.cartao = cartao;
 	}
 
-	public EnderecoUsuario getEndereco() {
+	public EntidadeEndereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(EnderecoUsuario endereco) {
+	public void setEndereco(EntidadeEndereco endereco) {
 		this.endereco = endereco;
 	}
-
-	@Override
-	public String toString() {
-		return "[cpf=" + cpf + ", nome=" + nome + ", cep=" + endereco.getCep() + ", logradouro=" + endereco.getLogradouro() 
-			+ ", bairro=" + endereco.getBairro() + ", cidade=" + endereco.getCidade() + ", numero=" + endereco.getNumero() 
-			+ ", uf=" + endereco.getUf() + ", complemento=" + endereco.getComplemento() +"]";
+	
+	public String getEnderecoFormatado() {
+		return endereco.getLogradouro().concat(", Nº").concat(endereco.getNumero()).concat(" ")
+				.concat(endereco.getBairro()).concat(" - ").concat(endereco.getCidade())
+				.concat("/").concat(endereco.getUf());
 	}
 	
 	public String getCpfFormatado() {
 		return new CPFFormatter().format(cpf);
+	}
+	
+	public String getTelefoneFormatado() {
+		return Util.formatTelefone(telefone);
 	}
 		
 }

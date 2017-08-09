@@ -1,13 +1,7 @@
 package br.com.pe.urbana.boleto;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import br.com.caelum.stella.boleto.Banco;
 import br.com.caelum.stella.boleto.Beneficiario;
@@ -25,12 +19,10 @@ import br.com.caelum.stella.boleto.bancos.gerador.GeradorDeDigitoPadrao;
 import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
 import br.com.pe.urbana.entidade.EntidadeCobranca;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 public class EmissorSegundaViaBoleto {
-	
-	@SuppressWarnings("deprecation")
-	public byte[] gerarBoletoEmBytes(EntidadeUsuario usuario, EntidadeCobranca cobranca, HttpServletRequest request) throws Exception {
+ 
+	public byte[] gerarBoletoEmBytes(EntidadeUsuario usuario, EntidadeCobranca cobranca) throws Exception {
 		
 		// EXTRAINDO DADOS DO USUÁRIO PARA O PAGADOR
 		Endereco enderecoPagador = Endereco.novoEndereco()
@@ -46,26 +38,10 @@ public class EmissorSegundaViaBoleto {
                 .comEndereco(enderecoPagador);
 		
 		byte[] pdfBytes = null;
+		
 		Boleto boleto = criarBoleto(pagador, cobranca);
 		
-		// CARREGA O CAMINHO FÍSICO DOS ARQUIVOS
-		String template = request.getServletContext().getRealPath("/WEB-INF/jasper/boleto-urbana.jasper");
-		String template_sub = request.getServletContext().getRealPath("/WEB-INF/jasper/boleto-urbana_instrucoes.jasper");
-		String logoUrbana = request.getServletContext().getRealPath("/WEB-INF/jasper/logoUrbana.png");
-		String logoBanco = request.getServletContext().getRealPath("/WEB-INF/jasper/logoBanco.png");
-		
-		// MAPA PARA PARÂMETROS
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("logo_urbana", logoUrbana);
-		parametros.put("logo_banco", logoBanco);
-		parametros.put("SUB_INSTRUCOES", JRLoader.loadObject(template_sub));
-		
-		// CARREGA O CONTEÚDO DO ARQUIVO EM UM INPUTSTREAM
-		InputStream templateBoleto = new FileInputStream(template);
-
-		// PASSA PARA O GERADOR DE BOLETO O DADOS DO TEMPLATE NO CONSTRUTOR, 
-		// JUNTO COM O MAPA DE PARÂMETROS, ALÉM DOS DADOS DOS BOLETOS
-		GeradorDeBoleto gerador = new GeradorDeBoleto(templateBoleto, parametros, boleto);
+		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
 		pdfBytes = gerador.geraPDF();
 				
 		return pdfBytes;
@@ -73,7 +49,7 @@ public class EmissorSegundaViaBoleto {
 	
 	private Boleto criarBoleto(Pagador pagador, EntidadeCobranca cobranca) {
 		
-		Beneficiario beneficiario = criarBeneficiario(cobranca.getNossoNumero());
+		Beneficiario beneficiario = criarBeneficiario(cobranca.getNossoNumeroFormatado());
 		
 		Date dt = cobranca.getDataVencimento();
 		
@@ -111,7 +87,7 @@ public class EmissorSegundaViaBoleto {
         		.comTipoProduto("00006")
         		.comSubProduto("00008")
         		.comAceite(false) // BOLETO PROPOSTA
-        		.comEspecie(01) // DUPLICATA MERCANTIL
+        		.comEspecie("01") // DUPLICATA MERCANTIL
         		.comTipoPagamento(1) // PAGAMENTO REALIZADO À VISTA
         		.comIndicadorPagamentoParcial(false) // NÃO ACEITA PAGAMENTO PARCIAL
         		.comJuros(juros) 
@@ -123,16 +99,16 @@ public class EmissorSegundaViaBoleto {
                 .comDatas(datas)
                 .comBeneficiario(beneficiario)
                 .comPagador(pagador)
-                .comValorBoleto("20.00")
+                .comValorBoleto("1.00")
                 .comNumeroDoDocumento(beneficiario.getNossoNumero())
-                .comEspecieDocumento("RC")
+                .comEspecieDocumento("RC") // RECIBO
                 .comInstrucoes("SR. CAIXA, FAVOR RECEBER O BOLETO MESMO APÓS A DATA DE VENCIMENTO, SEM", "COBRANÇA DE MULTA E JUROS.", "PAGAMENTO APENAS EM DINHEIRO.")
                 .comLocaisDePagamento("Até o vencimento, preferencialmente no Itaú");
-    
+
 		return boleto;
    	}
 
-	private Beneficiario criarBeneficiario(Integer nossoNumero) {
+	private Beneficiario criarBeneficiario(String nossoNumero) {
 
 		GeradorDeDigitoPadrao geradorDV = new GeradorDeDigitoPadrao();
 		
@@ -152,7 +128,7 @@ public class EmissorSegundaViaBoleto {
                 .comDigitoCodigoBeneficiario("3")
                 .comCarteira(109)
                 .comEndereco(enderecoBeneficiario)
-                .comNossoNumero(String.valueOf(nossoNumero));
+                .comNossoNumero(nossoNumero);
                 
         //GERANDO DV DO NOSSO NÚMERO
         String bloco = beneficiario.getAgencia()

@@ -2,6 +2,7 @@ package br.com.pe.urbana.util;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.json.JsonObjectBuilder;
 
@@ -27,10 +28,17 @@ public class TesteBoleto {
 		
 		GeradorDeDigitoPadrao geradorDV = new GeradorDeDigitoPadrao();
 		
-		Datas datas = Datas.novasDatas()
-                .comDocumento(11, 7, 2017)
-                .comProcessamento(11, 7, 2017)
-                .comVencimento(15, 7, 2017);  
+        Endereco enderecoPagador = Endereco.novoEndereco()
+        		.comLogradouro("Rua Dom José Pereira Alves, 171")
+        		.comBairro("Cordeiro")
+        		.comCep("50721-020")
+        		.comCidade("Recife")
+        		.comUf("PE");
+        
+        Pagador pagador = Pagador.novoPagador()
+                .comNome("André Carlos Batista da Silva") 
+                .comDocumento("701.806.866-58")
+                .comEndereco(enderecoPagador);
 
         Endereco enderecoBeneficiario = Endereco.novoEndereco()
         		.comLogradouro("R. da Soledade") 
@@ -56,46 +64,45 @@ public class TesteBoleto {
         
         beneficiario.comDigitoNossoNumero(String.valueOf(dv));
 
-        Endereco enderecoPagador = Endereco.novoEndereco()
-        		.comLogradouro("Rua Dom José Pereira Alves, 171")
-        		.comBairro("Cordeiro")
-        		.comCep("50721-020")
-        		.comCidade("Recife")
-        		.comUf("PE");
+		// DATA DE VENCIMENTO DO BOLETO
+		Calendar dataVencimento = Calendar.getInstance();
+		dataVencimento.add(Calendar.DAY_OF_MONTH, +5);
+		
+		Datas datas = Datas.novasDatas()
+                .comDocumento(Calendar.getInstance())
+                .comProcessamento(Calendar.getInstance())
+                .comVencimento(dataVencimento);
+
+		Juros juros = Juros.novoJuros()
+				.comTipo(5); // ISENTO
         
-        Pagador pagador = Pagador.novoPagador()
-                .comNome("André Carlos Batista da Silva") 
-                .comDocumento("701.806.866-58")
-                .comEndereco(enderecoPagador);
+		Multa multa = Multa.novaMulta()
+        		.comTipo(3); // ISENTO	
         
-        Desconto desconto = Desconto.novoDesconto()
-        		.comTipo(0);
+		Desconto desconto = Desconto.novoDesconto()
+        		.comTipo(0); // SEM DESCONTO
         
         RecebimentoDivergente recebimentoDivergente = RecebimentoDivergente.novoRecebimentoDivergente()
-        		.comTipoAutorizacao("1");
-        
-        Juros juros = Juros.novoJuros()
-        		.comTipo(5);
-        
-        Multa multa = Multa.novaMulta()
-        		.comTipo(3);
-        
+        		.comTipoAutorizacao("3"); // QUANDO O TÍTULO NÃO DEVE ACEITAR PAGAMENTO DE VALORES DIVERGENTES AO DA COBRANÇA
+
         InstrucaoCobranca instrucaoCobranca1 = InstrucaoCobranca.novaInstrucaoCobranca()
-        		.comInstrucao("90");
+        		.comInstrucao("90"); // NO VENCIMENTO, PAGÁVEL EM QUALQUER AGÊNCIA BANCÁRIA
         
-        Banco banco = new Itau();  
+        Banco banco = new Itau(); 
 
         Boleto boleto = Boleto.novoBoleto()
-        		.comTipoAmbiente(1)
-        		.comTipoRegistro(1)
-        		.comTipoCobranca(1)
+        		.comEspecieMoeda("R$")
+        		.comCodigoEspecieMoeda(9)
+        		.comTipoAmbiente(1) // PARA TESTE
+        		.comTipoRegistro(1) // PARA REGISTRO
+        		.comTipoCobranca(1) // PARA BOLETOS
         		.comTipoProduto("00006")
         		.comSubProduto("00008")
-        		.comAceite(false)//boleto de proposta
-        		.comEspecie(01)
-        		.comTipoPagamento(1)
-        		.comIndicadorPagamentoParcial(false)
-        		.comJuros(juros)
+        		.comAceite(false) // BOLETO PROPOSTA
+        		.comEspecie("01") // DUPLICATA MERCANTIL
+        		.comTipoPagamento(1) // PAGAMENTO REALIZADO À VISTA
+        		.comIndicadorPagamentoParcial(false) // NÃO ACEITA PAGAMENTO PARCIAL
+        		.comJuros(juros) 
         		.comMulta(multa)
         		.comDesconto(desconto)
         		.comRecebimentoDivergente(recebimentoDivergente)
@@ -104,11 +111,11 @@ public class TesteBoleto {
                 .comDatas(datas)
                 .comBeneficiario(beneficiario)
                 .comPagador(pagador)
-                .comValorBoleto("9.99")
-                .comNumeroDoDocumento("9876")
+                .comValorBoleto("20.00")
+                .comNumeroDoDocumento(beneficiario.getNossoNumero())
                 .comEspecieDocumento("RC")
-                .comInstrucoes("No vencimento, pagável em qualquer agência bancária")//InstrucaoCobranca 90
-                .comLocaisDePagamento("Preferencialmente no Banco Itaú");
+                .comInstrucoes("SR. CAIXA, FAVOR RECEBER O BOLETO MESMO APÓS A DATA DE VENCIMENTO, SEM", "COBRANÇA DE MULTA E JUROS.", "PAGAMENTO APENAS EM DINHEIRO.")
+                .comLocaisDePagamento("Até o vencimento, preferencialmente no Itaú");
 		
 		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
         gerador.geraPDF(pagador.getNome() + ".pdf");
@@ -126,9 +133,6 @@ public class TesteBoleto {
 		}
         
 		System.out.println("Json Gerado!");
-		
-		System.out.println("Cód Barras" + boleto.getCodigoDeBarras());
-		System.out.println("Linha dig" + boleto.getLinhaDigitavel());
 		
 	}	
 }

@@ -56,31 +56,37 @@ public class Acompanhamento extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/acompanhamento.jsp";
+		String page = "jsp/inicio.jsp";
 		String msgComando = null;
 		String msgAuxiliar = null;
-				
 		HttpSession session = request.getSession();
+		
+		boolean acompanhar = "true".equals(request.getParameter("acompanhar"));
+		
 		BoletoContoller ctrBoleto = BoletoContoller.getInstance();
 		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 		
 		try{
 			
-			EntidadeUser user = (EntidadeUser) session.getAttribute("user");
-			session.removeAttribute("user");
-			request.setAttribute("servlet", "acompanhamento");
-			
-			// CONSULTA O USUÁRIO 
-			EntidadeUsuario usuario = null;
-			usuario = ctrUsuario.consultarCpfNovo(user.getLogin());
-			if(usuario == null) {
-				usuario = ctrUsuario.consultarCpf(user.getLogin());
+			if(acompanhar) {
+				page = "jsp/acompanhamento.jsp";
+				
+				EntidadeUser user = (EntidadeUser) session.getAttribute("user");
+				session.removeAttribute("user");
+				request.setAttribute("servlet", "acompanhamento");
+				
+				// CONSULTA O USUÁRIO 
+				EntidadeUsuario usuario = null;
+				usuario = ctrUsuario.consultarCpfNovo(user.getLogin());
+				if(usuario == null) {
+					usuario = ctrUsuario.consultarCpf(user.getLogin());
+				}
+							
+				request.setAttribute("usuario", usuario);
+				
+				List<EntidadeCobranca> lEntidade = ctrBoleto.listarCobrancas(user.getLogin());
+				session.setAttribute("lEntidade", lEntidade);
 			}
-						
-			request.setAttribute("usuario", usuario);
-			
-			List<EntidadeCobranca> lEntidade = ctrBoleto.listarCobrancas(user.getLogin());
-			session.setAttribute("lEntidade", lEntidade);
 			
 		} catch (Exception e) {
 			

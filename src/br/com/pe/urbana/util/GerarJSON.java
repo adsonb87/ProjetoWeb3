@@ -7,7 +7,8 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 
-import br.com.pe.urbana.entidade.EnderecoUsuario;
+import br.com.caelum.stella.boleto.Boleto;
+import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 
 public class GerarJSON {
@@ -21,7 +22,7 @@ public class GerarJSON {
 	
 	private static void javaJson() {
 		EntidadeUsuario usuario = new EntidadeUsuario();
-		EnderecoUsuario endereco = new EnderecoUsuario();
+		EntidadeEndereco endereco = new EntidadeEndereco();
 
 		usuario.setCpf("051.884.364-50");
 		usuario.setNome("ANDRE CARLOS BATISTA DA SILVA");
@@ -57,12 +58,12 @@ public class GerarJSON {
 
 		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("c:\\usuario.json"));
+			BufferedReader br = new BufferedReader(new FileReader("C:/Users/andres/Desktop/ANDRE CARLOS BATISTA DA SILVA.json"));
 
 			//Converte String JSON para objeto Java
-			EntidadeUsuario obj = gson.fromJson(br, EntidadeUsuario.class);
+			Boleto obj = gson.fromJson(br, Boleto.class);
 
-			System.out.println(obj);
+			System.out.println(obj.toString());
 
 		} catch (IOException e) {
 			e.printStackTrace();

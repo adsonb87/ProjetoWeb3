@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.dao.UsuarioDao;
-import br.com.pe.urbana.entidade.EnderecoUsuario;
+import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeCartao;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
@@ -89,11 +89,11 @@ public class UsuarioControllerRep {
 		ResultSet rs = dao.consultarCpf(cpf);
 		
 		EntidadeUsuario usuario = null;
-		EnderecoUsuario endereco = null;
+		EntidadeEndereco endereco = null;
 		
 		if ((rs != null) && rs.next()) {
 			usuario = new EntidadeUsuario();
-			endereco = new EnderecoUsuario();
+			endereco = new EntidadeEndereco();
 	
 			usuario.setUsrIdOrigem(rs.getInt("USR_ID"));
 			usuario.setCpf(rs.getString("CPF"));
@@ -123,12 +123,12 @@ public class UsuarioControllerRep {
 		ResultSet rs = dao.consultarCpfNovo(cpf);
 		
 		EntidadeUsuario usuario = null;
-		EnderecoUsuario endereco = null;
+		EntidadeEndereco endereco = null;
 		EntidadeCartao cartao = null;
 		
 		if ((rs != null) && rs.next()) {
 			usuario = new EntidadeUsuario();
-			endereco = new EnderecoUsuario();
+			endereco = new EntidadeEndereco();
 			cartao = new EntidadeCartao();
 			
 			usuario.setId(rs.getInt("USU_ID"));

@@ -52,6 +52,7 @@
 			if (!valido) {
 				bootbox.alert("CPF inválido!",function(){
 					formConsultarCPF.action = "consultaCPF";
+					formConsultarCPF.consCadastro.value= "true";
 					formConsultarCPF.submit();
 				})
 				return false;

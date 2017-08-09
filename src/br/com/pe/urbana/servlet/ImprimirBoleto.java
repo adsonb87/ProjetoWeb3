@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
 @WebServlet("/imprimirBoleto")
@@ -57,10 +58,10 @@ public class ImprimirBoleto extends HttpServlet implements Servlet {
 				
 		HttpSession session = request.getSession();
 
-		
 		boolean imprimir = "true".equals(request.getParameter("imprimir"));
 		boolean imprimirBoleto = "true".equals(request.getParameter("imprimirBoleto"));
 		
+		EntidadeUsuario usuario = null;
 		String nome = null;
 		byte[] boletoPDF = null;
 				
@@ -68,13 +69,17 @@ public class ImprimirBoleto extends HttpServlet implements Servlet {
 			
 			if(imprimir || imprimirBoleto) {
 				page = "jsp/imprimirBoleto.jsp";
+				
+				usuario = (EntidadeUsuario) session.getAttribute("usuario");
+				session.removeAttribute("usuario");
+				
+				request.setAttribute("usuario", usuario);
 			}
 			
 			if(imprimirBoleto) {
 				
-				nome = (String) session.getAttribute("nome");
+				nome = request.getParameter("nome");
 				boletoPDF = (byte[]) session.getAttribute("boletoPDF");
-				session.removeAttribute("nome");
 				session.removeAttribute("boletoPDF");
 					
 				if (boletoPDF != null && boletoPDF.length > 0) {
@@ -86,6 +91,10 @@ public class ImprimirBoleto extends HttpServlet implements Servlet {
 					ouputStream.write(boletoPDF, 0, boletoPDF.length);
 					ouputStream.flush();
 					ouputStream.close();
+				} else {
+					
+					// CASO O USUARIO TENTE GERAR NOVAMENTE O BOLETO
+					msgComando = "1";
 				}
 				
 			}

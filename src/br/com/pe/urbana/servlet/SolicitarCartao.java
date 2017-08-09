@@ -18,7 +18,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.boleto.EmissorBoleto;
 import br.com.pe.urbana.controller.UsuarioContoller;
-import br.com.pe.urbana.entidade.EnderecoUsuario;
+import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
@@ -67,7 +67,7 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 		
 		EntidadeUsuario usuario = null;
-		EnderecoUsuario endereco = null;
+		EntidadeEndereco endereco = null;
 		byte[] boletoPDF = null;
 		
 		try{
@@ -88,7 +88,7 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 			if(solicitar) {
 				
 				usuario = new EntidadeUsuario();
-				endereco = new EnderecoUsuario();
+				endereco = new EntidadeEndereco();
 				
 				String usrIdOrigem = request.getParameter("usrIdOrigem");
 				String cpf = request.getParameter("cpf");
@@ -130,16 +130,16 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 					
 					EmissorBoleto emissorBoleto = new EmissorBoleto();
 					// GERA O BOLETO, SALVA O USUÁRIO E A COBRAÇA
-					boletoPDF = emissorBoleto.gerarBoletoEmBytes(request, usuario);
+					boletoPDF = emissorBoleto.gerarBoletoEmBytes(usuario, request);
 					
 					session.setAttribute("boletoPDF", boletoPDF);
-					session.setAttribute("nome", usuario.getNome());
+					session.setAttribute("usuario", usuario);
 												
-					msgAuxiliar = "Cartão solicitado com sucesso!";
 					msgComando = "1";
 				} else {
-					msgAuxiliar = "Cartão já foi solicitado!";
-					msgComando = "1";
+					
+					msgAuxiliar = "Cadastre uma senha para acompanhar o status do pedido";
+					msgComando = "2";
 				}
 				
 			}
@@ -147,7 +147,7 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 		} catch (Exception e) {
 			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
-			msgComando = "2";
+			msgComando = "3";
 		}
 		
 		request.setAttribute("msgAuxiliar", msgAuxiliar);

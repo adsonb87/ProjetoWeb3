@@ -127,6 +127,19 @@ c {
 	color: #329246;
 }
 
+#dadosUsu {
+	margin: 0px;
+}
+
+.margin-table{
+	margin: 0 0 0 0;
+}
+
+.panel-table{
+	margin-top: 20px;
+	border-color: #329246;
+}
+
 /*Helpers*/
 .centered {
 	text-align: center;
@@ -384,7 +397,7 @@ ul.icons li .icon-large:before, ul.icons li .icon-large:before {
 }
 
 .container small {
-	color: white;
+	color: #999;
 }
 
 .footer {
@@ -486,6 +499,10 @@ ul.icons li .icon-large:before, ul.icons li .icon-large:before {
 
 .modal-dialog-login {
 	width: 350px;
+}
+
+.modal-loading{
+	width: 200px;
 }
 
 .row>ul>li {

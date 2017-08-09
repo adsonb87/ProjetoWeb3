@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import br.com.pe.urbana.controller.UsuarioContoller;
-import br.com.pe.urbana.entidade.EnderecoUsuario;
+import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
@@ -68,7 +68,7 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 		UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
 
 		EntidadeUsuario usuario = null;
-		EnderecoUsuario endereco = null;
+		EntidadeEndereco endereco = null;
 	
 		try{
 			
@@ -79,9 +79,9 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 			if(altCadastro) {
 				
 				usuario = (EntidadeUsuario)session.getAttribute("usuario");
+				session.removeAttribute("usuario");
 				
 				request.setAttribute("usuario", usuario);
-				session.removeAttribute("usuario");
 				msgComando = "1";
 				
 			} else if(novoCadastro) {
@@ -94,7 +94,7 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 			}else if(alterarCad) {
 			
 				usuario = new EntidadeUsuario();
-				endereco = new EnderecoUsuario();
+				endereco = new EntidadeEndereco();
 				
 				String usrIdOrigem = request.getParameter("usrIdOrigem");
 				String cpf = request.getParameter("cpf");
@@ -133,7 +133,7 @@ public class CadastroUsuarioNovo extends HttpServlet implements Servlet {
 			} else if(cadastrar) {
 				
 				usuario = new EntidadeUsuario();
-				endereco = new EnderecoUsuario();
+				endereco = new EntidadeEndereco();
 				
 				String usrIdOrigem = request.getParameter("usrIdOrigem");
 				String cpf = request.getParameter("cpf");

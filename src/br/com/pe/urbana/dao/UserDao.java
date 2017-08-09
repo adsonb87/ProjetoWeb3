@@ -31,16 +31,15 @@ public class UserDao extends ConnectionFactoryDB {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("	INSERT INTO COM_USER (US_NOME, US_LOGIN, US_SENHA,");
+		sb.append("	INSERT INTO COM_USER (US_LOGIN, US_SENHA,");
 		sb.append("		US_REGUSER, US_REGDATE)");
-		sb.append("	VALUES (?, ?, ?, ?, SYSDATE)");
+		sb.append("	VALUES (?, ?, ?, SYSDATE)");
 		
-		ParamDAO[] params = new ParamDAO[4];
+		ParamDAO[] params = new ParamDAO[3];
 		
-		params[0] = new ParamDAO(user.getNome(), Types.VARCHAR);
-		params[1] = new ParamDAO(user.getLogin(), Types.VARCHAR);
-		params[2] = new ParamDAO(user.getPassword(), Types.VARCHAR);
-		params[3] = new ParamDAO(user.getRegUser(), Types.VARCHAR);
+		params[0] = new ParamDAO(user.getLogin(), Types.VARCHAR);
+		params[1] = new ParamDAO(user.getPassword(), Types.VARCHAR);
+		params[2] = new ParamDAO(user.getRegUser(), Types.VARCHAR);
 		
 		super.executeUpdate(sb.toString(), params);
 		
@@ -52,7 +51,6 @@ public class UserDao extends ConnectionFactoryDB {
 		
 		sb.append("	SELECT ");
 		sb.append("		US_ID,");
-		sb.append("		US_NOME,");
 		sb.append("		US_LOGIN,");
 		sb.append("		US_SENHA,");
 		sb.append("		US_REGUSER,");

@@ -42,5 +42,9 @@ public class EntidadeNossoNumero {
 	public void setSeqValor(Integer seqValor) {
 		this.seqValor = seqValor;
 	}
+	
+	public String getSeqValorFormatado() {
+		return String.format("%08d", seqValor);
+	}
 
 }

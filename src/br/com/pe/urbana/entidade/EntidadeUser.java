@@ -3,7 +3,6 @@ package br.com.pe.urbana.entidade;
 public class EntidadeUser extends Entidade {
 
 	private Integer id;
-	private String nome;
 	private String login;
 	private String password;
 	
@@ -16,14 +15,6 @@ public class EntidadeUser extends Entidade {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getLogin() {

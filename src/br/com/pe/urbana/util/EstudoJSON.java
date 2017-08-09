@@ -3,7 +3,7 @@ package br.com.pe.urbana.util;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.com.pe.urbana.entidade.EnderecoUsuario;
+import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 
 public class EstudoJSON {
@@ -17,12 +17,12 @@ public class EstudoJSON {
 	private static void adicaoSimplesDeDados() throws JSONException {
 
 		EntidadeUsuario usuario = new EntidadeUsuario();
-		EnderecoUsuario endereco = new EnderecoUsuario();
+		EntidadeEndereco endereco = new EntidadeEndereco();
 
 		usuario.setCpf("051.884.364-50");
 		usuario.setNome("ANDRE CARLOS BATISTA DA SILVA");
 		endereco.setCep("50721-020");
-		endereco.setLogradouro("RUA DOM JOSE PEREIRA ALVES");
+		endereco.setLogradouro("RUA DOM JOSE PERbEIRA ALVES");
 		endereco.setBairro("CORDEIRO");
 		endereco.setCidade("RECIFE");
 		endereco.setUf("PE");

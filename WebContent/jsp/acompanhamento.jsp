@@ -20,7 +20,9 @@
 		formConsultarCPF.idCobranca.value = idCobranca;
 		formConsultarCPF.exibir.value = "true";
 		formConsultarCPF.action = "exibirBoleto";
+		formConsultarCPF.setAttribute("target", "_blank");
 		formConsultarCPF.submit();
+		formConsultarCPF.removeAttribute("target");
 	}
 
 	function goBack() {
@@ -54,27 +56,41 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="has-success">
-								<label class="control-label">Nome: <b class="b-label">${ usuario.nome }</b></label>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="has-success">
-								<label class="control-label">CPF: <b class="b-label">${ usuario.cpfFormatado }</b></label>
-							</div>
-						</div>
+       					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+				            <div class="well well-sm">
+				                <div class="row">
+				                    <div class="col-md-12" style="text-align: center;">
+				                        <h4>
+				                        	${ usuario.nome }
+				                        </h4>
+				                        <small>
+											<cite><i class="glyphicon glyphicon-map-marker"></i> ${ usuario.enderecoFormatado }</cite>
+										</small>
+										<c:if test="${not empty usuario.cpfFormatado }">
+											<p id="dadosUsu"><i class="glyphicon glyphicon-credit-card"></i> CPF: ${ usuario.cpfFormatado }</p>
+										</c:if>
+										<c:if test="${not empty usuario.email }">
+											<p id="dadosUsu"><i class="glyphicon glyphicon-envelope"></i> ${ usuario.email }</p>
+										</c:if>
+										<c:if test="${not empty usuario.dataNascimento }">
+											<p id="dadosUsu"><i class="glyphicon glyphicon-calendar"></i> ${ usuario.dataNascimento }</p>
+										</c:if>
+										<c:if test="${not empty usuario.telefoneFormatado }">
+											<p id="dadosUsu"><i class="glyphicon glyphicon-phone"></i> ${ usuario.telefoneFormatado }</p>
+										</c:if>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
 					</div>
-				</div>
-				<div class="panel-body">					
-					<div class="row" style="margin: 0 0 0 0;">
+					<div class="row margin-table">
 						<c:if test="${not empty lEntidade}">
-							<div id="div-grid" class="panel panel-primary" style="margin-top: 20px;">
+							<div id="div-grid" class="panel panel-table">
 								<div class="table-responsive">
 									<display:table name="sessionScope.lEntidade" id="row" class="table table-striped " requestURI="/acompanhamento"	excludedParams="execCons" decorator="br.com.pe.urbana.wrapper.ConsultaWrapper">
-										<display:column property="nossoNumero" class="col-lg-4" title="Número Documento"/>
+										<display:column property="nossoNumero" class="col-lg-4" title="Nº Documento"/>
 										<display:column property="dataVencimentoFormatada" class="col-lg-3" title="Data Vencimento"/>
-										<display:column property="valorFormatado" class="col-lg-3" title="Valor do Boleto"/>
+										<display:column property="valorFormatado" class="col-lg-3" title="Valor"/>
 										<display:column property="statusCobranca" class="col-lg-1" title="Status"/>
 										<display:column property="exibirBoleto" class="col-lg-1" title="Visualizar"/>
 									</display:table>

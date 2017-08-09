@@ -8,18 +8,25 @@
 	}
 
 	function verificar() {
-		var msgComando = "${msgComando}";
-		var msgAuxiliar = "${msgAuxiliar}";
+		var msgComando = "${ msgComando }";
+		var msgAuxiliar = "${ msgAuxiliar }";
 		
 		if(msgComando == "1") {
+			$('#modalLoader').modal('hide');
 			$('#modalLogin').modal('show');
 			$('#msgLogin').css('display', 'block');
 			$('#msgLogin').text(msgAuxiliar);
 		}
 		
 		if(msgComando == "2") {
+			formInicio.acompanhar.value = "true";
 			formInicio.action = "acompanhamento";
 			formInicio.submit();
+		}
+		
+		if(msgComando == "3") {
+			$('#modalLoader').modal('hide');
+			$('#modalAtencao').modal('show');
 		}
 		
 	}
@@ -41,6 +48,8 @@
 	}
 	
 	function acessar() {
+		$('#modalLoader').modal('show');
+		$('#modalLogin').modal('hide');
 		formInicio.login.value = $("#login").val();
 		formInicio.password.value = $("#password").val();
 		formInicio.consLogin.value = "true";
@@ -58,9 +67,14 @@
 		
 	}
 	
-	function limparCampos() {
-		$('#login').val('');
-		$('#password').val('');	
+	function cancelarAcesso() {
+		formInicio.action = "inicio";
+		formInicio.submit();	
+	}
+	
+	function goBack() {
+		formInicio.action = "inicio";
+		formInicio.submit();
 	}
 	
 	function mostraSenha() {
@@ -87,6 +101,7 @@
     <input type="hidden" name="consCadastro">
     <input type="hidden" name="consLogin">
     <input type="hidden" name="cadastrarUser">
+    <input type="hidden" name="acompanhar">
     <input type="hidden" name="login">
     <input type="hidden" name="password">
 		<div class="container">
@@ -112,7 +127,7 @@
 									<img style="height: 249px;" src="imagens/cartoesComum.png" alt="img01">
 									<figcaption style="width: 50%;">
 										<h3>VOCÊ AINDA NÃO TEM NOSSO CARTÃO COMUM?</h3>
-										 <a onclick="javascript:consultaCPF();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a>
+										 <a onclick="javascript:consultaCPF();" class="btn btn-success botaoMenu" href="#">Clique Aqui</a> 
 									</figcaption>
 								</figure>
 							</li>
@@ -150,9 +165,9 @@
 				<p class="msg-login" id="msgLogin"></p>
 			</div>
 			<div class="form-group form-modal-login">
-				<div>
+<!-- 				<div> -->
 <!-- 					<a onclick="javascript:esqueceuSenha();" href="#" data-toggle="modal">ESQUECEU SUA SENHA?</a> -->
-				</div>
+<!-- 				</div> -->
 				<div>
 					<a onclick="javascript:cadastrarUser();" href="#" data-toggle="modal">INSCREVA-SE</a>
 				</div>
@@ -160,11 +175,43 @@
 		  </div>
 	      <div class="modal-footer">
 	      	<input class="btn btn-success" type="button" onclick="javascript:acessar();" readonly="readonly" value="ENTRAR" name="cmdEntrar" title="Entrar"/>
-			<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" data-dismiss="modal" readonly="readonly" value="CANCELAR" name="cmdCancelar" title="Cancelar"/>
+			<input class="btn btn-success" type="button" onclick="javascript:cancelarAcesso();" data-dismiss="modal" readonly="readonly" value="CANCELAR" name="cmdCancelar" title="Cancelar"/>
 	      </div>
 	    </div>
 	  </div>
 	</div>
+	<!-- Modal Atenção -->
+	<div class="modal fade" id="modalAtencao" tabindex="-1" role="dialog" aria-labelledby="modalAtencao" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <b class="modal-title" id="modalAtencao">Atenção!</b>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>${ msgAuxiliar }</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="javascript:goBack();">OK</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal Loader -->
+	<div class="modal fade modalLogin" id="modalLoader" tabindex="-1" role="dialog" aria-labelledby="modalLoader" aria-hidden="true">
+		<div class="modal-dialog modal-loading" role="document">
+	        <div class="modal-content">
+	            <div class="modal-body">
+	                <div class="text-center">
+	                    <img src="imagens/loader.svg" class="icon"/>
+	                    <h5>CARREGANDO...</h5>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>	
 <script src="js/mask.js"></script>
 </body>
 </html>

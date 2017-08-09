@@ -20,6 +20,7 @@
 		}
 		
 		if(msgComando == "2") {
+			$("#realizarCadastro").prop("disabled",true);
 			formCadUsuario.confirmar.value = "true";
 			formCadUsuario.action = "solicitarCartao";
 			formCadUsuario.submit();
@@ -403,7 +404,7 @@
 								<option value="">.:SELECIONAR:.</option>
 									<c:forEach var="cidades" items="${lcidade}">
 										<option value="${ cidades }"
-											<c:if test="${cidades == usuario.endereco.cidade}">selected</c:if>>${ cidades }</option>
+											<c:if test="${cidades == usuario.endereco.cidade.toUpperCase()}">selected</c:if>>${ cidades }</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -435,7 +436,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer btAcoes" style="text-align: center;">
+				<div class="panel-footer btAcoes">
 					<input class="btn btn-success" type="submit" onclick="javascript:cadastrarUsuario();" readonly="readonly" id="realizarCadastro" value='CADASTRAR' name="cmdCadastrar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" id="limpar" value="LIMPAR" readonly="readonly" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>

@@ -19,10 +19,22 @@
 		
 		if(msgComando == 2) {
 			bootbox.alert(msgAuxiliar,function(){
+				formSolicitar.cadastrarUser.value = "true";
+				formSolicitar.action = "cadastroUser";
+				formSolicitar.submit();
+			})
+		}
+		
+		if(msgComando == 3) {
+			bootbox.alert(msgAuxiliar,function(){
 				formSolicitar.action = "inicio";
 				formSolicitar.submit();
 			})
 		}
+	}
+	
+	function confirmarSolic() {
+		$('#modalAtencao').modal('show');
 	}
 
 	function solicitarCartao() {
@@ -51,8 +63,8 @@
 	<form name=formSolicitar method="POST" action="formSolicitar" onSubmit="return false;">
       <input type="hidden" name="imprimir">
       <input type="hidden" name="solicitar">
-      <input type="hidden" name="altCadastro">
       <input type="hidden" name="alterarCad">
+      <input type="hidden" name="cadastrarUser">
       <input type="hidden" name="usrIdOrigem">
       <input type="hidden" name="nome" value="${ usuario.nome }">
       <input type="hidden" name="cpf" value="${ usuario.cpf }"> 
@@ -82,7 +94,7 @@
 			            		<div class="panel-body">
 			              			<div class="row">
 			                			<div class="col-md-3 col-lg-3 " align="center">
-			                				<img src="imagens/comum-avatar.png" alt="img01" class="img-responsive">
+			                				<img src="imagens/comum-avatar.png" alt="img01" class="img-rounded img-responsive">
 			                			</div>
 							                <div class=" col-md-9 col-lg-9 ">
 							                	<table class="table table-user-information">
@@ -168,7 +180,7 @@
 										</div>
 									</div>
 								<div class="panel-footer btAcoes">
-									<input type="button" class="btn btn-success" onclick="javascript:solicitarCartao();" id="btnOk" value="CONFIRMAR">
+									<input type="button" class="btn btn-success" onclick="javascript:confirmarSolic();" id="btnOk" value="CONFIRMAR">
 									<input type="button" class="btn btn-warning" onclick="javascript:alterarCadastro();" id="btnEdit" value="ALTERAR">
 									<input type="button" class="btn btn-danger" onclick="javascript:cancelar();" id="btnCanc" value="CANCELAR">
 								</div>
@@ -178,6 +190,26 @@
 		    	</div>
 			</div>
 		</div>
-	</form>
+	</form>	
+	<!-- Modal Atenção -->
+	<div class="modal fade" id="modalAtencao" tabindex="-1" role="dialog" aria-labelledby="modalAtencao" aria-hidden="true">
+		<div class="modal-dialog modalLogin" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<b class="modal-title" id="modalAtencao">Atenção!</b>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Deseja realmente confirmar a compra do cartão Comum?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal" onclick="javascript:solicitarCartao();">SIM</button>
+					<button type="button" class="btn btn-success" data-dismiss="modal" onclick="javascript:cancelar();">NÃO</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 
 public class HashUtil {
 	
-
+	
 	private static Logger logger =null;
 	
 	public void init(){

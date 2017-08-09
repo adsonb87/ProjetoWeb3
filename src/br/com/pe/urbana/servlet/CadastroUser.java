@@ -77,7 +77,6 @@ public class CadastroUser extends HttpServlet implements Servlet {
 			
 			if(cadastrar) {
 				
-				String nome = request.getParameter("nome");
 				String cpf = Util.unMaskCnpj(request.getParameter("cpf"));
 				String password = request.getParameter("password1");
 				
@@ -91,7 +90,6 @@ public class CadastroUser extends HttpServlet implements Servlet {
 				if((flagUsuario || flagUsuarioNovo) && flagRegistro) {
 					
 					user = new EntidadeUser();
-					user.setNome(nome);
 					user.setLogin(cpf);
 					user.setPassword(password);
 					user.setRegUser("SISTEMA");

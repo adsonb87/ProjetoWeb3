@@ -100,7 +100,8 @@ public class ConsultaCadastro extends HttpServlet implements Servlet {
 					if(cartao.getCpf() != null || cardAux != null) {
 						msgAuxCartao = "Já vinculado a um usuário";
 						msgComando = "1";
-					} else if(cartao.getMotivoBloq() != null) {
+					//VERIFICA SE O CARTÃO ESTÁ BLOQUEADO, (99 == DESCANCELADO)
+					} else if((cartao.getMotivoBloq() != null) && (!cartao.getMotivoBloq().equals("99")))  {
 						msgAuxCartao = "Em Lista de restrição";
 						msgComando = "1";
 					} else {

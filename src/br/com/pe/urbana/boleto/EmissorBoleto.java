@@ -1,15 +1,10 @@
 package br.com.pe.urbana.boleto;
 
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.com.caelum.stella.boleto.Banco;
 import br.com.caelum.stella.boleto.Beneficiario;
@@ -32,12 +27,10 @@ import br.com.pe.urbana.entidade.EntidadeCobranca;
 import br.com.pe.urbana.entidade.EntidadeNossoNumero;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.entidade.Status;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 public class EmissorBoleto {
 	
-	@SuppressWarnings("deprecation")
-	public byte[] gerarBoletoEmBytes(HttpServletRequest request, EntidadeUsuario usuario) throws Exception {
+	public byte[] gerarBoletoEmBytes(EntidadeUsuario usuario, HttpServletRequest request) throws Exception {
 		
 		// EXTRAINDO DADOS DO USUÁRIO PARA O PAGADOR
 		Endereco enderecoPagador = Endereco.novoEndereco()
@@ -53,26 +46,10 @@ public class EmissorBoleto {
                 .comEndereco(enderecoPagador);
 		
 		byte[] pdfBytes = null;
+		
 		Boleto boleto = criarBoleto(pagador);
-
-		// CARREGA O CAMINHO FÍSICO DOS ARQUIVOS
-		String template = request.getServletContext().getRealPath("/WEB-INF/jasper/boleto-urbana.jasper");
-		String template_sub = request.getServletContext().getRealPath("/WEB-INF/jasper/boleto-urbana_instrucoes.jasper");
-		String logoUrbana = request.getServletContext().getRealPath("/WEB-INF/jasper/logoUrbana.png");
-		String logoBanco = request.getServletContext().getRealPath("/WEB-INF/jasper/logoBanco.png");
 		
-		// MAPA PARA PARÂMETROS
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("logo_urbana", logoUrbana);
-		parametros.put("logo_banco", logoBanco);
-		parametros.put("SUB_INSTRUCOES", JRLoader.loadObject(template_sub));
-		
-		// CARREGA O CONTEÚDO DO ARQUIVO EM UM INPUTSTREAM
-		InputStream templateBoleto = new FileInputStream(template);
-
-		// PASSA PARA O GERADOR DE BOLETO O DADOS DO TEMPLATE NO CONSTRUTOR, 
-		// JUNTO COM O MAPA DE PARÂMETROS, ALÉM DOS DADOS DOS BOLETOS
-		GeradorDeBoleto gerador = new GeradorDeBoleto(templateBoleto, parametros, boleto);
+		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
 		pdfBytes = gerador.geraPDF();
 		
 		if(pdfBytes != null) {
@@ -102,7 +79,7 @@ public class EmissorBoleto {
 		}
 		
 		// CRIAR O JSON DO BOLETO
-		//criarJsonBoleto(boleto);
+		criarJsonBoleto(boleto, request);
 		
 		return pdfBytes;
 	}
@@ -146,10 +123,10 @@ public class EmissorBoleto {
         		.comTipoProduto("00006")
         		.comSubProduto("00008")
         		.comAceite(false) // BOLETO PROPOSTA
-        		.comEspecie(01) // DUPLICATA MERCANTIL
+        		.comEspecie("01") // DUPLICATA MERCANTIL
         		.comTipoPagamento(1) // PAGAMENTO REALIZADO À VISTA
         		.comIndicadorPagamentoParcial(false) // NÃO ACEITA PAGAMENTO PARCIAL
-        		.comJuros(juros) 
+        		.comJuros(juros)
         		.comMulta(multa)
         		.comDesconto(desconto)
         		.comRecebimentoDivergente(recebimentoDivergente)
@@ -158,9 +135,9 @@ public class EmissorBoleto {
                 .comDatas(datas)
                 .comBeneficiario(beneficiario)
                 .comPagador(pagador)
-                .comValorBoleto("20.00")
+                .comValorBoleto("1.00")
                 .comNumeroDoDocumento(beneficiario.getNossoNumero())
-                .comEspecieDocumento("RC")
+                .comEspecieDocumento("RC") // RECIBO
                 .comInstrucoes("SR. CAIXA, FAVOR RECEBER O BOLETO MESMO APÓS A DATA DE VENCIMENTO, SEM", "COBRANÇA DE MULTA E JUROS.", "PAGAMENTO APENAS EM DINHEIRO.")
                 .comLocaisDePagamento("Até o vencimento, preferencialmente no Itaú");
     
@@ -191,7 +168,7 @@ public class EmissorBoleto {
                 .comDigitoCodigoBeneficiario("3")
                 .comCarteira(109)
                 .comEndereco(enderecoBeneficiario)
-                .comNossoNumero(String.valueOf(nossoNumero.getSeqValor()));
+                .comNossoNumero(nossoNumero.getSeqValorFormatado());
                 
         //GERANDO DV DO NOSSO NÚMERO
         String bloco = beneficiario.getAgencia()
@@ -221,19 +198,14 @@ public class EmissorBoleto {
 	}
 	
 	// CRIA O JSON DO BOLETO
-	private void criarJsonBoleto(Boleto boleto) {
+	private void criarJsonBoleto(Boleto boleto, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
 		
 		// GERA O JSON E RETORNA UM JSONOBJECTBUILDER
 		JsonObjectBuilder boletoJson = GeradorJson.gerarJson(boleto);
- 		
-		try {
-			FileWriter writer = new FileWriter("C:/projetos/vemcomum/" + boleto.getPagador().getNome() + ".json");
-			writer.write(boletoJson.build().toString());
-			writer.close();
-	 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// ADICIONA O JSON NA SESSÃO
+ 		//session.setAttribute("boletoJson", boletoJson);
         		
 	}
 

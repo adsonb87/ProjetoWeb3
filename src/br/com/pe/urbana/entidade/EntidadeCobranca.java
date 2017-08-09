@@ -133,4 +133,8 @@ public class EntidadeCobranca {
 		return String.format("R$ %.2f", valor);
 	}
 	
+	public String getNossoNumeroFormatado() {
+		return String.format("%08d", nossoNumero);
+	}
+	
 }

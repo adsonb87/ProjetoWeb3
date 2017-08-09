@@ -74,7 +74,7 @@
 			            		<div class="panel-body">
 			              			<div class="row">
 			                			<div class="col-md-3 col-lg-3 " align="center">
-			                				<img src="imagens/comum-avatar.png" alt="img01" class="img-responsive">
+			                				<img src="imagens/comum-avatar.png" alt="img01" class="img-rounded img-responsive">
 			                			</div>
 							                <div class=" col-md-9 col-lg-9 ">
 							                	<table class="table table-user-information">

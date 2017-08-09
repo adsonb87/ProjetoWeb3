@@ -14,6 +14,7 @@
 		switch(msgComando) {
 			case "1":
 				bootbox.alert(msgAuxiliar,function(){
+					formCadUser.acompanhar.value = "true";
 					formCadUser.action = "acompanhamento";
 					formCadUser.submit();
 				})
@@ -30,19 +31,6 @@
 	}
 
 	function validarCampos() {
-
-		//VALIDANDO NOME
-		var nome = document.formCadUser.nome.value.trim();
-		if (nome == "") {
-			bootbox.alert("Para continuar, informe o seu Nome!",function(){})
-			return false;
-		} else {
-			var cont = nome.length;
-			if(cont < 3){
-				bootbox.alert("Para continuar, informe um nome válido!",function(){})
-				return false;
-			}
-		}
 
 		//VALIDANDO CPF
 		if (document.formCadUser.cpf.value == "") {
@@ -86,7 +74,6 @@
 	}
 
 	function limparCampos() {
-		$('#nome').val('');
 		$('#cpf').val('');
 		$('#password1').val('');
 		$('#password2').val('');
@@ -164,6 +151,7 @@
 	<form name=formCadUser method="POST" action="formCadUser" onSubmit="return false;">
       <input type="hidden" name="cadastrar">
       <input type="hidden" name="cadastrarUser">
+      <input type="hidden" name="acompanhar">
 		<div class="container">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -171,13 +159,6 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group has-success">
-								<label class="control-label" for="nome">Nome</label>
-								<input type="text" class="form-control" placeholder="Informe o Nome" aria-describedby="basic-addon1"
-								id="nome" name="nome" onkeyup="maiuscula(this)" onkeypress="return sem_acento(event)" maxlength="100" autocomplete="off">
-							</div>
-						</div>
 	          			<div class="col-md-12">
 							<div class="form-group has-success">
 								<label class="control-label" for="cpf">CPF</label>
@@ -204,7 +185,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="panel-footer btAcoes" style="text-align: center;">
+				<div class="panel-footer btAcoes">
 					<input class="btn btn-success" type="submit" onclick="javascript:cadastrarUsuario();" readonly="readonly" id="cadUser" value='CADASTRAR' name="cmdCadastrar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:limparCampos();" readonly="readonly"  id="limpar" value="LIMPAR" name="cmdLimpar"/>
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>

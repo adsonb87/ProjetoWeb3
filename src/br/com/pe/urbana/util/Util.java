@@ -96,4 +96,9 @@ public class Util {
 		return dataFormat;
 	}
 	
+	public static String formatTelefone(String telefone) {
+		
+		return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2);
+	}
+	
 }

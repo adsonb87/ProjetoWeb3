@@ -83,14 +83,14 @@ public class ExibirBoleto extends HttpServlet implements Servlet {
 				
 				if(cobranca != null) {
 					
-					// CONSULTA O CADASTRO DO USUÁRIO 
+					// CONSULTA O CADASTRO DO USUÁRIO
 					usuario = ctrUsuario.consultarCpfNovo(cobranca.getCpfPagador());
 					if(usuario == null) {
 						usuario = ctrUsuario.consultarCpf(cobranca.getCpfPagador());
 					}
 					
 					// GERA A SEGUNDA VIA DO BOLETO
-					boletoPDF = emissorBoleto.gerarBoletoEmBytes(usuario, cobranca, request);
+					boletoPDF = emissorBoleto.gerarBoletoEmBytes(usuario, cobranca);
 					
 					if (boletoPDF != null && boletoPDF.length > 0) {
 						response.setHeader("Content-disposition","filename=" + usuario.getNome() + ".pdf");

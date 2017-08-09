@@ -1,0 +1,59 @@
+{
+	"tipo_ambiente":1,
+	"tipo_registro":1,
+	"tipo_cobranca":1,
+	"tipo_produto":"00006",
+	"subproduto":"00008",
+	
+	"beneficiario":{
+		"cpf_cnpj_beneficiario":"09759606000180",
+		"agencia_beneficiario":"2938",
+		"conta_beneficiario":"24794",
+		"digito_verificador_conta_beneficiario":"3"
+	},
+	
+	"titulo_aceite":"N",
+	
+	"pagador":{
+		"cpf_cnpj_pagador":"05188436450",
+		"nome_pagador":"ANDRE CARLOS BATISTA DA SILVA",
+		"logradouro_pagador":"RUA DOM JOSÉ PEREIRA ALVES, 171",
+		"bairro_pagador":"CORDEIRO",
+		"cidade_pagador":"RECIFE",
+		"uf_pagador":"PE",
+		"cep_pagador":"50721020"
+	},
+	
+	"tipo_carteira_titulo":"109",
+	
+	"moeda":{
+		"codigo_moeda_cnab":"9"
+	},
+	
+	"nosso_numero":"00000004",
+	"digito_verificador_nosso_numero":"0",
+	"codigo_barras":"34197725000000001001090000000402938247943000",
+	"data_vencimento":"2017-08-13",
+	"valor_cobrado":"100",
+	"especie":"01",
+	"data_emissao":"2017-08-08",
+	"tipo_pagamento":1,
+	"indicador_pagamento_parcial":"false",
+	"instrucao_cobranca_1":"90",
+	
+	"juros":{
+		"tipo_juros":5
+	},
+	
+	"multa":{
+		"tipo_multa":3
+	},
+	
+	"grupo_desconto":[{
+		"tipo_desconto":0
+	}],
+	
+	"recebimento_divergente":{
+		"tipo_autorizacao_recebimento":"3"
+	}
+}

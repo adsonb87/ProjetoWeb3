@@ -47,6 +47,8 @@
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 	<link href="css/panel-cad.css" rel="stylesheet">
+	<link href="css/loading.css" rel="stylesheet"/>
+	
 	<!-- /CSS -->
 	<!-- /importando arquivos -->
 
