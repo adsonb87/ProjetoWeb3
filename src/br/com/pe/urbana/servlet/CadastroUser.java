@@ -92,7 +92,7 @@ public class CadastroUser extends HttpServlet implements Servlet {
 					user = new EntidadeUser();
 					user.setLogin(cpf);
 					user.setPassword(password);
-					user.setRegUser("SISTEMA");
+					user.setRegUser("VEM COMUM");
 					
 					boolean flagUser = ctrUser.consultaUser(user);
 					// CONSULTA SE O LOGIN JÁ POSSUI UMA CONTA

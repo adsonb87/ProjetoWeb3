@@ -107,6 +107,7 @@ public class Vinculacao extends HttpServlet implements Servlet {
 				usuario.setNomeMae(nomeMae);
 				usuario.setTelefone(telefone);
 				usuario.setEmail(email);
+				usuario.setRegUser("VEM COMUM");
 				
 				boolean flag = ctrUsuario.consultarUsuarioNovo(cpf);
 				

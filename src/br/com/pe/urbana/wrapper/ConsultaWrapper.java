@@ -7,27 +7,31 @@ import br.com.pe.urbana.entidade.EntidadeCobranca;
 public class ConsultaWrapper extends TableDecorator {
 
 	public String getStatusCobranca() {
+		
 		Object obj = this.getCurrentRowObject();
 		String situacao = "";
-		Integer status;
+		Integer status = null;
 		if (obj instanceof EntidadeCobranca) {
 			EntidadeCobranca entidade = (EntidadeCobranca) obj;
-			status = entidade.getStatus().getId();
+			status = entidade.getStatus().getValor();
 			if (status != null) {
 				switch (status) {
 				case 1:
-				case 2:
 				case 4:
-					situacao = "<p class=\"pendente\">Pendente</p>";
+					situacao = "<span class='pendente glyphicon glyphicon-question-sign' title='Pendente de Pagamento'></span>";
+					break;
+				case 2:
+					situacao = "<span class='registrado glyphicon glyphicon-exclamation-sign' title='Registrado'></span>";
 					break;
 				case 3:
-					situacao = "<p class=\"pago\">Pago</p>";
+					situacao = "<span class='pago glyphicon glyphicon-ok-sign' title='Pago'></span>";
 					break;
 				}
 			}
 		}
 		return situacao;
 	}
+
 	public String getExibirBoleto() throws Exception {
 
 		Object obj = this.getCurrentRowObject();

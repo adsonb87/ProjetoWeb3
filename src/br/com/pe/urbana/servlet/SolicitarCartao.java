@@ -16,7 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import br.com.pe.urbana.boleto.EmissorBoleto;
+import br.com.pe.urbana.boleto.RetornoRegistro;
+import br.com.pe.urbana.boleto.emissor.EmissorBoleto;
 import br.com.pe.urbana.controller.UsuarioContoller;
 import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
@@ -54,7 +55,7 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String page = "jsp/inicio.jsp";
+		String page = "jsp/solicitarCartao.jsp";
 		String msgComando = null;
 		String msgAuxiliar = null;
 				
@@ -77,12 +78,10 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 			}
 			
 			if(confirmar) {
-				
 				usuario = (EntidadeUsuario)session.getAttribute("usuario");
 				
 				request.setAttribute("usuario", usuario);
-				session.removeAttribute("usuario");
-				
+				session.removeAttribute("usuario");				
 			}
 		
 			if(solicitar) {
@@ -122,32 +121,41 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 				endereco.setComplemento(complemento);
 				endereco.setNumero(numero);
 				usuario.setEndereco(endereco);
-				usuario.setRegUser("SISTEMA");
+				usuario.setRegUser("VEM COMUM");
 								
 				boolean flag = ctrUsuario.consultarUsuarioNovo(cpfFormat);
 				
 				if(!flag){
-					
 					EmissorBoleto emissorBoleto = new EmissorBoleto();
 					// GERA O BOLETO, SALVA O USUÁRIO E A COBRAÇA
-					boletoPDF = emissorBoleto.gerarBoletoEmBytes(usuario, request);
+					boletoPDF = emissorBoleto.gerarBoleto(usuario, request);
 					
-					session.setAttribute("boletoPDF", boletoPDF);
-					session.setAttribute("usuario", usuario);
-												
-					msgComando = "1";
+					if(boletoPDF != null) {
+						
+						session.setAttribute("boletoPDF", boletoPDF);
+						session.setAttribute("usuario", usuario);
+						msgComando = "1";
+						
+					} else {
+						// CASO O BOLETO NÃO SEJA REGISTRADO
+						RetornoRegistro retornoRegistro = (RetornoRegistro) session.getAttribute("retornoRegistro");
+						session.removeAttribute("retornoRegistro");
+						
+						if (retornoRegistro != null) {
+							msgAuxiliar = "Algo deu errado na geração do boleto, confira seus dados Cadastrais";
+							msgComando = "2";
+						}
+					}
 				} else {
-					
+					// CASO O USUARIO VOLTE A PÁGINA E TENTE SOLOCITAR NOVAMENTE
 					msgAuxiliar = "Cadastre uma senha para acompanhar o status do pedido";
-					msgComando = "2";
+					msgComando = "3";
 				}
-				
 			}
 			
 		} catch (Exception e) {
-			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
-			msgComando = "3";
+			msgComando = "4";
 		}
 		
 		request.setAttribute("msgAuxiliar", msgAuxiliar);
@@ -156,7 +164,5 @@ public class SolicitarCartao extends HttpServlet implements Servlet {
 		request.getRequestDispatcher(page).forward(request, response);
 		
 	}
-	
-	
 	
 }

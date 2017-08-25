@@ -93,7 +93,6 @@ public class BoletoControllerRep {
 
 		if ((rs != null) && rs.next()) {
 			cobranca = new EntidadeCobranca();
-			Status status = new Status();
 			
 			cobranca.setId(rs.getInt("RP_ID"));
 			cobranca.setCpfPagador(rs.getString("USU_CPF"));
@@ -101,9 +100,7 @@ public class BoletoControllerRep {
 			cobranca.setNossoNumero(rs.getInt("RP_NN"));
 			cobranca.setDataVencimento(rs.getDate("RP_DTVCTO"));
 			cobranca.setDataProcessamento(rs.getDate("RP_DTPROCESS"));
-			status.setId(rs.getInt("ST_ID"));
-			status.setDescricao(rs.getString("ST_DESCRICAO"));
-			cobranca.setStatus(status);
+			cobranca.setStatus(Status.parse(rs.getInt("ST_ID")));
 			cobranca.setValor(rs.getBigDecimal("RP_VALOR"));
 			cobranca.setDataPagamento(rs.getDate("RP_DTPAG"));
 			cobranca.setDataCredito(rs.getDate("RP_DTCRED"));
@@ -142,7 +139,6 @@ public class BoletoControllerRep {
 			while (rs.next()) {
 				
 				EntidadeCobranca cobranca = new EntidadeCobranca();
-				Status status = new Status();
 				
 				cobranca.setId(rs.getInt("RP_ID"));
 				cobranca.setCpfPagador(rs.getString("CPF_PAGADOR"));
@@ -150,9 +146,7 @@ public class BoletoControllerRep {
 				cobranca.setNossoNumero(rs.getInt("RP_NN"));
 				cobranca.setDataVencimento(rs.getDate("RP_DTVCTO"));
 				cobranca.setDataProcessamento(rs.getDate("RP_DTPROCESS"));
-				status.setId(rs.getInt("ST_ID"));
-				status.setDescricao(rs.getString("ST_DESCRICAO"));
-				cobranca.setStatus(status);
+				cobranca.setStatus(Status.parse(rs.getInt("ST_ID")));
 				cobranca.setValor(rs.getBigDecimal("RP_VALOR"));
 				cobranca.setDataPagamento(rs.getDate("RP_DTPAG"));
 				cobranca.setDataCredito(rs.getDate("RP_DTCRED"));

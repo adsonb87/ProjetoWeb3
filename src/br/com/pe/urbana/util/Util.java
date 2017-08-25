@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 
 public class Util {
 	
-	public static final String PATH = "/usr/share/tomcat/webapps/VemComum/WEB-INF/classes/br/com/pe/urbana/log4j/log4j.properties";
+	public static final String PATH = "/usr/share/tomcat/webapps/teste/WEB-INF/classes/br/com/pe/urbana/log4j/log4j.properties";
+//	public static final String PATH = "/usr/share/tomcat/vemcomum/WEB-INF/classes/br/com/pe/urbana/log4j/log4j.properties";
+//	public static final String PATH = "//C:/projetos/vemcomum/src/br/com/pe/urbana/log4j/log4j.properties";
 	
 	public static String like(String nome) {
 
@@ -96,9 +98,28 @@ public class Util {
 		return dataFormat;
 	}
 	
+	public static String formatDataNascimento(Calendar data) {
+		
+		String dataFormat = "";
+		
+		if(data != null) {
+			Date dt = new Date();		
+			dt = data.getTime();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			dataFormat = sdf.format(dt);
+		}
+		
+		return dataFormat;
+	}
+	
 	public static String formatTelefone(String telefone) {
 		
-		return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2);
+		if(telefone != null && !telefone.equals("")) {
+			return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2);
+		}
+		
+		return "";
 	}
 	
 }

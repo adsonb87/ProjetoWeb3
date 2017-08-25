@@ -129,6 +129,14 @@ public class EntidadeCobranca {
 		return Util.formatDataNascimento(dataVencimento);
 	}
 	
+	public String getDataEmissaoFormatada() {
+		return Util.formatDataNascimento(dataProcessamento);
+	}
+	
+	public String getDataPagamentoFormatada() {
+		return Util.formatDataNascimento(dataPagamento);
+	}
+	
 	public String getValorFormatado() {
 		return String.format("R$ %.2f", valor);
 	}

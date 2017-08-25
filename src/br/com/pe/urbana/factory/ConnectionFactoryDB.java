@@ -17,15 +17,10 @@ import java.sql.Types;
 import javax.naming.NamingException;
 import javax.sql.rowset.CachedRowSet;
 
-import br.com.pe.urbana.factory.util.ParamDAO;
-
 import com.sun.rowset.CachedRowSetImpl;
 
+import br.com.pe.urbana.factory.util.ParamDAO;
 
-/**
- * Author: heider.soares
- * data 13/09/2016 
- */
 public abstract class ConnectionFactoryDB {
 
 	protected Connection getConexao() throws NamingException, SQLException, ClassNotFoundException {
@@ -275,7 +270,7 @@ public abstract class ConnectionFactoryDB {
 				break;
 			case Types.BIGINT:
 			case Types.NUMERIC:
-				psmt.setLong(parameterIndex, (Long) p.getValor());
+				psmt.setLong(parameterIndex, (Integer) p.getValor());
 				break;
 			case Types.FLOAT:
 				psmt.setFloat(parameterIndex, (Float) p.getValor());

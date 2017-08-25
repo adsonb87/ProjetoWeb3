@@ -7,27 +7,29 @@ public class Campos {
 	private String valor;
 	
 	public Campos(){}
-	
+
 	public String getCampo() {
 		return campo;
 	}
-	public Campos comCampo(String campo) {
+
+	public void setCampo(String campo) {
 		this.campo = campo;
-		return this;
 	}
+
 	public String getMensagem() {
 		return mensagem;
 	}
-	public Campos comMensagem(String mensagem) {
+
+	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
-		return this;
 	}
+
 	public String getValor() {
 		return valor;
 	}
-	public Campos comValor(String valor) {
+
+	public void setValor(String valor) {
 		this.valor = valor;
-		return this;
 	}
 
 	@Override

@@ -81,8 +81,8 @@ public class Login extends HttpServlet implements Servlet {
 					msgComando = "2";
 					session.setAttribute("user", user);
 				}
-				
 			}
+			
 		} catch (Exception e) {
 			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";

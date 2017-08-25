@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import br.com.pe.urbana.entidade.EntidadeCobranca;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 import br.com.pe.urbana.util.Util;
 
@@ -72,37 +73,31 @@ public class ImprimirBoleto extends HttpServlet implements Servlet {
 				
 				usuario = (EntidadeUsuario) session.getAttribute("usuario");
 				session.removeAttribute("usuario");
-				
 				request.setAttribute("usuario", usuario);
+				
+				EntidadeCobranca cobranca = (EntidadeCobranca) session.getAttribute("cobranca");
+				session.removeAttribute("cobranca");
+				request.setAttribute("cobranca", cobranca);
+
 			}
 			
 			if(imprimirBoleto) {
-				
 				nome = request.getParameter("nome");
 				boletoPDF = (byte[]) session.getAttribute("boletoPDF");
 				session.removeAttribute("boletoPDF");
 					
 				if (boletoPDF != null && boletoPDF.length > 0) {
-					response.setHeader("Content-disposition","attachment; filename=" + nome + ".pdf"); // o 'attachment' serve para realizar o download sem a visualização.
-					//response.setHeader("Content-disposition","filename=" + nome + ".pdf");
-					response.setContentType("application/pdf");
-					response.setContentLength(boletoPDF.length);
-					ServletOutputStream ouputStream = response.getOutputStream();
-					ouputStream.write(boletoPDF, 0, boletoPDF.length);
-					ouputStream.flush();
-					ouputStream.close();
+					imprimirWeb(response, boletoPDF, nome);
 				} else {
-					
 					// CASO O USUARIO TENTE GERAR NOVAMENTE O BOLETO
 					msgComando = "1";
 				}
-				
 			}
 			
 		} catch (Exception e) {
 			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
-			msgComando = "1";
+			msgComando = "2";
 		}
 		
 		request.setAttribute("msgAuxiliar", msgAuxiliar);
@@ -110,8 +105,18 @@ public class ImprimirBoleto extends HttpServlet implements Servlet {
 		
 		if(!imprimirBoleto || boletoPDF == null) {
 			request.getRequestDispatcher(page).forward(request, response);	
-		}
-		
+		}		
+	}
+	
+	private static void imprimirWeb(HttpServletResponse response, byte[] boletoPDF, String nome) throws Exception {
+		response.setHeader("Content-disposition","attachment; filename=" + nome + ".pdf"); // o 'attachment' serve para realizar o download sem a visualização.
+		//response.setHeader("Content-disposition","filename=" + nome + ".pdf");
+		response.setContentType("application/pdf");
+		response.setContentLength(boletoPDF.length);
+		ServletOutputStream ouputStream = response.getOutputStream();
+		ouputStream.write(boletoPDF, 0, boletoPDF.length);
+		ouputStream.flush();
+		ouputStream.close();
 	}
 
 }

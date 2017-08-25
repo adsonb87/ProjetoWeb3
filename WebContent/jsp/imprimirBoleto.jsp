@@ -14,9 +14,18 @@
 		if(msgComando == 1) {
 			$('#modalAtencao').modal('show');
 		}
+		
+		if(msgComando == 2) {
+			bootbox.alert(msgAuxiliar,function(){
+				formImprimir.action = "inicio";
+				formImprimir.submit();
+			})
+		}
 	}
 
 	function imprimir() {
+		$("#gerar").prop("disabled",'true');
+		setTimeout("$('#gerar').removeAttr('disabled');",1000);
 		formImprimir.nome.value = "${ usuario.nome }";
 		formImprimir.imprimirBoleto.value = "true";
 		formImprimir.action = "imprimirBoleto";
@@ -33,14 +42,14 @@
 		formImprimir.action = "inicio";
 		formImprimir.submit();
 	}
-
+	
 </script>
 </head>
 <body onload="verificar()">
 	<form name=formImprimir method="POST" action="formImprimir" onSubmit="return false;">
-      <input type="hidden" name="imprimirBoleto">
-      <input type="hidden" name="cadastrarUser">
-      <input type="hidden" name="nome">
+		<input type="hidden" name="imprimirBoleto">
+      	<input type="hidden" name="cadastrarUser">
+      	<input type="hidden" name="nome">
 		<div class="container">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -59,26 +68,38 @@
 					                        <small>
 												<cite><i class="glyphicon glyphicon-map-marker"></i> ${ usuario.enderecoFormatado }</cite>
 											</small>
-											<c:if test="${not empty usuario.cpfFormatado }">
-												<p id="dadosUsu"><i class="glyphicon glyphicon-credit-card"></i> CPF: ${ usuario.cpfFormatado }</p>
-											</c:if>
 											<c:if test="${not empty usuario.email }">
 												<p id="dadosUsu"><i class="glyphicon glyphicon-envelope"></i> ${ usuario.email }</p>
 											</c:if>
-											<c:if test="${not empty usuario.dataNascimento }">
-												<p id="dadosUsu"><i class="glyphicon glyphicon-calendar"></i> ${ usuario.dataNascimento }</p>
+											<c:if test="${not empty usuario.cpfFormatado }">
+												<p id="dadosUsu"><i class="glyphicon glyphicon-credit-card"></i> CPF: ${ usuario.cpfFormatado }</p>
 											</c:if>
 											<c:if test="${not empty usuario.telefoneFormatado }">
 												<p id="dadosUsu"><i class="glyphicon glyphicon-phone"></i> ${ usuario.telefoneFormatado }</p>
 											</c:if>
+											<c:if test="${not empty usuario.dataNascimento }">
+												<p id="dadosUsu"><i class="glyphicon glyphicon-calendar"></i> ${ usuario.dataNascimento }</p>
+											</c:if>
+											<div class="boleto-panel">
+								          		<div class="row">
+									          		<div class="col-md-6 col-xs-6">
+									          			<p class="boleto-label"> VENCIMENTO </p>
+									          			<p class="boleto-valor"> ${ cobranca.dataVencimentoFormatada } </p>
+									          		</div>
+									          		<div class="col-md-6 col-xs-6">
+									          			<p class="boleto-label"> VALOR </p>
+									          			<p class="boleto-valor"><span>R$</span> ${ cobranca.valor }</p>
+									          		</div>
+								          		</div>
+								        	</div>
 				                        </c:if>
-				                    </div>
-				                </div>
-				            </div>
-				        </div>
+				                    </div>		
+				            	</div>
+				        	</div>		        
+						</div>
 					</div>
 				</div>
-				<div class="panel-footer btAcoes">
+				<div class="panel-footer btAcoes" id="footer-print">
 					<input class="btn btn-success" type="button" onclick="javascript:imprimir();" readonly="readonly" id="gerar" value='IMPRIMIR BOLETO' name="cmdImprimir"/>
 				</div>
 			</div>
@@ -95,7 +116,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-	        		<p> Seu cartão já foi solicitado, para acompanhar o status do seu pedido, imprimir segunda via do boleto, basta cadastrar uma senha no nosso portal.</p>
+	        		<p> Para imprimir segunda via do boleto ou acompanhar o status do seu pedido, basta cadastrar uma senha no nosso portal.</p>
 	        		<p> Deseja cadastrar a senha agora? </p>
 	        	</div>
 				<div class="modal-footer">

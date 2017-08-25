@@ -135,9 +135,37 @@ c {
 	margin: 0 0 0 0;
 }
 
-.panel-table{
+.panel-table {
 	margin-top: 20px;
 	border-color: #329246;
+}
+
+.none {
+	display: none;
+}
+
+.block {
+	display: block;	
+}
+
+.boleto-panel {
+	padding-top: 10px
+}
+
+.boleto-label {
+	margin: 0px; 
+	font-size: 12px;
+}
+
+.boleto-valor {
+	margin-top: 0px; 
+	font-size: 20px;
+}
+
+.label-descricao{
+	color: #999; 
+	font-size: 12px; 
+	font-style: italic
 }
 
 /*Helpers*/
@@ -267,25 +295,18 @@ c {
 }
 
 .pendente {
-	color: #ffffff;
-	background: #ff3535;
-	border-color: #ff3535;
-	border-radius: 10px;
-	text-align: center;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-bottom: 2px;
+	color: #ff3535;
+	font-size: 20px;
+}
+
+.registrado {
+	color: #ff8811;
+	font-size: 20px;
 }
 
 .pago {
-	color: #ffffff;
-	background: #49b960;
-	border-color: #49b960;
-	border-radius: 10px;
-	text-align: center;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-bottom: 2px;
+	color: #49b960;
+	font-size: 20px;
 }
 
 .painel2 {

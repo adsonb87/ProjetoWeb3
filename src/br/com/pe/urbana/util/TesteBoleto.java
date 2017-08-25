@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 
-import javax.json.JsonObjectBuilder;
+import javax.json.JsonObject;
 
 import br.com.caelum.stella.boleto.Banco;
 import br.com.caelum.stella.boleto.Beneficiario;
@@ -57,7 +57,7 @@ public class TesteBoleto {
                 .comNumeroConvenio("1411398")  
                 .comCarteira(109)
                 .comEndereco(enderecoBeneficiario)
-                .comNossoNumero("21000987");
+                .comNossoNumero("21000980");
         
         String aux = beneficiario.getAgencia() + beneficiario.getCodigoBeneficiario() + beneficiario.getCarteira() + beneficiario.getNossoNumero();
         int dv = geradorDV.geraDigitoBloco1(aux);
@@ -118,14 +118,14 @@ public class TesteBoleto {
                 .comLocaisDePagamento("Até o vencimento, preferencialmente no Itaú");
 		
 		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
-        gerador.geraPDF(pagador.getNome() + ".pdf");
+        gerador.geraPDF("teste.pdf");
 		System.out.println("Boleto Gerado!");
 	
-		JsonObjectBuilder boletoJson = GeradorJson.gerarJson(boleto);
+		JsonObject boletoJson = (JsonObject) GeradorJson.gerarJson(boleto);
  		
 		try {
-			FileWriter writer = new FileWriter("boletoItau.json");
-			writer.write(boletoJson.build().toString());
+			FileWriter writer = new FileWriter("teste.json");
+			writer.write(boletoJson.toString());
 			writer.close();
 	 
 		} catch (IOException e) {
@@ -133,6 +133,8 @@ public class TesteBoleto {
 		}
         
 		System.out.println("Json Gerado!");
+		
+		System.out.println(boleto.getCodigoDeBarras());
 		
 	}	
 }

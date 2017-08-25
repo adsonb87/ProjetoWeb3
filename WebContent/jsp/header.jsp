@@ -23,7 +23,7 @@
 						</c:if>
 					</div>
 					<div class="col-xs-12 col-md-6 col-lg-6 text-center produto">
-						<h3>CADASTRO DO VEM COMUM</h3>
+						<h3>PORTAL DO VEM COMUM</h3>
 					</div>
 				</div>
 			</div>

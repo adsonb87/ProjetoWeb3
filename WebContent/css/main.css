@@ -258,6 +258,10 @@ form>.container{
 .toggle {
 	margin: 5px 5px 0 0;
 }
+
+#descricao-status{
+	display: none;
+}
 /* CSS PARA O MENU - FIM */
 
 /* PARA DISPOSITIVOS  ATÃ‰ 768px DE LARGURA (mobile) */
@@ -351,6 +355,14 @@ form>.container{
 	.panel-vinculacao {
 		text-align: center;
 	}
+	
+	.modal-loader{
+		margin: 60% auto;
+		text-align: center;
+	}
+	#descricao-status{
+		display: block;
+	}
 }
 /* PARA DISPOSITIVOS  ATÃ‰ 768px DE LARGURA (mobile) */
 
@@ -374,6 +386,11 @@ form>.container{
 	
 	.modalLogin{
 		margin-top: 200px;
+	}
+	
+	.modal-loader{
+		margin-top: 230px;
+		text-align: center;
 	}
 }
 /* PARA DISPOSITIVOS NO M�NIMO 769px DE LARGURA (desktop) */

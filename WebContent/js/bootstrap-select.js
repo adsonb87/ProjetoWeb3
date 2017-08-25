@@ -438,7 +438,7 @@
                 .off('shown.bs.select');
             },
             'rendered.bs.select': function () {
-              // if select is no longer invalid, remove the bs-invalid class
+              // if select is no Integerer invalid, remove the bs-invalid class
               if (this.validity.valid) that.$button.removeClass('bs-invalid');
               that.$element.off('rendered.bs.select');
             }
@@ -1057,7 +1057,7 @@
         $selectClone.remove();
         $selectClone2.remove();
 
-        // Set width to whatever's larger, button title or longest option
+        // Set width to whatever's larger, button title or Integerest option
         this.$newElement.css('width', Math.max(ulWidth, btnWidth) + 'px');
       } else if (this.options.width === 'fit') {
         // Remove inline min-width so width can be changed from 'auto'

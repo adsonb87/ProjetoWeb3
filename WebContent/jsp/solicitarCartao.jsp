@@ -10,26 +10,35 @@
 	function verificar() {
 		var msgComando = "${msgComando}";
 		var msgAuxiliar = "${msgAuxiliar}";
-
-		if(msgComando == 1) {
+	
+		switch(msgComando) {
+		case "1":
 			formSolicitar.action = "imprimirBoleto";
 			formSolicitar.imprimir.value = "true";
 			formSolicitar.submit();
-		}
-		
-		if(msgComando == 2) {
+			break;
+
+		case "2":
+			bootbox.alert(msgAuxiliar,function(){
+				history.go(-1);
+			})
+			break;
+			
+		case "3":
+			$("#loader").modal("hide");
 			bootbox.alert(msgAuxiliar,function(){
 				formSolicitar.cadastrarUser.value = "true";
 				formSolicitar.action = "cadastroUser";
 				formSolicitar.submit();
 			})
-		}
-		
-		if(msgComando == 3) {
+			break;
+
+		case "4":
 			bootbox.alert(msgAuxiliar,function(){
 				formSolicitar.action = "inicio";
 				formSolicitar.submit();
 			})
+			break;
 		}
 	}
 	
@@ -38,6 +47,7 @@
 	}
 
 	function solicitarCartao() {
+		$("#loader").modal("show");
 		$("#btnOk").prop("disabled",true);
 		formSolicitar.usrIdOrigem.value = "${ usuario.usrIdOrigem }";
 		formSolicitar.solicitar.value = "true";
@@ -57,6 +67,14 @@
 		formSolicitar.submit();
 	}
 	
+	$(document).keypress(function(e) {
+		if(e.which == 13) confirmarSolic();
+	});
+	
+	$(document).keydown(function(e) {
+	    if (e.keyCode == 27) return false;
+	});
+	
 </script>
 </head>
 <body onload="verificar()">
@@ -64,6 +82,7 @@
       <input type="hidden" name="imprimir">
       <input type="hidden" name="solicitar">
       <input type="hidden" name="alterarCad">
+      <input type="hidden" name="altCadastro">
       <input type="hidden" name="cadastrarUser">
       <input type="hidden" name="usrIdOrigem">
       <input type="hidden" name="nome" value="${ usuario.nome }">
@@ -209,6 +228,12 @@
 					<button type="button" class="btn btn-success" data-dismiss="modal" onclick="javascript:cancelar();">NÃO</button>
 				</div>
 			</div>
+		</div>	
+	</div>
+	<!-- Modal Loader -->	
+	<div class="modal fade modalLogin" id="loader" tabindex="-1" role="dialog" aria-labelledby="modalLoader" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+		<div class="modal-loader">
+			<img src="imagens/loader-boleto.svg" class="icon"/>
 		</div>
 	</div>
 </body>

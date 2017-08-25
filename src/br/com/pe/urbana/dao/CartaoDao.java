@@ -82,10 +82,10 @@ public class CartaoDao extends ConnectionFactoryDB {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("	INSERT INTO COM_USUARIO (USR_ID_CART, USR_ID_ORIG, USU_CPF, USU_NOME,");
-		sb.append("		USU_DT_NASC, USU_NOME_MAE, USU_TELEFONE, USU_EMAIL, USU_REGDATE)");
-		sb.append("	VALUES (?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+		sb.append("		USU_DT_NASC, USU_NOME_MAE, USU_TELEFONE, USU_EMAIL, USU_REGUSER , USU_REGDATE)");
+		sb.append("	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
 		
-		ParamDAO[] params = new ParamDAO[8];
+		ParamDAO[] params = new ParamDAO[9];
 		
 		params[0] = new ParamDAO(usuario.getCartao().getUsrIdCartao(), Types.INTEGER);
 		params[1] = new ParamDAO(usuario.getUsrIdOrigem() != 0 ? usuario.getUsrIdOrigem() : null, Types.INTEGER);
@@ -95,6 +95,7 @@ public class CartaoDao extends ConnectionFactoryDB {
 		params[5] = new ParamDAO(usuario.getNomeMae(), Types.VARCHAR);
 		params[6] = new ParamDAO(usuario.getTelefone(), Types.VARCHAR);
 		params[7] = new ParamDAO(usuario.getEmail(), Types.VARCHAR);
+		params[8] = new ParamDAO(usuario.getRegUser(), Types.VARCHAR);
 		
 		super.executeUpdate(sb.toString(), params);
 		

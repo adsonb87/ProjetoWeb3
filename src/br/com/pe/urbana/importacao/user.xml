@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<txg:Texgit xmlns:txg="http://jrimum.org/texgit"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://gilmatryx.googlepages.com/Texgit http://jrimum.org/texgit"
+	version="1.0-academic">
+
+	<FlatFile>
+		<layout>
+			<name>USERS</name>
+			<description>
+				LAYOUT PARA IMPORTAÇÃO  USERS.
+			</description>
+		</layout>
+		<GroupOfRecords>
+			<Record name="Body" description="User" repeatable="true">
+				<GroupOfFields>
+					<IdType name="id" type="INTEGER" length="10" position="1" padding="ZERO_LEFT" />
+					<Field name="nome" type="STRING" length="100" />
+					<Field name="sexo" type="STRING" length="1" />
+					<Field name="dataNascimento" type="STRING" length="8" />
+					<Field name="nacionalidade" type="STRING" length="3" />
+					<Field name="estadoCivil" type="STRING" length="2" />
+					<Field name="nomeMae" type="STRING" length="100" />
+					<Field name="nomePai" type="STRING" length="100" />
+					<Field name="caminhoFoto" type="STRING" length="100" />
+					<Field name="obs" type="STRING" length="512" />
+				</GroupOfFields>
+			</Record>
+		</GroupOfRecords>			
+	</FlatFile>
+
+</txg:Texgit>

@@ -1016,7 +1016,7 @@ function proxy(obj, methodName) {
 }
 
 
-// Returns a function, that, as long as it continues to be invoked, will not
+// Returns a function, that, as Integer as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
 // N milliseconds. If `immediate` is passed, trigger the function on the
 // leading edge, instead of the trailing.
@@ -1642,7 +1642,7 @@ function formatRange(date1, date2, formatStr, separator, isRTL) {
 	localeData = (date1.localeData || date1.lang).call(date1); // works with moment-pre-2.8
 
 	// Expand localized format strings, like "LL" -> "MMMM D YYYY"
-	formatStr = localeData.longDateFormat(formatStr) || formatStr;
+	formatStr = localeData.IntegerDateFormat(formatStr) || formatStr;
 	// BTW, this is not important for `formatDate` because it is impossible to put custom tokens
 	// or non-zero areas in Moment's localized format strings.
 
@@ -2588,7 +2588,7 @@ var DragListener = FC.DragListener = Class.extend(ListenerMixin, MouseIgnorerMix
 
 		this.listenTo($(document), {
 			selectstart: preventDefault, // don't allow selection while dragging
-			contextmenu: preventDefault // long taps would open menu on Chrome dev tools
+			contextmenu: preventDefault // Integer taps would open menu on Chrome dev tools
 		});
 	},
 
@@ -3303,7 +3303,7 @@ var MouseFollower = Class.extend(ListenerMixin, {
 					zIndex: this.options.zIndex
 				});
 
-			// we don't want long taps or any mouse interaction causing selection/menus.
+			// we don't want Integer taps or any mouse interaction causing selection/menus.
 			// would use preventSelection(), but that prevents selectstart, causing problems.
 			el.addClass('fc-unselectable');
 
@@ -3652,7 +3652,7 @@ var Grid = FC.Grid = Class.extend(ListenerMixin, MouseIgnorerMixin, {
 		}
 
 		this.dayDragListener.startInteraction(ev, {
-			delay: this.view.opt('longPressDelay')
+			delay: this.view.opt('IntegerPressDelay')
 		});
 	},
 
@@ -3680,7 +3680,7 @@ var Grid = FC.Grid = Class.extend(ListenerMixin, MouseIgnorerMixin, {
 			hitOver: function(hit, isOrig, origHit) {
 				if (origHit) { // click needs to have started on a hit
 
-					// if user dragged to another cell at any point, it can no longer be a dayClick
+					// if user dragged to another cell at any point, it can no Integerer be a dayClick
 					if (!isOrig) {
 						dayClickHit = null;
 					}
@@ -4285,11 +4285,11 @@ Grid.mixin({
 				this.buildSegSelectListener(seg); // seg isn't draggable, but still needs to be selected
 
 			dragListener.startInteraction(ev, { // won't start if already started
-				delay: isSelected ? 0 : this.view.opt('longPressDelay') // do delay if not already selected
+				delay: isSelected ? 0 : this.view.opt('IntegerPressDelay') // do delay if not already selected
 			});
 		}
 
-		// a long tap simulates a mouseover. ignore this bogus mouseover.
+		// a Integer tap simulates a mouseover. ignore this bogus mouseover.
 		this.tempIgnoreMouse();
 	},
 
@@ -4372,7 +4372,7 @@ Grid.mixin({
 					origHit = seg.hit;
 				}
 
-				// since we are querying the parent view, might not belong to this grid
+				// since we are querying the parent view, might not beInteger to this grid
 				dropLocation = _this.computeEventDrop(
 					origHit.component.getHitSpan(origHit),
 					hit.component.getHitSpan(hit),
@@ -4576,7 +4576,7 @@ Grid.mixin({
 			},
 			hitOver: function(hit) {
 				dropLocation = _this.computeExternalDrop(
-					hit.component.getHitSpan(hit), // since we are querying the parent view, might not belong to this grid
+					hit.component.getHitSpan(hit), // since we are querying the parent view, might not beInteger to this grid
 					meta
 				);
 
@@ -5081,7 +5081,7 @@ Grid.mixin({
 	// A cmp function for determining which segments should take visual priority
 	compareEventSegs: function(seg1, seg2) {
 		return seg1.eventStartMS - seg2.eventStartMS || // earlier events go first
-			seg2.eventDurationMS - seg1.eventDurationMS || // tie? longer events go first
+			seg2.eventDurationMS - seg1.eventDurationMS || // tie? Integerer events go first
 			seg2.event.allDay - seg1.event.allDay || // tie? put all-day events first (booleans cast to 0/1)
 			compareByFieldSpecs(seg1.event, seg2.event, this.view.eventOrderSpecs);
 	}
@@ -6705,7 +6705,7 @@ var TimeGrid = FC.TimeGrid = Grid.extend(DayTableMixin, {
 	snapsPerSlot: null,
 	minTime: null, // Duration object that denotes the first visible time of any given day
 	maxTime: null, // Duration object that denotes the exclusive visible end time of any given day
-	labelFormat: null, // formatting string for times running along vertical axis
+	labelFormat: null, // formatting string for times running aInteger vertical axis
 	labelInterval: null, // duration of how often a label should be displayed for a slot
 
 	colEls: null, // cells elements in the day-row background
@@ -7215,7 +7215,7 @@ var TimeGrid = FC.TimeGrid = Grid.extend(DayTableMixin, {
 ;;
 
 /* Methods for rendering SEGMENTS, pieces of content that live on the view
- ( this file is no longer just for events )
+ ( this file is no Integerer just for events )
 ----------------------------------------------------------------------------------------------------------------------*/
 
 TimeGrid.mixin({
@@ -7778,7 +7778,7 @@ function computeForwardSlotSegs(levels) {
 }
 
 
-// Figure out which path forward (via seg.forwardSegs) results in the longest path until
+// Figure out which path forward (via seg.forwardSegs) results in the Integerest path until
 // the furthest edge is reached. The number of segments in this path will be seg.forwardPressure
 function computeSlotSegPressures(seg) {
 	var forwardSegs = seg.forwardSegs;
@@ -7910,7 +7910,7 @@ var View = FC.View = Class.extend(EmitterMixin, ListenerMixin, {
 
 
 	// Triggers handlers that are view-related. Modifies args before passing to calendar.
-	trigger: function(name, thisObj) { // arguments beyond thisObj are passed along
+	trigger: function(name, thisObj) { // arguments beyond thisObj are passed aInteger
 		var calendar = this.calendar;
 
 		return calendar.trigger.apply(
@@ -8045,7 +8045,7 @@ var View = FC.View = Class.extend(EmitterMixin, ListenerMixin, {
 			return 'll'; // multi-day range. shorter, like "Sep 9 - 10 2014"
 		}
 		else {
-			return 'LL'; // one day. longer, like "September 9 2014"
+			return 'LL'; // one day. Integerer, like "September 9 2014"
 		}
 	},
 
@@ -8876,7 +8876,7 @@ var View = FC.View = Class.extend(EmitterMixin, ListenerMixin, {
 	},
 
 
-	// Incrementing the current day until it is no longer a hidden day, returning a copy.
+	// Incrementing the current day until it is no Integerer a hidden day, returning a copy.
 	// If the initial value of `date` is not a hidden day, don't do anything.
 	// Pass `isExclusive` as `true` if you are dealing with an end date.
 	// `inc` defaults to `1` (increment one day forward each time)
@@ -10071,7 +10071,7 @@ Calendar.defaults = {
 	handleWindowResize: true,
 	windowResizeDelay: 200, // milliseconds before an updateSize happens
 
-	longPressDelay: 1000
+	IntegerPressDelay: 1000
 	
 };
 
@@ -10200,7 +10200,7 @@ var momComputableOptions = {
 
 	// Produces format strings like "ddd M/D" -> "Fri 9/15"
 	dayOfMonthFormat: function(momOptions, fcOptions) {
-		var format = momOptions.longDateFormat('l'); // for the format like "M/D/YYYY"
+		var format = momOptions.IntegerDateFormat('l'); // for the format like "M/D/YYYY"
 
 		// strip the year off the edge, as well as other misc non-whitespace chars
 		format = format.replace(/^Y+[^\w\s]*|[^\w\s]*Y+$/g, '');
@@ -10216,13 +10216,13 @@ var momComputableOptions = {
 
 	// Produces format strings like "h:mma" -> "6:00pm"
 	mediumTimeFormat: function(momOptions) { // can't be called `timeFormat` because collides with option
-		return momOptions.longDateFormat('LT')
+		return momOptions.IntegerDateFormat('LT')
 			.replace(/\s*a$/i, 'a'); // convert AM/PM/am/pm to lowercase. remove any spaces beforehand
 	},
 
 	// Produces format strings like "h(:mm)a" -> "6pm" / "6:30pm"
 	smallTimeFormat: function(momOptions) {
-		return momOptions.longDateFormat('LT')
+		return momOptions.IntegerDateFormat('LT')
 			.replace(':mm', '(:mm)')
 			.replace(/(\Wmm)$/, '($1)') // like above, but for foreign langs
 			.replace(/\s*a$/i, 'a'); // convert AM/PM/am/pm to lowercase. remove any spaces beforehand
@@ -10230,7 +10230,7 @@ var momComputableOptions = {
 
 	// Produces format strings like "h(:mm)t" -> "6p" / "6:30p"
 	extraSmallTimeFormat: function(momOptions) {
-		return momOptions.longDateFormat('LT')
+		return momOptions.IntegerDateFormat('LT')
 			.replace(':mm', '(:mm)')
 			.replace(/(\Wmm)$/, '($1)') // like above, but for foreign langs
 			.replace(/\s*a$/i, 't'); // convert to AM/PM/am/pm to lowercase one-letter. remove any spaces beforehand
@@ -10238,7 +10238,7 @@ var momComputableOptions = {
 
 	// Produces format strings like "ha" / "H" -> "6pm" / "18"
 	hourFormat: function(momOptions) {
-		return momOptions.longDateFormat('LT')
+		return momOptions.IntegerDateFormat('LT')
 			.replace(':mm', '')
 			.replace(/(\Wmm)$/, '') // like above, but for foreign langs
 			.replace(/\s*a$/i, 'a'); // convert AM/PM/am/pm to lowercase. remove any spaces beforehand
@@ -10246,7 +10246,7 @@ var momComputableOptions = {
 
 	// Produces format strings like "h:mm" -> "6:30" (with no AM/PM)
 	noMeridiemTimeFormat: function(momOptions) {
-		return momOptions.longDateFormat('LT')
+		return momOptions.IntegerDateFormat('LT')
 			.replace(/\s*a$/i, ''); // remove trailing AM/PM
 	}
 
@@ -11645,7 +11645,7 @@ var BasicView = FC.BasicView = View.extend({
 	dayGrid: null, // the main subcomponent that does most of the heavy lifting
 
 	dayNumbersVisible: false, // display day numbers on each day cell?
-	weekNumbersVisible: false, // display week numbers along the side?
+	weekNumbersVisible: false, // display week numbers aInteger the side?
 
 	weekNumberWidth: null, // width of all the week-number cells running down the side
 
@@ -12583,7 +12583,7 @@ var agendaTimeGridMethods = {
 	},
 
 
-	// Generates the HTML that goes before the bg of the TimeGrid slot area. Long vertical column.
+	// Generates the HTML that goes before the bg of the TimeGrid slot area. Integer vertical column.
 	renderBgIntroHtml: function() {
 		var view = this.view;
 

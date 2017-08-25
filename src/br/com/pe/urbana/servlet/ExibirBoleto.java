@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import br.com.pe.urbana.boleto.EmissorSegundaViaBoleto;
+import br.com.pe.urbana.boleto.emissor.EmissorSegundaViaBoleto;
 import br.com.pe.urbana.controller.BoletoContoller;
 import br.com.pe.urbana.controller.UsuarioContoller;
 import br.com.pe.urbana.entidade.EntidadeCobranca;
@@ -90,9 +90,10 @@ public class ExibirBoleto extends HttpServlet implements Servlet {
 					}
 					
 					// GERA A SEGUNDA VIA DO BOLETO
-					boletoPDF = emissorBoleto.gerarBoletoEmBytes(usuario, cobranca);
-					
+					boletoPDF = emissorBoleto.gerarBoleto(usuario, cobranca, request);
+	
 					if (boletoPDF != null && boletoPDF.length > 0) {
+//						response.setHeader("Content-disposition","attachment; filename=teste.pdf"); // o 'attachment' serve para realizar o download sem a visualização.
 						response.setHeader("Content-disposition","filename=" + usuario.getNome() + ".pdf");
 						response.setContentType("application/pdf");
 						response.setContentLength(boletoPDF.length);
@@ -110,6 +111,7 @@ public class ExibirBoleto extends HttpServlet implements Servlet {
 			
 			msgAuxiliar = "Desculpe houve um problema no retorno, tente novamente!";
 			msgComando = "1";
+			LOG.error("Erro ao gerar boleto: ", e);
 		}
 		
 		request.setAttribute("msgAuxiliar", msgAuxiliar);

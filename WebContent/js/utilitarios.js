@@ -11,19 +11,6 @@ function validarNumero(obj) {
 	return true;
 }
 
-function validarData(obj) {
-
-	var valor = obj.value;
-	var reDate = /^((0[1-9]|[12]\d)\/(0[1-9]|1[0-2])|30\/(0?[13-9]|1[0-2])|31\/(0[13578]|1[02]))\/(19|20)\d{2}$/;
-	var resultado = reDate.test(valor);
-
-	if (!resultado && obj.value != "") {
-		alert("Data inválida!");
-		return false;
-	}
-	return true;
-}
-
 function validandoCPF(strCPF) {
 	var Soma;
 	var Resto;
@@ -236,4 +223,29 @@ function apenasNumerosDatas(v) {
 
 function apenasNumeros(v) {
 	return v.replace(/\D/g, "");
+}
+
+function validarData(data) {
+	var RegExPattern = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+	if (!((data.match(RegExPattern)) && (data!=''))) {
+		return false;
+	}
+	return true;
+}
+
+function validarEmail(email) {
+	var usuario = email.substring(0, email.indexOf("@"));
+	var dominio = email.substring(email.indexOf("@")+ 1, email.length);
+	if (!((usuario.length >=1) &&
+	    (dominio.length >= 3) &&
+	    (usuario.search("@") == -1) &&
+	    (dominio.search("@") == -1) &&
+	    (usuario.search(" ") == -1) &&
+	    (dominio.search(" ") == -1) &&
+	    (dominio.search(".") != -1) &&
+	    (dominio.indexOf(".") >= 1)&&
+	    (dominio.lastIndexOf(".") < dominio.length - 1))) {
+		return false;
+	}
+	return true;
 }

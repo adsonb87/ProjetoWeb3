@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 
-import br.com.caelum.stella.boleto.Boleto;
+import br.com.pe.urbana.boleto.RetornoRegistro;
 import br.com.pe.urbana.entidade.EntidadeEndereco;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
 
@@ -58,10 +58,10 @@ public class GerarJSON {
 
 		try {
 
-			BufferedReader br = new BufferedReader(new FileReader("C:/Users/andres/Desktop/ANDRE CARLOS BATISTA DA SILVA.json"));
+			BufferedReader br = new BufferedReader(new FileReader("C:/Users/andres/Desktop/resposta.json"));
 
 			//Converte String JSON para objeto Java
-			Boleto obj = gson.fromJson(br, Boleto.class);
+			RetornoRegistro obj = gson.fromJson(br, RetornoRegistro.class);
 
 			System.out.println(obj.toString());
 

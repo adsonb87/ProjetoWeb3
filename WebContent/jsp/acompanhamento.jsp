@@ -66,17 +66,17 @@
 				                        <small>
 											<cite><i class="glyphicon glyphicon-map-marker"></i> ${ usuario.enderecoFormatado }</cite>
 										</small>
-										<c:if test="${not empty usuario.cpfFormatado }">
-											<p id="dadosUsu"><i class="glyphicon glyphicon-credit-card"></i> CPF: ${ usuario.cpfFormatado }</p>
-										</c:if>
 										<c:if test="${not empty usuario.email }">
 											<p id="dadosUsu"><i class="glyphicon glyphicon-envelope"></i> ${ usuario.email }</p>
 										</c:if>
-										<c:if test="${not empty usuario.dataNascimento }">
-											<p id="dadosUsu"><i class="glyphicon glyphicon-calendar"></i> ${ usuario.dataNascimento }</p>
+										<c:if test="${not empty usuario.cpfFormatado }">
+											<p id="dadosUsu"><i class="glyphicon glyphicon-credit-card"></i> CPF: ${ usuario.cpfFormatado }</p>
 										</c:if>
 										<c:if test="${not empty usuario.telefoneFormatado }">
 											<p id="dadosUsu"><i class="glyphicon glyphicon-phone"></i> ${ usuario.telefoneFormatado }</p>
+										</c:if>
+										<c:if test="${not empty usuario.dataNascimento }">
+											<p id="dadosUsu"><i class="glyphicon glyphicon-calendar"></i> ${ usuario.dataNascimento }</p>
 										</c:if>
 				                    </div>
 				                </div>
@@ -88,9 +88,11 @@
 							<div id="div-grid" class="panel panel-table">
 								<div class="table-responsive">
 									<display:table name="sessionScope.lEntidade" id="row" class="table table-striped " requestURI="/acompanhamento"	excludedParams="execCons" decorator="br.com.pe.urbana.wrapper.ConsultaWrapper">
-										<display:column property="nossoNumero" class="col-lg-4" title="Nº Documento"/>
-										<display:column property="dataVencimentoFormatada" class="col-lg-3" title="Data Vencimento"/>
-										<display:column property="valorFormatado" class="col-lg-3" title="Valor"/>
+										<display:column property="nossoNumeroFormatado" class="col-lg-2" title="Nº Documento"/>
+										<display:column property="dataEmissaoFormatada" class="col-lg-2" title="Data Emissão"/>
+										<display:column property="dataVencimentoFormatada" class="col-lg-2" title="Data Vencimento"/>
+										<display:column property="valorFormatado" class="col-lg-2" title="Valor"/>
+										<display:column property="dataPagamentoFormatada" class="col-lg-2" title="Data Pagamento"/>
 										<display:column property="statusCobranca" class="col-lg-1" title="Status"/>
 										<display:column property="exibirBoleto" class="col-lg-1" title="Visualizar"/>
 									</display:table>
@@ -98,6 +100,26 @@
 							</div>
 						</c:if>
 					</div>
+					<!-- PARA DISPOSITIVOS NO MÍNIMO 769px DE LARGURA (desktop) -->
+					<div class="row" id="descricao-status">
+						<c:forEach var="cobranca" items="${lEntidade}">
+							<c:if test="${ cobranca.status.valor == 1 || cobranca.status.valor == 4 }">
+								<div class="col-xs-12">
+									<label class="label-descricao"><span class="pendente glyphicon glyphicon-question-sign"></span> Pendente de Pagamento</label>
+								</div>
+							</c:if>
+							<c:if test="${ cobranca.status.valor == 2 }">
+								<div class="col-xs-12">
+									<label class="label-descricao"><span class="registrado glyphicon glyphicon-exclamation-sign"></span> Registrado</label>
+								</div>
+							</c:if>
+							<c:if test="${ cobranca.status.valor == 3 }">
+								<div class="col-xs-12">
+									<label class="label-descricao"><span class="pago glyphicon glyphicon-ok-sign"></span> Pago</label>
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>									
 				</div>
 				<div class="panel-footer btAcoes">
 					<input class="btn btn-success" type="button" onclick="javascript:goBack();" readonly="readonly" id="voltar" value='VOLTAR' name="cmdVoltar"/>

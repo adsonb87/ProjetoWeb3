@@ -157,10 +157,10 @@ public class UsuarioDao extends ConnectionFactoryDB {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("	INSERT INTO COM_USUARIO (USR_ID_ORIG, USU_CPF, USU_NOME, USU_DT_NASC, USU_NOME_MAE, USU_TELEFONE, USU_EMAIL,");
-		sb.append("		USU_CEP, USU_LOGRADOURO, USU_NUMERO, USU_BAIRRO, USU_CIDADE, USU_UF, USU_COMPLEMENTO, USU_REGDATE)");
-		sb.append("	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+		sb.append("		USU_CEP, USU_LOGRADOURO, USU_NUMERO, USU_BAIRRO, USU_CIDADE, USU_UF, USU_COMPLEMENTO, USU_REGUSER, USU_REGDATE)");
+		sb.append("	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
 		
-		ParamDAO[] params = new ParamDAO[14];
+		ParamDAO[] params = new ParamDAO[15];
 		
 		params[0] = new ParamDAO(usuario.getUsrIdOrigem() != 0 ? usuario.getUsrIdOrigem() : null, Types.INTEGER);
 		params[1] = new ParamDAO(usuario.getCpf(), Types.VARCHAR);
@@ -176,6 +176,7 @@ public class UsuarioDao extends ConnectionFactoryDB {
 		params[11] = new ParamDAO(usuario.getEndereco().getCidade(), Types.VARCHAR);
 		params[12] = new ParamDAO(usuario.getEndereco().getUf(), Types.VARCHAR);
 		params[13] = new ParamDAO(usuario.getEndereco().getComplemento(), Types.VARCHAR);
+		params[14] = new ParamDAO(usuario.getRegUser(), Types.VARCHAR);
 				
 		super.executeUpdate(sb.toString(), params);
 		

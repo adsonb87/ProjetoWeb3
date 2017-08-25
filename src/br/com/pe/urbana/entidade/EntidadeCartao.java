@@ -3,23 +3,14 @@ package br.com.pe.urbana.entidade;
 public class EntidadeCartao {
 	
 	private int id;
-	
 	private int usrIdCartao;
-	
 	private String viaCartao;
-
 	private String motivoBloq;
-	
 	private String cpf;
-	
 	private int issId;
-	
 	private int cdId;
-	
 	private int crdSnr;
-
 	private int crdSnrAtual;
-
 	private String numCartao;
 
 	public int getId() {

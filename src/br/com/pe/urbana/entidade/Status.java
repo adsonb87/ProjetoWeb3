@@ -1,21 +1,32 @@
 package br.com.pe.urbana.entidade;
 
-public class Status {
+public enum Status {
 	
-	private int id;
-	private String descricao;
+	PENDENTE(1),
+	REGISTRADO(2),
+	PAGO(3),
+	GERADO(4);
 	
-	public int getId() {
-		return id;
+	private final int valor;
+	
+	Status(int status){
+		valor = status;
 	}
-	public void setId(int valor) {
-		this.id = valor;
+	
+	public int getValor(){
+		return valor;	
 	}
-	public String getDescricao() {
-		return descricao;
+	
+	public static Status parse(Integer id) {
+		
+		Status status = null;
+		
+		if(id == 1) status = Status.PENDENTE;
+		else if(id == 2) status = Status.REGISTRADO;
+		else if(id == 3) status = Status.PAGO;
+		else if(id == 4) status = Status.GERADO;
+		
+		return status;
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
+	
 }

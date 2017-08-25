@@ -39,26 +39,20 @@
 
 
 	function validarCampos() {
+	
+		//VALIDANDO CPF
 		if (document.formConsultarCPF.cpf.value == "") {
 			bootbox.alert("Para realizar a consulta é obrigatório informar: o CPF",function(){})
 			return false;
-		}
-
-		var cpf = document.formConsultarCPF.cpf;
-
-		if (cpf.value != "") {
+		} else {
 			var cpf_Int = parseInt(cpf.value);
 			var valido = (!isNaN(cpf_Int) && (isValidoCNPJ(cpf) || isValidoCPF(cpf.value)));
 			if (!valido) {
-				bootbox.alert("CPF inválido!",function(){
-					formConsultarCPF.action = "consultaCPF";
-					formConsultarCPF.consCadastro.value= "true";
-					formConsultarCPF.submit();
-				})
+				bootbox.alert("CPF inválido!",function(){})
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
 

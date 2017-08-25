@@ -150,7 +150,7 @@
 					<div class="input-group-addon">
 						<span class="glyphicon glyphicon-user"></span>
 					</div>
-			    	<input type="text" class="form-control" id="login" name="login" placeholder="LOGIN">
+			    	<input type="text" class="form-control" id="login" name="login" placeholder="CPF">
 		      	</div>
 			</div>
       		<div class="form-group has-success form-modal-login">
@@ -169,7 +169,7 @@
 <!-- 					<a onclick="javascript:esqueceuSenha();" href="#" data-toggle="modal">ESQUECEU SUA SENHA?</a> -->
 <!-- 				</div> -->
 				<div>
-					<a onclick="javascript:cadastrarUser();" href="#" data-toggle="modal">INSCREVA-SE</a>
+					<a onclick="javascript:cadastrarUser();" href="#" data-toggle="modal">CADASTRE-SE</a>
 				</div>
 			</div>
 		  </div>
@@ -200,18 +200,11 @@
 	  </div>
 	</div>
 	<!-- Modal Loader -->
-	<div class="modal fade modalLogin" id="modalLoader" tabindex="-1" role="dialog" aria-labelledby="modalLoader" aria-hidden="true">
-		<div class="modal-dialog modal-loading" role="document">
-	        <div class="modal-content">
-	            <div class="modal-body">
-	                <div class="text-center">
-	                    <img src="imagens/loader.svg" class="icon"/>
-	                    <h5>CARREGANDO...</h5>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>	
+	<div class="modal fade modalLogin" id="modalLoader" tabindex="-1" role="dialog" aria-labelledby="modalLoader" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+		<div class="modal-loader">
+			<img src="imagens/loader-boleto.svg" class="icon"/>
+		</div>
+	</div>
 <script src="js/mask.js"></script>
 </body>
 </html>

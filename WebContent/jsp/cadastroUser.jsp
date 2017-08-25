@@ -171,7 +171,7 @@
 								<input type="password" class="form-control" placeholder="Senha" aria-describedby="basic-addon1"
 								id="password1" name="password1" maxlength="20" autocomplete="off" onkeypress="return sem_espaco(event)"
 								onblur="javascript:validarSenha();">
-								<p class="pass-erro"  id="pass1"><span class="glyphicon glyphicon-remove"></span>Mínimo de 8 caracteres</p>
+								<p class="pass-erro" id="pass1"><span class="glyphicon glyphicon-remove"></span> Mínimo de 8 caracteres </p>
 								<a id="oculta" onclick="javascript:mostraSenha();">Mostra Senha</a>
 							</div>
 						</div>

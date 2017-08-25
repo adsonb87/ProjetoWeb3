@@ -34,22 +34,6 @@
 		}
 	}
 
-	function validarEmail(email) {
-		usuario = email.value.substring(0, email.value.indexOf("@"));
-		dominio = email.value.substring(email.value.indexOf("@")+ 1, email.value.length);
-		if (!(usuario.length >=1) &&
-		    (dominio.length >=3) &&
-		    (usuario.search("@")==-1) &&
-		    (dominio.search("@")==-1) &&
-		    (usuario.search(" ")==-1) &&
-		    (dominio.search(" ")==-1) &&
-		    (dominio.search(".")!=-1) &&
-		    (dominio.indexOf(".") >=1)&&
-		    (dominio.lastIndexOf(".") < dominio.length - 1)) {
-			bootbox.alert("Para continuar, informe um Email válido",function(){})
-		}
-	}
-
 	function validarCampos() {
 
 		//VALIDANDO CPF
@@ -67,15 +51,13 @@
 		
 		//VALIDANDO NOME
 		var nome = document.formCadUsuario.nome.value.trim();
+		var cont = nome.length;
 		if (nome == "") {
 			bootbox.alert("Para continuar, informe o seu Nome!",function(){})
 			return false;
-		} else {
-			var cont = nome.length;
-			if(cont < 3){
-				bootbox.alert("Para continuar, informe um nome válido!",function(){})
-				return false;
-			}
+		} else if (cont < 3) {
+			bootbox.alert("Para continuar, informe um nome válido!",function(){})
+			return false;
 		}
 		
 		//VALIDANDO DATA NASCIMENTO
@@ -83,54 +65,38 @@
 		if(data == "") {
 			bootbox.alert("Para continuar, informe sua Data de Nascimento!",function(){})
 			return false;
-		} else {
-			var RegExPattern = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
-			if (!((data.match(RegExPattern)) && (data!=''))) {
-				bootbox.alert("Data de Nascimento inválida!",function(){})
-				return false;
-			}
+		} else if (!validarData(data)) {
+			bootbox.alert("Data de Nascimento inválida!",function(){})
+			return false;
 		}
 		
 		//VALIDANDO NOME MÃE
 		var nome = document.formCadUsuario.nomeMae.value.trim();
+		var cont = nome.length;
 		if (nome == "") {
 			bootbox.alert("Para continuar, informe o Nome da sua Mãe!",function(){})
 			return false;
-		} else {
-			var cont = nome.length;
-			if(cont < 3){
-				bootbox.alert("Para continuar, informe um nome da mãe válido!",function(){})
-				return false;
-			}
+		} else if (cont < 3) {
+			bootbox.alert("Para continuar, informe um nome da mãe válido!",function(){})
+			return false;
 		}
 
 		//VALIDANDO TELEFONE
-		if (document.formCadUsuario.telefone.value == "")  {
+		var telefone = document.formCadUsuario.telefone.value;
+		var txt = telefone.replace(/[^\d]+/g,'');
+		var cont = txt.length;
+		if (telefone == "") {
 			bootbox.alert("Para continuar, informe o seu Telefone!",function(){})
 			return false;
-		} else {
-			var txt = $('#telefone').val().replace(/[^\d]+/g,'');
-			var cont = txt.length;
-			if(cont < 10){
-				bootbox.alert("Informe um número de telefone válido (DDD + NÚMERO).",function(){	})
-				return false;
-			}
+		} else if (cont < 10) {
+			bootbox.alert("Informe um número de telefone válido (DDD + NÚMERO).",function(){	})
+			return false;
 		}
 
-		//VALIDANDO EMAI
+		//VALIDANDO EMAIL
 		var email = document.formCadUsuario.email.value;
 		if (email != "") {
-			var usuario = email.substring(0, email.indexOf("@"));
-			var dominio = email.substring(email.indexOf("@")+ 1, email.length);
-			if (!((usuario.length >=1) &&
-			    (dominio.length >= 3) &&
-			    (usuario.search("@") == -1) &&
-			    (dominio.search("@") == -1) &&
-			    (usuario.search(" ") == -1) &&
-			    (dominio.search(" ") == -1) &&
-			    (dominio.search(".") != -1) &&
-			    (dominio.indexOf(".") >= 1)&&
-			    (dominio.lastIndexOf(".") < dominio.length - 1))) {
+			if(!validarEmail(email)) {
 				bootbox.alert("Para continuar, informe um Email válido",function(){})
 				return false;
 			}
@@ -190,7 +156,6 @@
 		$('#numero').val('');
 	}
 	
-	//CONSULTA CEP
     function limparCampoEnd() {
     	$('#logradouro').val('');
 		$('#bairro').val('');
@@ -211,33 +176,25 @@
             })
         }
     }
-        
+       
+	//CONSULTA CEP
     function pesquisaCep(valor) {
-
 		var cep = valor.replace(/\D/g, '');
-
         if (cep != "") {
-
             //Expressão regular para validar o CEP.
             var validacep = /^[0-9]{8}$/;
-
             if(validacep.test(cep)) {
-
                 //Preenche os campos com "..." enquanto consulta webservice.
                 document.formCadUsuario.logradouro.value = "...";
                 document.formCadUsuario.bairro.value = "...";
                 document.formCadUsuario.cidade.value = "...";
                 document.formCadUsuario.uf.value = "...";
-
                 //Cria um elemento javascript.
                 var script = document.createElement('script');
-
                 //Sincroniza com o atualCampoEnd.
                 script.src = '//viacep.com.br/ws/'+ cep + '/json/?callback=atualCampoEnd';
-
                 //Insere script no documento e carrega o conteúdo.
                 document.body.appendChild(script);
-
             } else {
 				bootbox.alert("Formato de CEP inválido.",function(){
                 	limparCampoEnd();

@@ -1,10 +1,13 @@
-package br.com.pe.urbana.boleto;
+package br.com.pe.urbana.boleto.emissor;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import br.com.caelum.stella.boleto.Banco;
 import br.com.caelum.stella.boleto.Beneficiario;
@@ -19,18 +22,41 @@ import br.com.caelum.stella.boleto.Pagador;
 import br.com.caelum.stella.boleto.RecebimentoDivergente;
 import br.com.caelum.stella.boleto.bancos.Itau;
 import br.com.caelum.stella.boleto.bancos.gerador.GeradorDeDigitoPadrao;
-import br.com.caelum.stella.boleto.json.GeradorJson;
 import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
-import br.com.pe.urbana.controller.BoletoContoller;
-import br.com.pe.urbana.controller.UsuarioContoller;
 import br.com.pe.urbana.entidade.EntidadeCobranca;
-import br.com.pe.urbana.entidade.EntidadeNossoNumero;
 import br.com.pe.urbana.entidade.EntidadeUsuario;
-import br.com.pe.urbana.entidade.Status;
+import net.sf.jasperreports.engine.util.JRLoader;
 
-public class EmissorBoleto {
+public class EmissorSegundaViaBoleto {
+ 
+	public byte[] gerarBoleto(EntidadeUsuario usuario, EntidadeCobranca cobranca, HttpServletRequest request) throws Exception {
 	
-	public byte[] gerarBoletoEmBytes(EntidadeUsuario usuario, HttpServletRequest request) throws Exception {
+		byte[] pdfBytes = null;
+		
+		Boleto boleto = criarBoleto(usuario, cobranca);
+		
+		// CARREGA O CAMINHO FÍSICO DOS ARQUIVOS
+		String template = request.getServletContext().getRealPath("/WEB-INF/jasper/boleto-urbana.jasper");
+		String template_sub = request.getServletContext().getRealPath("/WEB-INF/jasper/boleto-urbana_instrucoes.jasper");
+		String logoUrbana = request.getServletContext().getRealPath("/WEB-INF/jasper/logoUrbana.png");
+		
+		// MAPA PARA PARÂMETROS
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("logo_urbana", logoUrbana);
+		parametros.put("SUB_INSTRUCOES", JRLoader.loadObjectFromFile(template_sub));
+		
+		// CARREGA O CONTEÚDO DO ARQUIVO EM UM INPUTSTREAM
+		InputStream templateBoleto = new FileInputStream(template);
+
+		// PASSA PARA O GERADOR DE BOLETO O DADOS DO TEMPLATE NO CONSTRUTOR,
+		// JUNTO COM O MAPA DE PARÂMETROS E O BOLETO
+		GeradorDeBoleto gerador = new GeradorDeBoleto(templateBoleto, parametros, boleto);
+		pdfBytes = gerador.geraPDF();
+						
+		return pdfBytes;
+	}
+	
+	private Boleto criarBoleto(EntidadeUsuario usuario, EntidadeCobranca cobranca) {
 		
 		// EXTRAINDO DADOS DO USUÁRIO PARA O PAGADOR
 		Endereco enderecoPagador = Endereco.novoEndereco()
@@ -45,52 +71,12 @@ public class EmissorBoleto {
                 .comDocumento(usuario.getCpfFormatado())
                 .comEndereco(enderecoPagador);
 		
-		byte[] pdfBytes = null;
+		Beneficiario beneficiario = criarBeneficiario(cobranca.getNossoNumeroFormatado());
 		
-		Boleto boleto = criarBoleto(pagador);
+		Date dt = cobranca.getDataVencimento();
 		
-		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
-		pdfBytes = gerador.geraPDF();
-		
-		if(pdfBytes != null) {
-			UsuarioContoller ctrUsuario = UsuarioContoller.getInstance();
-			BoletoContoller ctrBoleto = BoletoContoller.getInstance();
-						
-			EntidadeCobranca cobranca = new EntidadeCobranca();
-			Status status = new Status();
-			status.setId(4);
-			
-			cobranca.setCpfPagador(boleto.getPagador().getDocumento());
-			cobranca.setNossoNumero(Integer.parseInt(boleto.getBeneficiario().getNossoNumero()));
-			cobranca.setDataVencimento(boleto.getDatas().getVencimento().getTime());
-			cobranca.setDataProcessamento(boleto.getDatas().getProcessamento().getTime());
-			cobranca.setValor(boleto.getValorCobrado());
-			cobranca.setStatus(status); //GERADO
-			cobranca.setRegUser("SISTEMA");
-			
-			try {
-				// SALVA O USUÁRIO, A COBRAÇA E ATUALIZA O NOSSO NÚMERO
-				ctrUsuario.cadastrarUsuarioNovo(usuario);
-				ctrBoleto.salvarCobranca(cobranca);
-				ctrBoleto.atualizarNossoNumero(Integer.parseInt(boleto.getBeneficiario().getNossoNumero()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		// CRIAR O JSON DO BOLETO
-		criarJsonBoleto(boleto, request);
-		
-		return pdfBytes;
-	}
-	
-	private Boleto criarBoleto(Pagador pagador) {
-		
-		Beneficiario beneficiario = criarBeneficiario();
-		
-		// DATA DE VENCIMENTO DO BOLETO
 		Calendar dataVencimento = Calendar.getInstance();
-		dataVencimento.add(Calendar.DAY_OF_MONTH, +5);
+		dataVencimento.setTime(dt);
 		
 		Datas datas = Datas.novasDatas()
                 .comDocumento(Calendar.getInstance())
@@ -106,13 +92,13 @@ public class EmissorBoleto {
 		Desconto desconto = Desconto.novoDesconto()
         		.comTipo(0); // SEM DESCONTO
         
-        RecebimentoDivergente recebimentoDivergente = RecebimentoDivergente.novoRecebimentoDivergente()
+		RecebimentoDivergente recebimentoDivergente = RecebimentoDivergente.novoRecebimentoDivergente()
         		.comTipoAutorizacao("3"); // QUANDO O TÍTULO NÃO DEVE ACEITAR PAGAMENTO DE VALORES DIVERGENTES AO DA COBRANÇA
 
         InstrucaoCobranca instrucaoCobranca1 = InstrucaoCobranca.novaInstrucaoCobranca()
         		.comInstrucao("90"); // NO VENCIMENTO, PAGÁVEL EM QUALQUER AGÊNCIA BANCÁRIA
         
-        Banco banco = new Itau(); 
+        Banco banco = new Itau();
 
         Boleto boleto = Boleto.novoBoleto()
         		.comEspecieMoeda("R$")
@@ -123,10 +109,11 @@ public class EmissorBoleto {
         		.comTipoProduto("00006")
         		.comSubProduto("00008")
         		.comAceite(false) // BOLETO PROPOSTA
-        		.comEspecie("01") // DUPLICATA MERCANTIL
-        		.comTipoPagamento(1) // PAGAMENTO REALIZADO À VISTA
+        		.comEspecie("05") // RECIBO (RC)
+                .comEspecieDocumento("RC") // RECIBO (05)
+                .comTipoPagamento(1) // PAGAMENTO REALIZADO À VISTA
         		.comIndicadorPagamentoParcial(false) // NÃO ACEITA PAGAMENTO PARCIAL
-        		.comJuros(juros)
+        		.comJuros(juros) 
         		.comMulta(multa)
         		.comDesconto(desconto)
         		.comRecebimentoDivergente(recebimentoDivergente)
@@ -135,27 +122,22 @@ public class EmissorBoleto {
                 .comDatas(datas)
                 .comBeneficiario(beneficiario)
                 .comPagador(pagador)
-                .comValorBoleto("1.00")
+                .comValorBoleto(cobranca.getValor())
                 .comNumeroDoDocumento(beneficiario.getNossoNumero())
-                .comEspecieDocumento("RC") // RECIBO
                 .comInstrucoes("SR. CAIXA, FAVOR RECEBER O BOLETO MESMO APÓS A DATA DE VENCIMENTO, SEM", "COBRANÇA DE MULTA E JUROS.", "PAGAMENTO APENAS EM DINHEIRO.")
-                .comLocaisDePagamento("Até o vencimento, preferencialmente no Itaú");
-    
+                .comLocaisDePagamento("Até o vencimento, preferencialmente no Itaú / Após o vencimento, somente no Itaú");
+
 		return boleto;
    	}
 
-	private Beneficiario criarBeneficiario() {
+	private Beneficiario criarBeneficiario(String nossoNumero) {
 
-		// RESPONSÁVEL PELA GERAÇÃO DO DIGITO VERIFICADOR
 		GeradorDeDigitoPadrao geradorDV = new GeradorDeDigitoPadrao();
-
-		// PEGA O VALOR ATUAL DO NOSSO NÚMERO NO BANCO 
-		EntidadeNossoNumero nossoNumero = getNossoNumero();
 		
 		Endereco enderecoBeneficiario = Endereco.novoEndereco()
-        		.comLogradouro("R. DA SOLEDADE")
-        		.comBairro("BOA VISTA")  
-        		.comCep("50070-040")  
+        		.comLogradouro("AV GOV AGAMENON MAGALHAES")
+        		.comBairro("BOA VISTA")
+        		.comCep("50070-160")  
         		.comCidade("RECIFE")
         		.comUf("PE");
 
@@ -164,11 +146,11 @@ public class EmissorBoleto {
                 .comDocumento("09.759.606/0001-80")
                 .comAgencia("2938")
                 .comDigitoAgencia("4")
-                .comCodigoBeneficiario("24794")  
-                .comDigitoCodigoBeneficiario("3")
+                .comCodigoBeneficiario("28439")  
+                .comDigitoCodigoBeneficiario("1")
                 .comCarteira(109)
                 .comEndereco(enderecoBeneficiario)
-                .comNossoNumero(nossoNumero.getSeqValorFormatado());
+                .comNossoNumero(nossoNumero);
                 
         //GERANDO DV DO NOSSO NÚMERO
         String bloco = beneficiario.getAgencia()
@@ -180,33 +162,6 @@ public class EmissorBoleto {
         beneficiario.comDigitoNossoNumero(String.valueOf(dv));
         
 		return beneficiario;
-	}
-	
-	// RESPONSÁVEL POR PEGAR O NOSSO NÚMERO
-	private EntidadeNossoNumero getNossoNumero() {
-		
-		BoletoContoller ctr = BoletoContoller.getInstance();
-		EntidadeNossoNumero nossoNumero = null;
-		
-		try {
-			nossoNumero = ctr.getNossoNumero();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return nossoNumero;
-	}
-	
-	// CRIA O JSON DO BOLETO
-	private void criarJsonBoleto(Boleto boleto, HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		
-		// GERA O JSON E RETORNA UM JSONOBJECTBUILDER
-		JsonObjectBuilder boletoJson = GeradorJson.gerarJson(boleto);
-		// ADICIONA O JSON NA SESSÃO
- 		//session.setAttribute("boletoJson", boletoJson);
-        		
 	}
 
 }

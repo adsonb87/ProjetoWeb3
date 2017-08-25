@@ -41,7 +41,7 @@ public class BoletoDao extends ConnectionFactoryDB {
 		params[0] = new ParamDAO(Util.unMaskCnpj(cobranca.getCpfPagador()), Types.VARCHAR);
 		params[1] = new ParamDAO(Util.formatDate(cobranca.getDataVencimento()), Types.VARCHAR);
 		params[2] = new ParamDAO(Util.formatDate(cobranca.getDataProcessamento()), Types.VARCHAR);
-		params[3] = new ParamDAO(cobranca.getStatus().getId(), Types.INTEGER);
+		params[3] = new ParamDAO(cobranca.getStatus().getValor(), Types.INTEGER);
 		params[4] = new ParamDAO(cobranca.getValor().doubleValue(), Types.DOUBLE);
 		params[5] = new ParamDAO(cobranca.getNossoNumero(), Types.INTEGER);
 		params[6] = new ParamDAO(cobranca.getRegUser(), Types.VARCHAR);

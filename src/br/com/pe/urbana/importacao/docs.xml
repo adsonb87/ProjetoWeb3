@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<txg:Texgit xmlns:txg="http://jrimum.org/texgit"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://gilmatryx.googlepages.com/Texgit http://jrimum.org/texgit"
+	version="1.0-academic">
+
+	<FlatFile>
+		<layout>
+			<name>USERDOCUMENTS</name>
+			<description>
+				LAYOUT PARA IMPORTAÇÃO USERDOCUMENTS.
+			</description>
+		</layout>
+		<GroupOfRecords>
+			<Record name="Body" description="Documents" repeatable="true">
+				<GroupOfFields>
+					<IdType name="id" type="INTEGER" length="10" position="1" padding="ZERO_LEFT" />
+					<Field name="tipoDocumento" type="INTEGER" length="3" padding="ZERO_LEFT" />
+					<Field name="numeroDocumento" type="STRING" length="25" />
+					<Field name="orgaoEmissor" type="STRING" length="15" />
+					<Field name="dataEmissao" type="STRING" length="8" />
+					<Field name="siglaEstado" type="STRING" length="2" />
+					<Field name="numeroLivro" type="STRING" length="10" />
+					<Field name="docComplemento" type="STRING" length="100" />
+					<Field name="folha" type="STRING" length="5" />
+					<Field name="termo" type="STRING" length="10" />
+					<Field name="circunscricao" type="STRING" length="2" />
+					<Field name="cidadeEmissao" type="STRING" length="100" />
+					<Field name="subdistrito" type="STRING" length="100" />
+				</GroupOfFields>
+			</Record>
+		</GroupOfRecords>			
+	</FlatFile>
+
+</txg:Texgit>

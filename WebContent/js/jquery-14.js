@@ -1705,7 +1705,7 @@ jQuery.event = {
 				}
 			}
 
-			// Remove the expando if it's no longer used
+			// Remove the expando if it's no Integerer used
 			for ( ret in events ) {
 				break;
 			}

@@ -31,6 +31,7 @@ public class BoletoContoller {
 		
 		BoletoControllerRep controllerRep = BoletoControllerRep.getInstance();
 		controllerRep.salvarCobranca(cobranca);
+		controllerRep.atualizarNossoNumero(cobranca.getNossoNumero());
 		
 	}
 		
@@ -43,13 +44,6 @@ public class BoletoContoller {
 		nossoNumero = controllerRep.getNossoNumero();
 		
 		return nossoNumero;
-	}
-	
-	public void atualizarNossoNumero(Integer nossoNumero) throws Exception {
-		
-		BoletoControllerRep controllerRep = BoletoControllerRep.getInstance();
-		controllerRep.atualizarNossoNumero(nossoNumero);
-		
 	}
 	
 	public EntidadeCobranca consultarBoleto(Integer id) throws ClassNotFoundException, 
